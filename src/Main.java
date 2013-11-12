@@ -9,8 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
         Application.run("Space Kaira", WIDTH, HEIGHT, (context) -> {
-            context.render((graphics) -> graphics.setBackground(Color.black));
-            (new MainScreen(context)).start();
+            (new MainScreen(context, WIDTH, HEIGHT)).start();
         });
     }
 }

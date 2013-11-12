@@ -14,8 +14,13 @@ public class MainScreen implements Screen {
     final static int HARDCORE_MODE_POS_Y = 250;
     final static int BOTH_MODES_POS_X = 200;
 
-    public MainScreen(ApplicationContext context) {
+    public MainScreen(ApplicationContext context, int width, int height) {
         this.context = context;
+
+        context.render((graphics) -> {
+            graphics.setBackground(Color.black);
+            graphics.clearRect(0, 0, width, height);
+        });
     }
 
     @Override
