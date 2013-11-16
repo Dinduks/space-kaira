@@ -1,11 +1,15 @@
-package fr.upem.spacekaira;
+package fr.upem.spacekaira.screen;
 
 import fr.umlv.zen.ApplicationContext;
 import fr.umlv.zen.KeyboardEvent;
 import fr.umlv.zen.KeyboardKey;
+import fr.upem.spacekaira.draw.DrawingHelpers;
 
 import java.awt.*;
 
+/**
+ * Represents the main screen with the difficulty selection
+ */
 public class MainScreen implements Screen {
     private final ApplicationContext context;
 

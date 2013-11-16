@@ -1,5 +1,8 @@
-package fr.upem.spacekaira;
+package fr.upem.spacekaira.screen;
 
+/**
+ * Represents the game screen
+ */
 public class GameScreen implements Screen {
     private final boolean isNormalMode;
 

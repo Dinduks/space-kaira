@@ -1,7 +1,5 @@
 import fr.umlv.zen.Application;
-import fr.upem.spacekaira.MainScreen;
-
-import java.awt.*;
+import fr.upem.spacekaira.screen.MainScreen;
 
 public class Main {
     final static int WIDTH = 800;
