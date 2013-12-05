@@ -1,8 +1,8 @@
-package fr.umlv.zen;
+package fr.umlv.zen3;
 
 import java.util.Set;
 
-import fr.umlv.zen.KeyboardKey.Modifier;
+import fr.umlv.zen3.KeyboardKey.Modifier;
 
 /**
  * A keyboard key and its set of modifiers.

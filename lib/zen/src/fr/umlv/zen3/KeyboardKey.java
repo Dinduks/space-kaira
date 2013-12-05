@@ -1,4 +1,4 @@
-package fr.umlv.zen;
+package fr.umlv.zen3;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -11,7 +11,7 @@ import java.util.Set;
  * A keyboard key.
  * 
  * @see KeyboardEvent
- * @see Modifier
+ * @see fr.umlv.zen3.KeyboardKey.Modifier
  */
 public enum KeyboardKey {
   META(KeyEvent.VK_META),

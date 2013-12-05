@@ -1,4 +1,4 @@
-package fr.umlv.zen;
+package fr.umlv.zen3;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -11,6 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.util.Objects;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.function.Consumer;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -19,7 +20,7 @@ import javax.swing.WindowConstants;
 
 /**
  *  Main class of the Zen framework.
- *  Starting a GUI application is as simple as calling {@link #run(String, int, int, ApplicationCode)}. 
+ *  Starting a GUI application is as simple as calling {@link #run(String, int, int, java.util.function.Consumer)}.
  */
 public class Application {
   private Application() {
@@ -40,7 +41,7 @@ public class Application {
    * @param height height of the drawing area.
    * @param applicationCode code of the application to run in the application thread.
    */
-  public static void run(final String title, final int width, final int height, final ApplicationCode applicationCode) {
+  public static void run(String title, int width, int height, Consumer<ApplicationContext> applicationCode) {
     Objects.requireNonNull(title);
     if (width < 0 || height < 0) {
       throw new IllegalArgumentException("invalid size");
@@ -68,10 +69,10 @@ public class Application {
       }
     }
     
-    final ArrayBlockingQueue<KeyboardEvent> keyboardEventQueue =
+    ArrayBlockingQueue<KeyboardEvent> keyboardEventQueue =
         new ArrayBlockingQueue<>(20);
     
-    final Canvas canvas = new Canvas();
+    Canvas canvas = new Canvas();
     canvas.addKeyListener(new KeyAdapter() {
       @Override
       public void keyPressed(KeyEvent e) {
@@ -79,15 +80,12 @@ public class Application {
       }
     });
     
-    final Thread thread = new ApplicationContext() {
+    Thread thread = new ApplicationContext() {
       final Thread applicationThread;
       {
         final ApplicationContext context = this;
-        applicationThread = new Thread(new Runnable() {
-          @Override
-          public void run() {
-            applicationCode.run(context);
-          }
+        applicationThread = new Thread(() -> {
+          applicationCode.accept(context);
         });
       }
       
@@ -115,11 +113,11 @@ public class Application {
       }
       
       @Override
-      public void render(ApplicationRenderCode rendererCode) {
+      public void render(Consumer<Graphics2D> rendererCode) {
         checkThread();
         Graphics2D graphics = buffer.createGraphics();
         try {
-          rendererCode.render(graphics);
+          rendererCode.accept(graphics);
         } finally {
           graphics.dispose();
         }
@@ -130,28 +128,20 @@ public class Application {
     thread.setName("Application-Thread");
     
     try {
-      EventQueue.invokeAndWait(new Runnable() {
-        @Override
-        public void run() {
-          JPanel panel = new JPanel();
-          panel.add(canvas);
-          
-          JFrame frame = new JFrame(title);
-          frame.setIgnoreRepaint(true);
-          frame.setResizable(false);
-          frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-          frame.setContentPane(panel);
-          frame.setLocationRelativeTo(null);
-          frame.pack();
-          frame.setVisible(true);
-          
-          EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-              thread.start();
-            }
-          });
-        }
+      EventQueue.invokeAndWait(() -> {
+        JPanel panel = new JPanel();
+        panel.add(canvas);
+
+        JFrame frame = new JFrame(title);
+        frame.setIgnoreRepaint(true);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setContentPane(panel);
+        frame.setLocationRelativeTo(null);
+        frame.pack();
+        frame.setVisible(true);
+
+        EventQueue.invokeLater(thread::start);
       });
     } catch (InvocationTargetException e) {
       Throwable cause = e.getCause();

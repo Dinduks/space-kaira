@@ -1,4 +1,7 @@
-package fr.umlv.zen;
+package fr.umlv.zen3;
+
+import java.awt.Graphics2D;
+import java.util.function.Consumer;
 
 /**
  * Provided by the application framework, this object allows
@@ -27,8 +30,8 @@ public interface ApplicationContext {
    *  In fact, the drawing code doesn't draw directly into the drawing area
    *  but draw into a back buffer that will be drawn to the screen.
    *  
-   * @param rendererCode user object specifying the code that should be executed to drawn
+   * @param rendererCode code that should be executed to drawn
    *                     to the drawing area.
    */
-  public void render(ApplicationRenderCode rendererCode);
+  public void render(Consumer<Graphics2D> rendererCode);
 }
