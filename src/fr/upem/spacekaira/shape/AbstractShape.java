@@ -5,7 +5,7 @@ import org.jbox2d.dynamics.Fixture;
 
 import java.awt.*;
 
-abstract public class AbstractShape implements Drawable {
+public abstract class AbstractShape implements Drawable {
     protected Body body;
 
     @Override

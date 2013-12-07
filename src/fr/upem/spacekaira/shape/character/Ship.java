@@ -1,5 +1,8 @@
-package fr.upem.spacekaira.shape;
+package fr.upem.spacekaira.shape.character;
 
+import fr.upem.spacekaira.shape.AbstractShape;
+import fr.upem.spacekaira.shape.Brush;
+import fr.upem.spacekaira.shape.Draw;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
@@ -71,6 +74,14 @@ public class Ship extends AbstractShape {
 
     public void shield() {
         shield = (shield)?false:true;
+    }
+
+    public  void bomb() {
+
+    }
+
+    public void shoot() {
+
     }
 
     @Override

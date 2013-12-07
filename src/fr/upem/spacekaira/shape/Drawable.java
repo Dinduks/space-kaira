@@ -1,5 +1,7 @@
 package fr.upem.spacekaira.shape;
 
+import fr.umlv.zen3.ApplicationContext;
+
 import java.awt.*;
 
 @FunctionalInterface
