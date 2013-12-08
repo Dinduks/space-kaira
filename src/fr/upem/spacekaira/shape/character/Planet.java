@@ -10,6 +10,9 @@ import org.jbox2d.dynamics.World;
 
 import java.awt.*;
 
+/**
+ * Represent a simple planet on the screen
+ */
 public class Planet extends AbstractShape {
     private static final float RADIUS = 2;
 
@@ -18,14 +21,15 @@ public class Planet extends AbstractShape {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(x,y);
 
+        body = world.createBody(bodyDef);
+
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(RADIUS);
 
         FixtureDef fd = new FixtureDef();
         fd.shape = circleShape;
-        fd.userData = new Brush(true, Color.RED,true);
+        fd.userData = new Brush(Color.RED,true);
 
-        body = world.createBody(bodyDef);
         body.createFixture(fd);
 
         body.setUserData(this);

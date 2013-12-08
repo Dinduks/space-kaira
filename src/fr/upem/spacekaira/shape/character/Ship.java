@@ -9,12 +9,25 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
 
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
+/**
+ * The player ship
+ */
 public class Ship extends AbstractShape {
+    static {BULLET_COLOR = new Brush(Color.GREEN,true);}
+    private final static Brush BULLET_COLOR;
+
     private boolean shield;
     private final Fixture shieldFix;
+    private List<Bullet> bullets;
 
     public Ship(World world) {
+
+        //Bullet list
+        bullets = new LinkedList<Bullet>();
+
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;
         bodyDef.angularDamping = 1.0f;
@@ -32,7 +45,7 @@ public class Ship extends AbstractShape {
             ship = new FixtureDef();
             ship.shape = polygonShape;
             ship.density = 1.0f;
-            ship.userData = new Brush(true, Color.BLUE,true);
+            ship.userData = new Brush(Color.BLUE,true);
         }
 
         //Shield
@@ -81,12 +94,23 @@ public class Ship extends AbstractShape {
     }
 
     public void shoot() {
-
+        if(!shield)
+            bullets.add(new Bullet(body.getWorld(),body.getPosition(),body.getWorldVector(new Vec2(0,3)),body.getAngle(),BULLET_COLOR));
     }
 
     @Override
     public void draw(Graphics2D graphics, Draw d) {
-        shieldFix.setUserData((shield) ? new Brush(true, Color.BLUE, false) : null);
+        shieldFix.setUserData((shield) ? new Brush(Color.BLUE, false) : null);
         super.draw(graphics, d);
+        bullets.forEach(b->b.draw(graphics,d));
+    }
+
+    public void checkForBulletOutScreen(Draw d) {
+        Iterator<Bullet> it = bullets.iterator();
+
+        while(it.hasNext()) {
+            if(!it.next().isInScreen(d))
+                it.remove();
+        }
     }
 }

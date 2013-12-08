@@ -2,10 +2,7 @@ package fr.upem.spacekaira.map;
 
 import fr.umlv.zen3.ApplicationContext;
 import fr.upem.spacekaira.shape.Draw;
-import fr.upem.spacekaira.shape.character.AbstractEnemy;
-import fr.upem.spacekaira.shape.character.Enemy;
-import fr.upem.spacekaira.shape.character.Planet;
-import fr.upem.spacekaira.shape.character.Ship;
+import fr.upem.spacekaira.shape.character.*;
 import org.jbox2d.dynamics.World;
 
 import java.awt.*;
@@ -25,20 +22,23 @@ public class Map {
     private List<Planet> planets;
     private List<Enemy> enemies;
     private  World world;
+    private Draw d;
 
 
-    public Map(World world,final int HEIGHT, final int WIDTH) {
+    public Map(World world,Draw d,final int HEIGHT, final int WIDTH) {
         this.world = world;
         planets = new ArrayList<Planet>();
         enemies = new LinkedList<Enemy>();
         this.HEIGHT = HEIGHT;
         this.WIDTH = WIDTH;
+        this.d = d;
     }
 
     public void initMap() {
-
+        //TODO config class pour la l'init
         ship=new Ship(world);
         planets.addAll(Arrays.asList(new Planet(world, 2, 2),new Planet(world, 10, 30),new Planet(world, 10, 100)));
+        enemies.add(new TIE(world));
     }
 
     public Ship getShip() {
@@ -46,10 +46,16 @@ public class Map {
     }
 
     public void computeDataGame() {
+        checkBulletOutScreen();
         checkCollision();
     }
 
     private void checkCollision() {
+
+    }
+
+    private void checkBulletOutScreen() {
+        ship.checkForBulletOutScreen(d);
     }
 
     public void draw(ApplicationContext context, Draw d) {
@@ -57,7 +63,7 @@ public class Map {
             //clear screen
             graphics.clearRect(0, 0, WIDTH, HEIGHT);
 
-        //draw Map
+            //draw Map
             ship.draw(graphics, d);
             planets.forEach(p -> p.draw(graphics, d));
             enemies.forEach(e -> e.draw(graphics, d));

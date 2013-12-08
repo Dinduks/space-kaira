@@ -12,10 +12,16 @@ import org.jbox2d.pooling.arrays.Vec2Array;
 import java.awt.*;
 import java.util.Arrays;
 
+/**
+ * Performed vector transformation (local -> world -> screen) and shape drawing
+ */
 public class Draw {
     private OBBViewportTransform obb;
+    private final int HEIGHT;
+    private final int WIDTH;
 
     public Draw(int width , int height) {
+        HEIGHT = height; WIDTH = width;
         obb = new OBBViewportTransform();
         obb.setCamera(0, 0, 1);
         obb.setExtents(width/2,height/2);
@@ -23,6 +29,11 @@ public class Draw {
 
     public void getWorldVectorToScreen(Vec2 argWorld, Vec2 argScreen) {
         obb.getWorldToScreen(argWorld, argScreen);
+    }
+
+    public boolean isInScreen(Vec2 worldVector) {
+        Vec2 v = getWorldVectorToScreen(worldVector);
+        return v.x >= 0 && v.x <= WIDTH && v.y >= 0 && v.y <= HEIGHT;
     }
 
     public Vec2 getWorldVectorToScreen(Vec2 argWorld) {
@@ -73,14 +84,13 @@ public class Draw {
         Vec2 vertex1 = getWorldVectorToScreen(fixture.getBody().getWorldPoint(edgeShape.m_vertex1));
         Vec2 vertex2 = getWorldVectorToScreen(fixture.getBody().getWorldPoint(edgeShape.m_vertex2));
 
-        if(brush.isDraw()) {
-            graphics.setPaint(brush.getColor());
-            graphics.drawLine(
-                    Math.round(vertex1.x),
-                    Math.round(vertex1.y),
-                    Math.round(vertex2.x),
-                    Math.round(vertex2.y));
-        }
+        graphics.setPaint(brush.getColor());
+        graphics.drawLine(
+                Math.round(vertex1.x),
+                Math.round(vertex1.y),
+                Math.round(vertex2.x),
+                Math.round(vertex2.y));
+
     }
 
     void drawPolygon(Fixture fixture,Graphics2D graphics) {
@@ -103,14 +113,11 @@ public class Draw {
             xPoints[i] =  Math.round(vertex.x);
             yPoints[i] =  Math.round(vertex.y);
         }
-
-        if(brush.isDraw()) {
-            graphics.setPaint(brush.getColor());
-            if(brush.isOpaque()) {
-                graphics.fillPolygon(xPoints,yPoints,vertexCount);
-            } else {
-                graphics.drawPolygon(xPoints, yPoints,vertexCount);
-            }
+        graphics.setPaint(brush.getColor());
+        if(brush.isOpaque()) {
+            graphics.fillPolygon(xPoints,yPoints,vertexCount);
+        } else {
+            graphics.drawPolygon(xPoints, yPoints,vertexCount);
         }
     }
 }

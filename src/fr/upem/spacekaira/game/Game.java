@@ -9,8 +9,10 @@ import fr.upem.spacekaira.time.Synchronizer;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+/**
+ * This class draw and compute the game via the run method
+ */
 public class Game {
-
     private Game () {
         throw null; // no instance
     }
@@ -28,7 +30,7 @@ public class Game {
         draw.setCamera(0, 0, CAMERA_SCALE);
 
         //Init Map
-        Map map = new Map(world,HEIGHT,WIDTH);
+        Map map = new Map(world,draw,HEIGHT,WIDTH);
         map.initMap();
 
         //Create Synchronizer
