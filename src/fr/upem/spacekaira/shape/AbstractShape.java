@@ -29,5 +29,14 @@ public abstract class AbstractShape implements Drawable {
             list = list.getNext();
         }
     }
+
+    public boolean equalsBody(Body other) {
+        return other == body;
+    }
+
+    @Override
+    public int hashCode() {
+        return body.hashCode();
+    }
 }
 

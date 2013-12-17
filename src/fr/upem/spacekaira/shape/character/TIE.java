@@ -18,12 +18,12 @@ public class TIE extends Enemy {
     static {ENEMY_COLOR = new Brush(Color.BLUE,false);}
     private static final Brush ENEMY_COLOR;
 
-    public TIE (World world) {
+    public TIE (World world,float x, float y) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;
         bodyDef.angularDamping = 1.0f;
         bodyDef.linearDamping = 1.0f;
-        bodyDef.position.set(10,10);
+        bodyDef.position.set(x,y);
 
         body = world.createBody(bodyDef);
 
@@ -87,5 +87,10 @@ public class TIE extends Enemy {
 
     private void shootRight() {
         bullets.add(new Bullet(body.getWorld(),body.getWorldPoint(new Vec2(7,2)),body.getWorldVector(new Vec2(1,0)),body.getAngle()-1.57f,BULLET_COLOR));
+    }
+
+    @Override
+    public void shoot() {
+        //TODO feed the body
     }
 }

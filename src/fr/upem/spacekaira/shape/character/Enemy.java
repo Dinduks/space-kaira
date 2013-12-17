@@ -11,11 +11,10 @@ import java.util.List;
 /**
  * This abstract class represent a base to construct a Enemy
  */
-public abstract class Enemy extends AbstractShape {
+public abstract class Enemy extends AbstractShape implements Shooter {
     static {BULLET_COLOR = new Brush(Color.RED,true);}
 
     protected static final Brush BULLET_COLOR;
-
     protected List<Bullet> bullets;
 
     public Enemy() {
@@ -26,5 +25,10 @@ public abstract class Enemy extends AbstractShape {
     public void draw(Graphics2D graphics, Draw d) {
         super.draw(graphics, d);
         bullets.forEach(b->b.draw(graphics,d));
+    }
+
+    @Override
+    public void checkForBulletOutScreen(Draw d) {
+        Bullet.checkForBulletsOutScreen(d,bullets);
     }
 }

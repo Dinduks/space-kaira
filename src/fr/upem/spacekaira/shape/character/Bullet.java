@@ -3,6 +3,7 @@ package fr.upem.spacekaira.shape.character;
 
 import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
+import fr.upem.spacekaira.shape.Collidable;
 import fr.upem.spacekaira.shape.Draw;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.EdgeShape;
@@ -10,13 +11,17 @@ import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Transform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
+import org.jbox2d.dynamics.contacts.Contact;
+import org.jbox2d.dynamics.contacts.ContactEdge;
 
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 /**
  * Represent a bullet who are a little segment
  */
-public class Bullet extends AbstractShape {
+public class Bullet extends AbstractShape implements Collidable{
     /**
      * Build a new bullet with a fixed velocity
      * @param world the current world
@@ -53,4 +58,39 @@ public class Bullet extends AbstractShape {
     boolean isInScreen(Draw d) {
         return  d.isInScreen(body.getPosition());
     }
+
+    public static void checkForBulletsOutScreen(Draw d, List<Bullet> bullets) {
+        Iterator<Bullet> it = bullets.iterator();
+
+        while(it.hasNext()) {
+            if(!it.next().isInScreen(d))
+                it.remove();
+        }
+    }
+
+    @Override
+    public boolean isCollide(AbstractShape as) {
+        for(ContactEdge edge = body.getContactList(); edge != null; edge = edge.next) {
+            if(edge.contact.isEnabled()) {
+                if(as.equalsBody(edge.other) && edge.contact.isTouching())
+                    return true;
+                edge.contact.setEnabled(false);
+            }
+        }
+        return false;
+    }
+
+    /*
+    public boolean isCollide(FixtureDef fix) {
+        for(ContactEdge edge = body.getContactList(); edge != null; edge = edge.next) {
+            if(edge.contact.isEnabled()) {
+                for(Contact c = edge.contact; c != null; c=c.getNext()) {
+                    c.getFixtureA().getBody()
+                }
+            }
+        }
+        return false;
+    }
+    */
+
 }

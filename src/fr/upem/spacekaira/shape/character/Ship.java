@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * The player ship
  */
-public class Ship extends AbstractShape {
+public class Ship extends AbstractShape implements Shooter {
     static {BULLET_COLOR = new Brush(Color.GREEN,true);}
     private final static Brush BULLET_COLOR;
 
@@ -89,13 +89,19 @@ public class Ship extends AbstractShape {
         shield = (shield)?false:true;
     }
 
-    public  void bomb() {
-
+    public void bomb() {
+        //TODO the code to compute an explosion
     }
 
+    @Override
     public void shoot() {
         if(!shield)
             bullets.add(new Bullet(body.getWorld(),body.getPosition(),body.getWorldVector(new Vec2(0,3)),body.getAngle(),BULLET_COLOR));
+    }
+
+    @Override
+    public void checkForBulletOutScreen(Draw d) {
+        Bullet.checkForBulletsOutScreen(d,bullets);
     }
 
     @Override
@@ -103,14 +109,34 @@ public class Ship extends AbstractShape {
         shieldFix.setUserData((shield) ? new Brush(Color.BLUE, false) : null);
         super.draw(graphics, d);
         bullets.forEach(b->b.draw(graphics,d));
+        if(Draw.isZero(body.getLinearVelocity().x) || Draw.isZero(body.getLinearVelocity().y) || Draw.isZero(body.getAngularVelocity())) {
+            drawMotors(graphics, d);
+        }
     }
 
-    public void checkForBulletOutScreen(Draw d) {
-        Iterator<Bullet> it = bullets.iterator();
+    private void drawMotors(Graphics2D graphics, Draw d) {
+        //TODO a faire en dynamique avec une chaine de petites boules et suivant la vitesse
+        Vec2 leftMotor = new Vec2(-0.5f,-3.3f);
+        Vec2 rightMotor = new Vec2(0.5f,-3.3f);
 
+        leftMotor = d.getWorldVectorToScreen(body.getWorldPoint(leftMotor));
+        rightMotor = d.getWorldVectorToScreen(body.getWorldPoint(rightMotor));
+
+        graphics.setPaint(Color.YELLOW);
+        graphics.fillOval(Math.round(leftMotor.x - (int)d.getCameraScale()/2),Math.round(leftMotor.y - (int)d.getCameraScale()/2),(int)d.getCameraScale(),(int)d.getCameraScale());
+        graphics.fillOval(Math.round(rightMotor.x - (int)d.getCameraScale()/2),Math.round(rightMotor.y - (int)d.getCameraScale()/2),(int)d.getCameraScale(),(int)d.getCameraScale());
+    }
+
+    @Override
+    public void checkForBulletInPlanets(List<Planet> planets) {
+        Iterator<Bullet> it = bullets.iterator();
         while(it.hasNext()) {
-            if(!it.next().isInScreen(d))
-                it.remove();
+            Bullet b = it.next();
+            for(Planet p : planets) {
+                if(b.isCollide(p)) {
+                    it.remove();
+                }
+            }
         }
     }
 }

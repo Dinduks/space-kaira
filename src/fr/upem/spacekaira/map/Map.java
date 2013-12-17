@@ -21,7 +21,7 @@ public class Map {
     private Ship ship;
     private List<Planet> planets;
     private List<Enemy> enemies;
-    private  World world;
+    private World world;
     private Draw d;
 
 
@@ -38,7 +38,7 @@ public class Map {
         //TODO config class pour la l'init
         ship=new Ship(world);
         planets.addAll(Arrays.asList(new Planet(world, 2, 2),new Planet(world, 10, 30),new Planet(world, 10, 100)));
-        enemies.add(new TIE(world));
+        enemies.add(new TIE(world,10,10));
     }
 
     public Ship getShip() {
@@ -51,11 +51,12 @@ public class Map {
     }
 
     private void checkCollision() {
-
+        ship.checkForBulletInPlanets(planets);
     }
 
     private void checkBulletOutScreen() {
         ship.checkForBulletOutScreen(d);
+        enemies.forEach(e->e.checkForBulletOutScreen(d));
     }
 
     public void draw(ApplicationContext context, Draw d) {
