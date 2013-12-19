@@ -2,10 +2,12 @@ package fr.upem.spacekaira.map;
 
 import fr.umlv.zen3.ApplicationContext;
 import fr.upem.spacekaira.shape.Draw;
-import fr.upem.spacekaira.shape.character.*;
+import fr.upem.spacekaira.shape.character.Enemy;
+import fr.upem.spacekaira.shape.character.Planet;
+import fr.upem.spacekaira.shape.character.Ship;
+import fr.upem.spacekaira.shape.character.TIE;
 import org.jbox2d.dynamics.World;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;

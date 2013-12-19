@@ -5,17 +5,15 @@ import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.Collidable;
 import fr.upem.spacekaira.shape.Draw;
-import org.jbox2d.collision.shapes.CircleShape;
-import org.jbox2d.collision.shapes.EdgeShape;
 import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.common.Transform;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.*;
-import org.jbox2d.dynamics.contacts.Contact;
+import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.FixtureDef;
+import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.ContactEdge;
 
-import java.awt.*;
-import java.util.*;
+import java.util.Iterator;
 import java.util.List;
 
 /**

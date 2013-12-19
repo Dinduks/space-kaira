@@ -9,7 +9,8 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
 
 import java.awt.*;
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
