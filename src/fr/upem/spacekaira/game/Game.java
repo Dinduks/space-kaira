@@ -5,6 +5,7 @@ import fr.umlv.zen3.KeyboardEvent;
 import fr.upem.spacekaira.map.Map;
 import fr.upem.spacekaira.shape.Draw;
 import fr.upem.spacekaira.shape.character.Ship;
+import fr.upem.spacekaira.shape.character.collision.MpContactListener;
 import fr.upem.spacekaira.time.Synchronizer;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
@@ -24,6 +25,8 @@ public class Game {
 
         //Jbox2d World creation
         World world = new World(new Vec2(0, 0));
+        world.setContactListener(new MpContactListener());
+        //world.setContactFilter();
 
         //Init Draw class
         Draw draw = new Draw(WIDTH, HEIGHT);
