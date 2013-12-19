@@ -5,7 +5,10 @@ import org.jbox2d.dynamics.Fixture;
 
 import java.awt.*;
 
-abstract public class AbstractShape implements Drawable {
+/**
+ * Represent a base to construct a figure an contains drawing method
+ */
+public abstract class AbstractShape implements Drawable {
     protected Body body;
 
     @Override
@@ -25,6 +28,15 @@ abstract public class AbstractShape implements Drawable {
             }
             list = list.getNext();
         }
+    }
+
+    public boolean equalsBody(Body other) {
+        return other == body;
+    }
+
+    @Override
+    public int hashCode() {
+        return body.hashCode();
     }
 }
 

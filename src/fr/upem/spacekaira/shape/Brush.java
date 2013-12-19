@@ -2,19 +2,16 @@ package fr.upem.spacekaira.shape;
 
 import java.awt.*;
 
+/**
+ * Contains data to draw a shape
+ */
 public class Brush {
-    private final boolean draw;
     private final Color color;
     private final boolean isOpaque;
 
-    public Brush(boolean draw, Color color, boolean isOpaque) {
-        this.draw = draw;
+    public Brush(Color color, boolean isOpaque) {
         this.color = color;
         this.isOpaque = isOpaque;
-    }
-
-    public boolean isDraw() {
-        return draw;
     }
 
     public Color getColor() {
