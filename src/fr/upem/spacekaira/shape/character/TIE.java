@@ -32,7 +32,7 @@ public class TIE extends Enemy {
         edgeFix.density = 1.0f;
         edgeFix.userData = ENEMY_COLOR;
         edgeFix.filter.categoryBits = FixtureType.STD_ENEMY;
-        edgeFix.filter.maskBits = FixtureType.BULLET;
+        edgeFix.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP;
 
         //left-side-down
        {
@@ -95,5 +95,10 @@ public class TIE extends Enemy {
     @Override
     public void shoot() {
         //TODO feed the body
+    }
+
+    @Override
+    public boolean isDie() {
+        return body.getUserData() == Brush.DESTROY_BRUSH;
     }
 }

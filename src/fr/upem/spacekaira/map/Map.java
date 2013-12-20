@@ -8,10 +8,7 @@ import fr.upem.spacekaira.shape.character.Ship;
 import fr.upem.spacekaira.shape.character.TIE;
 import org.jbox2d.dynamics.World;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * This class contains all figure present on the screen
@@ -53,7 +50,15 @@ public class Map {
     }
 
     private void checkComputedCollision() {
-
+        Iterator<Enemy> it = enemies.iterator();
+        while (it.hasNext()) {
+            Enemy e = it.next();
+            e.computeTimeStepData();
+            if(e.isDie()) {
+                e.destroy();
+                it.remove();
+            }
+        }
     }
 
     private void checkBulletOutScreen() {

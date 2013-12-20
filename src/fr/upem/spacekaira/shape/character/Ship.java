@@ -63,6 +63,8 @@ public class Ship extends AbstractShape implements Shooter {
             shield.shape = circleShape;
             shield.density = 0;
             shield.userData = null; //Use with caution
+            shield.filter.categoryBits = FixtureType.SHIP;
+            shield.filter.maskBits = FixtureType.PLANET | FixtureType.STD_ENEMY | FixtureType.BULLET;
         }
 
         body.createFixture(ship);

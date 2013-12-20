@@ -4,6 +4,7 @@ package fr.upem.spacekaira.shape.character;
 import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.Draw;
+import fr.upem.spacekaira.shape.DynamicContact;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
@@ -18,7 +19,7 @@ import java.util.List;
 /**
  * Represent a bullet who are a little segment
  */
-public class Bullet extends AbstractShape {
+public class Bullet extends AbstractShape implements DynamicContact{
     /**
      * Build a new bullet with a fixed velocity
      * @param world the current world
@@ -62,8 +63,20 @@ public class Bullet extends AbstractShape {
         Iterator<Bullet> it = bullets.iterator();
 
         while(it.hasNext()) {
-            if(!it.next().isInScreen(d))
+            Bullet b = it.next();
+            if(!b.isInScreen(d)) {
+                b.destroy();
                 it.remove();
+            }
         }
+    }
+
+    @Override
+    public void computeTimeStepData() {
+    }
+
+    @Override
+    public boolean isDie() {
+        return body.getFixtureList().getUserData() == Brush.DESTROY_BRUSH;
     }
 }

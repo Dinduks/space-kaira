@@ -13,16 +13,27 @@ import java.util.function.BiConsumer;
 public class MpContactListener implements ContactListener {
     interface ContactAction extends BiConsumer<Fixture,Fixture> {}
 
-    private static ContactAction dSS =  (f1,f2) -> {
+    private static ContactAction dSD =  (f1,f2) -> {
         f1.setUserData(Brush.DESTROY_BRUSH);
         f2.setUserData(Brush.DESTROY_BRUSH);
     };
 
+    private static ContactAction lSD =  (f1,f2) -> {
+        f1.setUserData(Brush.DESTROY_BRUSH);
+    };
+
+    private static ContactAction rSD =  (f1,f2) -> {
+        f1.setUserData(Brush.DESTROY_BRUSH);
+    };
+
+    private static ContactAction nil =  (f1,f2) -> {};
+
    private static ContactAction [][] action = {
-            {dSS,dSS,dSS,dSS},
-            {dSS,dSS,dSS,dSS},
-            {dSS,dSS,dSS,dSS},
-            {dSS,dSS,dSS,dSS}};
+                        /*BULLET PLANET STD_ENEMY SHIP*/
+        /*BULLET*/      {nil,   rSD,    dSD,    dSD},
+        /*PLANET*/      {lSD,   nil,    nil,    nil},
+        /*STD_ENEMY*/   {dSD,   nil,    nil,    nil},
+        /*SHIP*/        {dSD,   nil,    nil,    nil}};
 
 
     @Override
