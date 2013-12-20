@@ -3,7 +3,6 @@ package fr.upem.spacekaira.shape.character;
 
 import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.Collidable;
 import fr.upem.spacekaira.shape.Draw;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
@@ -19,7 +18,7 @@ import java.util.List;
 /**
  * Represent a bullet who are a little segment
  */
-public class Bullet extends AbstractShape implements Collidable{
+public class Bullet extends AbstractShape {
     /**
      * Build a new bullet with a fixed velocity
      * @param world the current world
@@ -48,6 +47,8 @@ public class Bullet extends AbstractShape implements Collidable{
         bullet.shape = polygonShape;
         bullet.density = 1.0f;
         bullet.userData = color;
+        bullet.filter.categoryBits = FixtureType.BULLET;
+        bullet.filter.maskBits = FixtureType.PLANET | FixtureType.STD_ENEMY;
 
         body.createFixture(bullet);
         body.setUserData(this);
@@ -65,30 +66,4 @@ public class Bullet extends AbstractShape implements Collidable{
                 it.remove();
         }
     }
-
-    @Override
-    public boolean isCollide(AbstractShape as) {
-        for(ContactEdge edge = body.getContactList(); edge != null; edge = edge.next) {
-            if(edge.contact.isEnabled()) {
-                if(as.equalsBody(edge.other) && edge.contact.isTouching())
-                    return true;
-                edge.contact.setEnabled(false);
-            }
-        }
-        return false;
-    }
-
-    /*
-    public boolean isCollide(FixtureDef fix) {
-        for(ContactEdge edge = body.getContactList(); edge != null; edge = edge.next) {
-            if(edge.contact.isEnabled()) {
-                for(Contact c = edge.contact; c != null; c=c.getNext()) {
-                    c.getFixtureA().getBody()
-                }
-            }
-        }
-        return false;
-    }
-    */
-
 }

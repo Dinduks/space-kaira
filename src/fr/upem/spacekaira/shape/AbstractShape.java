@@ -38,5 +38,10 @@ public abstract class AbstractShape implements Drawable {
     public int hashCode() {
         return body.hashCode();
     }
+
+    public void destroy() {
+        body.getWorld().destroyBody(body);
+        body = null;
+    }
 }
 

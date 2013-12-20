@@ -47,6 +47,9 @@ public class Ship extends AbstractShape implements Shooter {
             ship.shape = polygonShape;
             ship.density = 1.0f;
             ship.userData = new Brush(Color.BLUE,true);
+            ship.filter.categoryBits = FixtureType.SHIP;
+            ship.filter.maskBits = FixtureType.PLANET | FixtureType.STD_ENEMY | FixtureType.BULLET;
+
         }
 
         //Shield
@@ -69,7 +72,7 @@ public class Ship extends AbstractShape implements Shooter {
     }
 
     public void up() {
-        Vec2 f = body.getWorldVector(new Vec2(0.0f, 60.0f));
+        Vec2 f = body.getWorldVector(new Vec2(0.0f, 120.0f));
         Vec2 p = body.getWorldPoint(body.getLocalCenter().add(new Vec2(0.0f, 4.0f)));
         body.applyForce(f, p);
     }
@@ -126,18 +129,5 @@ public class Ship extends AbstractShape implements Shooter {
         graphics.setPaint(Color.YELLOW);
         graphics.fillOval(Math.round(leftMotor.x - (int)d.getCameraScale()/2),Math.round(leftMotor.y - (int)d.getCameraScale()/2),(int)d.getCameraScale(),(int)d.getCameraScale());
         graphics.fillOval(Math.round(rightMotor.x - (int)d.getCameraScale()/2),Math.round(rightMotor.y - (int)d.getCameraScale()/2),(int)d.getCameraScale(),(int)d.getCameraScale());
-    }
-
-    @Override
-    public void checkForBulletInPlanets(List<Planet> planets) {
-        Iterator<Bullet> it = bullets.iterator();
-        while(it.hasNext()) {
-            Bullet b = it.next();
-            for(Planet p : planets) {
-                if(b.isCollide(p)) {
-                    it.remove();
-                }
-            }
-        }
     }
 }

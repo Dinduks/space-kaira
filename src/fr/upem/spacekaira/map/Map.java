@@ -49,11 +49,11 @@ public class Map {
 
     public void computeDataGame() {
         checkBulletOutScreen();
-        checkCollision();
+        checkComputedCollision();
     }
 
-    private void checkCollision() {
-        ship.checkForBulletInPlanets(planets);
+    private void checkComputedCollision() {
+
     }
 
     private void checkBulletOutScreen() {

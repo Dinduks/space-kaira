@@ -25,11 +25,13 @@ public class Planet extends AbstractShape {
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(RADIUS);
 
-        FixtureDef fd = new FixtureDef();
-        fd.shape = circleShape;
-        fd.userData = new Brush(Color.RED,true);
+        FixtureDef planet = new FixtureDef();
+        planet.shape = circleShape;
+        planet.userData = new Brush(Color.RED,true);
+        planet.filter.categoryBits = FixtureType.PLANET;
+        planet.filter.maskBits = FixtureType.BULLET;
 
-        body.createFixture(fd);
+        body.createFixture(planet);
 
         body.setUserData(this);
     }

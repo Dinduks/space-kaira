@@ -26,10 +26,13 @@ public class TIE extends Enemy {
         bodyDef.position.set(x,y);
 
         body = world.createBody(bodyDef);
+        body.setUserData(this);
 
         FixtureDef edgeFix = new FixtureDef();
         edgeFix.density = 1.0f;
         edgeFix.userData = ENEMY_COLOR;
+        edgeFix.filter.categoryBits = FixtureType.STD_ENEMY;
+        edgeFix.filter.maskBits = FixtureType.BULLET;
 
         //left-side-down
        {
