@@ -30,10 +30,6 @@ public abstract class AbstractShape implements Drawable {
         }
     }
 
-    public boolean equalsBody(Body other) {
-        return other == body;
-    }
-
     @Override
     public int hashCode() {
         return body.hashCode();

@@ -15,10 +15,10 @@ import java.awt.*;
  * The space ship Enemy
  */
 public class TIE extends Enemy {
-    static {ENEMY_COLOR = new Brush(Color.BLUE,false);}
-    private static final Brush ENEMY_COLOR;
 
-    public TIE (World world,float x, float y) {
+    public TIE(World world, float x, float y, Brush color, Brush bulletColor) {
+        super(world, x, y, color, bulletColor);
+
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;
         bodyDef.angularDamping = 1.0f;

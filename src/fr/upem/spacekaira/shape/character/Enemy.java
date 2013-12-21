@@ -4,7 +4,9 @@ import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.Draw;
 import fr.upem.spacekaira.shape.DynamicContact;
+import fr.upem.spacekaira.shape.character.factory.BulletFactory;
 import org.jbox2d.dynamics.Fixture;
+import org.jbox2d.dynamics.World;
 
 import java.awt.*;
 import java.util.*;
@@ -14,13 +16,14 @@ import java.util.List;
  * This abstract class represent a base to construct a Enemy
  */
 public abstract class Enemy extends AbstractShape implements Shooter, DynamicContact {
-    static {BULLET_COLOR = new Brush(Color.RED,true);}
-
-    protected static final Brush BULLET_COLOR;
+    protected final Brush ENEMY_COLOR;
+    protected final Brush BULLET_COLOR;
     protected List<Bullet> bullets;
 
-    public Enemy() {
+    public Enemy(World world,float x, float y, Brush color, Brush bulletColor) {
         this.bullets = new LinkedList<Bullet>();
+        this.ENEMY_COLOR = color;
+        this.BULLET_COLOR = bulletColor;
     }
 
     @Override

@@ -14,21 +14,19 @@ import java.awt.*;
  * Represent a simple planet on the screen
  */
 public class Planet extends AbstractShape {
-    private static final float RADIUS = 2;
 
-    public Planet(World world,float x, float y) {
-
+    public Planet(World world,float x, float y,float radius,Brush color) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(x,y);
 
         body = world.createBody(bodyDef);
 
         CircleShape circleShape = new CircleShape();
-        circleShape.setRadius(RADIUS);
+        circleShape.setRadius(radius);
 
         FixtureDef planet = new FixtureDef();
         planet.shape = circleShape;
-        planet.userData = new Brush(Color.RED,true);
+        planet.userData = color;
         planet.filter.categoryBits = FixtureType.PLANET;
         planet.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP;
 

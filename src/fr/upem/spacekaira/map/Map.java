@@ -6,6 +6,7 @@ import fr.upem.spacekaira.shape.character.Enemy;
 import fr.upem.spacekaira.shape.character.Planet;
 import fr.upem.spacekaira.shape.character.Ship;
 import fr.upem.spacekaira.shape.character.TIE;
+import fr.upem.spacekaira.shape.character.factory.FactoryPool;
 import org.jbox2d.dynamics.World;
 
 import java.util.*;
@@ -20,8 +21,10 @@ public class Map {
     private Ship ship;
     private List<Planet> planets;
     private List<Enemy> enemies;
+
     private World world;
     private Draw d;
+    private FactoryPool fP;
 
 
     public Map(World world,Draw d,final int HEIGHT, final int WIDTH) {
@@ -31,13 +34,14 @@ public class Map {
         this.HEIGHT = HEIGHT;
         this.WIDTH = WIDTH;
         this.d = d;
+        this.fP = new FactoryPool(world);
     }
 
     public void initMap() {
         //TODO config class pour la l'init
-        ship=new Ship(world);
-        planets.addAll(Arrays.asList(new Planet(world, 2, 2),new Planet(world, 10, 30),new Planet(world, 10, 100)));
-        enemies.add(new TIE(world,10,10));
+        ship=fP.getShipFactory().createShip(false); /* <- hard ship core*/
+        planets.addAll(Arrays.asList(fP.getPlanetFactory().createPlanet(2,2),fP.getPlanetFactory().createPlanet(10,30),fP.getPlanetFactory().createPlanet(10,100)));
+        enemies.add(fP.getEnemyFactory().createEnemy(10,10));
     }
 
     public Ship getShip() {

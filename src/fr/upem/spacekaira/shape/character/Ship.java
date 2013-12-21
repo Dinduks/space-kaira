@@ -17,14 +17,15 @@ import java.util.List;
  * The player ship
  */
 public class Ship extends AbstractShape implements Shooter {
-    static {BULLET_COLOR = new Brush(Color.GREEN,true);}
-    private final static Brush BULLET_COLOR;
-
     private boolean shield;
     private final Fixture shieldFix;
     private List<Bullet> bullets;
+    private final Brush SHIP_COLOR;
+    private final Brush BULLET_COLOR;
 
-    public Ship(World world) {
+    public Ship(World world,Brush shipColor,Brush bulletColor) {
+        this.SHIP_COLOR = shipColor;
+        this.BULLET_COLOR = bulletColor;
 
         //Bullet list
         bullets = new LinkedList<Bullet>();
