@@ -1,5 +1,6 @@
 package fr.upem.spacekaira.shape;
 
+import fr.umlv.zen3.ApplicationContext;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.EdgeShape;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -13,7 +14,7 @@ import java.awt.*;
 import java.util.Arrays;
 
 /**
- * Performed vector transformation (local -> world -> screen) and shape drawing
+ * Performs vector transformation (local -> world -> screen) and shape drawing
  */
 public class Draw {
     private OBBViewportTransform obb;
@@ -21,8 +22,9 @@ public class Draw {
     private final int WIDTH;
     private float scale = 1;
 
-    public Draw(int width , int height) {
-        HEIGHT = height; WIDTH = width;
+    public Draw(int width, int height) {
+        HEIGHT = height;
+        WIDTH = width;
         obb = new OBBViewportTransform();
         obb.setCamera(0, 0, 1);
         obb.setExtents(width/2,height/2);
@@ -96,7 +98,6 @@ public class Draw {
                 Math.round(vertex1.y),
                 Math.round(vertex2.x),
                 Math.round(vertex2.y));
-
     }
 
     public void drawPolygon(Fixture fixture,Graphics2D graphics) {
@@ -104,8 +105,12 @@ public class Draw {
         PolygonShape polygonShape = (PolygonShape) fixture.getShape();
 
         Vec2[] vecs = vec2Array.get(polygonShape.getVertexCount());
-        for (int i=0;i<polygonShape.getVertexCount();i++) vecs[i].set(polygonShape.getVertex(i));
-        Arrays.asList(vecs).forEach(v -> v.set(getWorldVectorToScreen(fixture.getBody().getWorldPoint(v))));
+        for (int i=0;i<polygonShape.getVertexCount();i++) {
+            vecs[i].set(polygonShape.getVertex(i));
+        }
+        Arrays.asList(vecs).forEach(v -> {
+            v.set(getWorldVectorToScreen(fixture.getBody().getWorldPoint(v)));
+        });
         drawPolygon(vecs, polygonShape.getVertexCount(), brush, graphics);
     }
 
@@ -129,5 +134,14 @@ public class Draw {
 
     public static boolean isZero(float f) {
         return Math.abs(f) > 0.5;
+    }
+
+    public static void drawGameOver(ApplicationContext context) {
+        context.render((graphics) -> {
+            Font font = new Font("arial", Font.BOLD, 60);
+            graphics.setFont(font);
+            graphics.setPaint(new Color(255, 0, 0));
+            graphics.drawString("GAME OVER", 200, 200);
+        });
     }
 }

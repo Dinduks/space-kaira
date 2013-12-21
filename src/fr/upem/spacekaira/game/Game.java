@@ -15,12 +15,15 @@ import org.jbox2d.dynamics.World;
  * This class draw and compute the game via the run method
  */
 public class Game {
+    // TODO: Remove this
     private Game () {
         throw null; // no instance
     }
 
-    public static void run(final int HEIGHT,final int WIDTH, ApplicationContext context) {
-
+    public static void run(final int height,
+                           final int width,
+                           ApplicationContext context,
+                           int gameDuration) {
         final float REFRESH_TIME = 1/60f;
         final int CAMERA_SCALE = 10;
 
@@ -30,17 +33,18 @@ public class Game {
         //world.setContactFilter(new ContactFilter());
 
         //Init Draw class
-        Draw draw = new Draw(WIDTH, HEIGHT);
+        Draw draw = new Draw(width, height);
         draw.setCamera(0, 0, CAMERA_SCALE);
 
         //Init Map
-        Map map = new Map(world,draw,HEIGHT,WIDTH);
+        Map map = new Map(world, draw, height, width);
         map.initMap();
 
-        //Create Synchronizer
         Synchronizer syn = new Synchronizer((long)(REFRESH_TIME * 1000));
 
-        for (;;) {
+        long startTime = System.currentTimeMillis();
+
+        while (System.currentTimeMillis() <= startTime + gameDuration * 1000) {
             syn.start();
             checkKeyboardAction(context, map.getShip());
             world.step(REFRESH_TIME, 6, 8);
@@ -49,6 +53,8 @@ public class Game {
             draw.setCenter(map.getShip().getPosition());
             syn.waitToSynchronize();
         }
+
+        Draw.drawGameOver(context);
     }
 
     private static void checkKeyboardAction(ApplicationContext context,Ship s) {
