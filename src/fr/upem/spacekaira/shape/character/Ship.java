@@ -22,7 +22,7 @@ public class Ship extends AbstractShape implements Shooter {
     private final Brush SHIP_COLOR;
     private final Brush BULLET_COLOR;
 
-    public Ship(World world,Brush shipColor,Brush bulletColor) {
+    public Ship(World world, Brush shipColor, Brush bulletColor) {
         this.SHIP_COLOR = shipColor;
         this.BULLET_COLOR = bulletColor;
 
@@ -49,7 +49,6 @@ public class Ship extends AbstractShape implements Shooter {
             ship.userData = new Brush(Color.BLUE,true);
             ship.filter.categoryBits = FixtureType.SHIP;
             ship.filter.maskBits = FixtureType.PLANET | FixtureType.STD_ENEMY | FixtureType.BULLET;
-
         }
 
         //Shield
@@ -95,8 +94,12 @@ public class Ship extends AbstractShape implements Shooter {
         return body.getWorldCenter();
     }
 
-    public void shield() {
+    public void toggleShield() {
         shield = !shield;
+    }
+
+    public boolean shield() {
+        return shield;
     }
 
     public void bomb() {

@@ -20,7 +20,7 @@ public abstract class Enemy extends AbstractShape implements Shooter, DynamicCon
     protected List<Bullet> bullets;
 
     public Enemy(World world,float x, float y, Brush color, Brush bulletColor) {
-        this.bullets = new LinkedList<Bullet>();
+        this.bullets = new LinkedList<>();
         this.ENEMY_COLOR = color;
         this.BULLET_COLOR = bulletColor;
     }
@@ -38,7 +38,7 @@ public abstract class Enemy extends AbstractShape implements Shooter, DynamicCon
 
     @Override
     public void computeTimeStepData() {
-        for(Fixture fix = body.getFixtureList();fix != null;fix = fix.getNext()) {
+        for (Fixture fix = body.getFixtureList(); fix != null; fix = fix.getNext()) {
             if(fix.getUserData() == Brush.DESTROY_BRUSH) {
                 body.setUserData(Brush.DESTROY_BRUSH);
             }

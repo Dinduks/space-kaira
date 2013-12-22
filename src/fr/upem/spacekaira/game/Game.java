@@ -31,7 +31,6 @@ public class Game {
         //Jbox2d World creation
         World world = new World(new Vec2(0, 0));
         world.setContactListener(new MpContactListener());
-        //world.setContactFilter(new ContactFilter());
 
         //Init Draw class
         Draw draw = new Draw(width, height);
@@ -85,9 +84,9 @@ public class Game {
                     break;
                 case B: s.bomb();
                     break;
-                case S: s.shield();
+                case S: s.toggleShield();
                     break;
-                default :
+                default:
                     break;
             }
         }
