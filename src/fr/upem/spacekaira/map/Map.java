@@ -2,13 +2,7 @@ package fr.upem.spacekaira.map;
 
 import fr.umlv.zen3.ApplicationContext;
 import fr.upem.spacekaira.shape.Draw;
-<<<<<<< HEAD
 import fr.upem.spacekaira.shape.character.*;
-=======
-import fr.upem.spacekaira.shape.character.Enemy;
-import fr.upem.spacekaira.shape.character.Planet;
-import fr.upem.spacekaira.shape.character.Ship;
->>>>>>> 04a6da9e543f1b212901178d8be5ac989252c137
 import fr.upem.spacekaira.shape.character.factory.FactoryPool;
 import fr.upem.spacekaira.util.Util;
 import org.jbox2d.dynamics.World;
@@ -33,12 +27,7 @@ public class Map {
     private Draw d;
     private FactoryPool factoryPool;
 
-<<<<<<< HEAD
-    public Map(World world,Draw d,final int HEIGHT, final int WIDTH) {
-=======
-
     public Map(World world,Draw d,final int height, final int width) {
->>>>>>> 04a6da9e543f1b212901178d8be5ac989252c137
         this.world = world;
         planets = new ArrayList<Planet>();
         enemies = new LinkedList<Enemy>();
@@ -50,19 +39,9 @@ public class Map {
 
     public void initMap() {
         //TODO config class pour la l'init
-<<<<<<< HEAD
-        ship=fP.getShipFactory().createShip(false); /* <- hard ship core*/
-        enemies.add(fP.getEnemyFactory().createEnemy(10,10));
-        planetGenerator = PlanetGenerator.newPlanetGenerator(4,d,WIDTH,HEIGHT,ship, fP.getPlanetFactory());
-=======
-        ship = factoryPool.getShipFactory().createShip(false); /* <- hard ship core*/
+        ship = factoryPool.getShipFactory().createShip(false);
         enemies.add(factoryPool.getEnemyFactory().createEnemy(10, 10));
-        planets.addAll(Arrays.asList(
-                factoryPool.getPlanetFactory().createPlanet(2, 2),
-                factoryPool.getPlanetFactory().createPlanet(10, 30),
-                factoryPool.getPlanetFactory().createPlanet(10, 100)
-        ));
->>>>>>> 04a6da9e543f1b212901178d8be5ac989252c137
+        planetGenerator = PlanetGenerator.newPlanetGenerator(4,d,width,height,ship, factoryPool.getPlanetFactory());
     }
 
     public Ship getShip() {

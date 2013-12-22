@@ -12,9 +12,9 @@ public class Main {
         final int WIDTH = 800;
         final int HEIGHT = 600;
 
-        /*File configurationFile = new File(args[0]);
+        File configurationFile = new File(args[0]);
         Configuration configuration =
-                ConfigurationBuilder.buildFrom(configurationFile);*/
+                ConfigurationBuilder.buildFrom(configurationFile);
 
         Application.run("Space Kaïra" , WIDTH, HEIGHT, context -> {
             Game.run(HEIGHT, WIDTH, context, configuration.getGameDuration());
