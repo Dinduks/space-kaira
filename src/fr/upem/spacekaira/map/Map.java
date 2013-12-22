@@ -79,7 +79,7 @@ public class Map {
         while (it.hasNext()) {
             Enemy e = it.next();
             e.computeTimeStepData();
-            if(e.isDie()) {
+            if(e.isDead()) {
                 e.destroy();
                 it.remove();
             }

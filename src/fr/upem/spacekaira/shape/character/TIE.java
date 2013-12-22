@@ -98,7 +98,7 @@ public class TIE extends Enemy {
     }
 
     @Override
-    public boolean isDie() {
+    public boolean isDead() {
         return body.getUserData() == Brush.DESTROY_BRUSH;
     }
 }

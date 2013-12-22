@@ -9,7 +9,6 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
 
 import java.awt.*;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -97,7 +96,7 @@ public class Ship extends AbstractShape implements Shooter {
     }
 
     public void shield() {
-        shield = (shield)?false:true;
+        shield = !shield;
     }
 
     public void bomb() {
@@ -106,8 +105,14 @@ public class Ship extends AbstractShape implements Shooter {
 
     @Override
     public void shoot() {
-        if(!shield)
-            bullets.add(new Bullet(body.getWorld(),body.getPosition(),body.getWorldVector(new Vec2(0,3)),body.getAngle(),BULLET_COLOR));
+        if(!shield) {
+            bullets.add(new Bullet(
+                    body.getWorld(),
+                    body.getPosition(),
+                    body.getWorldVector(new Vec2(0, 3)),
+                    body.getAngle(),
+                    BULLET_COLOR));
+        }
     }
 
     @Override
@@ -119,7 +124,7 @@ public class Ship extends AbstractShape implements Shooter {
     public void draw(Graphics2D graphics, Draw d) {
         shieldFix.setUserData((shield) ? new Brush(Color.BLUE, false) : null);
         super.draw(graphics, d);
-        bullets.forEach(b->b.draw(graphics,d));
+        bullets.forEach(b -> b.draw(graphics, d));
         if (Draw.isZero(body.getLinearVelocity().x) ||
                 Draw.isZero(body.getLinearVelocity().y) ||
                 Draw.isZero(body.getAngularVelocity())) {
@@ -129,14 +134,20 @@ public class Ship extends AbstractShape implements Shooter {
 
     private void drawMotors(Graphics2D graphics, Draw d) {
         //TODO a faire en dynamique avec une chaine de petites boules et suivant la vitesse
-        Vec2 leftMotor = new Vec2(-0.5f,-3.3f);
-        Vec2 rightMotor = new Vec2(0.5f,-3.3f);
+        Vec2 leftMotor = new Vec2(-0.5f, -3.3f);
+        Vec2 rightMotor = new Vec2(0.5f, -3.3f);
 
         leftMotor = d.getWorldVectorToScreen(body.getWorldPoint(leftMotor));
         rightMotor = d.getWorldVectorToScreen(body.getWorldPoint(rightMotor));
 
         graphics.setPaint(Color.YELLOW);
-        graphics.fillOval(Math.round(leftMotor.x - (int)d.getCameraScale()/2),Math.round(leftMotor.y - (int)d.getCameraScale()/2),(int)d.getCameraScale(),(int)d.getCameraScale());
-        graphics.fillOval(Math.round(rightMotor.x - (int)d.getCameraScale()/2),Math.round(rightMotor.y - (int)d.getCameraScale()/2),(int)d.getCameraScale(),(int)d.getCameraScale());
+        graphics.fillOval(Math.round(leftMotor.x - (int) d.getCameraScale()/2),
+                Math.round(leftMotor.y - (int) d.getCameraScale()/2),
+                (int) d.getCameraScale(),
+                (int) d.getCameraScale());
+        graphics.fillOval(Math.round(rightMotor.x - (int) d.getCameraScale()/2),
+                Math.round(rightMotor.y - (int) d.getCameraScale()/2),
+                (int) d.getCameraScale(),
+                (int) d.getCameraScale());
     }
 }

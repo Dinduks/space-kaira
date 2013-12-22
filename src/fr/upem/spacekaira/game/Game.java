@@ -81,9 +81,9 @@ public class Game {
                     break;
                 case RIGHT: s.right();
                     break;
-                case SPACE : s.shoot();
+                case SPACE: s.shoot();
                     break;
-                case B : s.bomb();
+                case B: s.bomb();
                     break;
                 case S: s.shield();
                     break;

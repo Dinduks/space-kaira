@@ -76,7 +76,7 @@ public class Bullet extends AbstractShape implements DynamicContact{
     }
 
     @Override
-    public boolean isDie() {
+    public boolean isDead() {
         return body.getFixtureList().getUserData() == Brush.DESTROY_BRUSH;
     }
 }

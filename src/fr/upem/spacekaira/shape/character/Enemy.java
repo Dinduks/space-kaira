@@ -4,7 +4,6 @@ import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.Draw;
 import fr.upem.spacekaira.shape.DynamicContact;
-import fr.upem.spacekaira.shape.character.factory.BulletFactory;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.World;
 
@@ -48,7 +47,7 @@ public abstract class Enemy extends AbstractShape implements Shooter, DynamicCon
         Iterator<Bullet> it = bullets.iterator();
         while(it.hasNext()) {
             Bullet b = it.next();
-            if(b.isDie()) {
+            if(b.isDead()) {
                 b.destroy();
                 it.remove();
             }
