@@ -12,10 +12,18 @@ public interface ApplicationContext {
   /** Returns the first keyboard event since or the application was started or
    * {@link #pollKeyboard()} or {@link #waitKeyboard()} was called
    * or null if the user didn't press a key.
-   *  
+   *
    * @return a keyboard event or null otherwise.
    */
   public KeyboardEvent pollKeyboard();
+
+  /** Returns the first key release event since or the application was started or
+   * {@link #pollKeyboard()} or {@link #waitKeyboard()} was called
+   * or null if the user didn't release a key.
+   *
+   * @return a keyboard event or null otherwise.
+   */
+  public KeyboardEvent pollReleasedKeys();
   
   /** Returns the first keyboard event since or the application was started or
    * {@link #pollKeyboard()} or {@link #waitKeyboard()} was called

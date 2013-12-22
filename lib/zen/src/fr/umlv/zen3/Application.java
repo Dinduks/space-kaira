@@ -68,8 +68,10 @@ public class Application {
         g.drawImage(buffer, 0, 0, null);
       }
     }
-    
+
     ArrayBlockingQueue<KeyboardEvent> keyboardEventQueue =
+        new ArrayBlockingQueue<>(20);
+    ArrayBlockingQueue<KeyboardEvent> releasedKeysEventQueue =
         new ArrayBlockingQueue<>(20);
     
     Canvas canvas = new Canvas();
@@ -77,6 +79,11 @@ public class Application {
       @Override
       public void keyPressed(KeyEvent e) {
         keyboardEventQueue.offer(new KeyboardEvent(KeyboardKey.key(e.getKeyCode()), e.getModifiersEx()));
+      }
+
+      @Override
+      public void keyReleased(KeyEvent e) {
+        releasedKeysEventQueue.offer(new KeyboardEvent(KeyboardKey.key(e.getKeyCode()), e.getModifiersEx()));
       }
     });
     
@@ -94,11 +101,17 @@ public class Application {
           throw new IllegalStateException("try to do something with another thread than the application thread");
         }
       }
-      
+
       @Override
       public KeyboardEvent pollKeyboard() {
         checkThread();
         return keyboardEventQueue.poll();
+      }
+
+      @Override
+      public KeyboardEvent pollReleasedKeys() {
+        checkThread();
+        return releasedKeysEventQueue.poll();
       }
       
       @Override
