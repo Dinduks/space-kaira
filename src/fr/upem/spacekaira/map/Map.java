@@ -24,11 +24,14 @@ public class Map {
     private PlanetGenerator planetGenerator;
 
     private World world;
+    private int planetsDensity;
     private Draw d;
     private FactoryPool factoryPool;
 
-    public Map(World world,Draw d,final int height, final int width) {
+    public Map(World world, Draw d, final int height, final int width,
+               int planetsDensity) {
         this.world = world;
+        this.planetsDensity = planetsDensity;
         planets = new ArrayList<Planet>();
         enemies = new LinkedList<Enemy>();
         this.height = height;
@@ -41,7 +44,12 @@ public class Map {
         //TODO config class pour la l'init
         ship = factoryPool.getShipFactory().createShip(false);
         enemies.add(factoryPool.getEnemyFactory().createEnemy(10, 10));
-        planetGenerator = PlanetGenerator.newPlanetGenerator(4,d,width,height,ship, factoryPool.getPlanetFactory());
+        planetGenerator = PlanetGenerator.newPlanetGenerator(planetsDensity,
+                d,
+                width,
+                height,
+                ship,
+                factoryPool.getPlanetFactory());
     }
 
     public Ship getShip() {
@@ -80,7 +88,7 @@ public class Map {
 
             //draw Map
             ship.draw(graphics, d);
-            planetGenerator.getPlanetSet().forEach(p-> p.draw(graphics,d));
+            planetGenerator.getPlanetSet().forEach(p -> p.draw(graphics, d));
             enemies.forEach(e -> e.draw(graphics, d));
 
             drawTimeCounter(graphics, startTime, gameDuration);

@@ -9,8 +9,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Configuration {
     private int gameDuration;
+    private int planetsDensity;
 
     public Configuration() {
+    }
+
+    public int getGameDuration() {
+        return gameDuration;
     }
 
     @XmlElement
@@ -18,7 +23,12 @@ public class Configuration {
         this.gameDuration = gameDuration;
     }
 
-    public int getGameDuration() {
-        return gameDuration;
+    public int getPlanetsDensity() {
+        return planetsDensity;
+    }
+
+    @XmlElement
+    public void setPlanetsDensity(int planetsDensity) {
+        this.planetsDensity = planetsDensity;
     }
 }

@@ -20,7 +20,12 @@ public class PlanetGenerator {
     private Map<Integer,List<Planet>> visitedZone;
 
     /* a factory method to create a planet generator */
-    public static PlanetGenerator newPlanetGenerator(int density,Draw draw, int WIDTH, int HEIGHT, Ship ship, PlanetFactory planetFactory) {
+    public static PlanetGenerator newPlanetGenerator(int density,
+                                                     Draw draw,
+                                                     int WIDTH,
+                                                     int HEIGHT,
+                                                     Ship ship,
+                                                     PlanetFactory planetFactory) {
         PlanetGenerator pg = new PlanetGenerator(density,draw,WIDTH,HEIGHT,ship,planetFactory);
         pg.execute();
         return pg;

@@ -24,7 +24,8 @@ public class Game {
     public static void run(final int height,
                            final int width,
                            ApplicationContext context,
-                           int gameDuration) {
+                           int gameDuration,
+                           int planetsDensity) {
         final float REFRESH_TIME = 1/60f;
         final int CAMERA_SCALE = 10;
 
@@ -37,7 +38,7 @@ public class Game {
         draw.setCamera(0, 0, CAMERA_SCALE);
 
         //Init Map
-        Map map = new Map(world, draw, height, width);
+        Map map = new Map(world, draw, height, width, planetsDensity);
         map.initMap();
 
         Synchronizer syn = new Synchronizer((long)(REFRESH_TIME * 1000));
