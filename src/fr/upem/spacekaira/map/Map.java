@@ -5,18 +5,20 @@ import fr.upem.spacekaira.shape.Draw;
 import fr.upem.spacekaira.shape.character.Enemy;
 import fr.upem.spacekaira.shape.character.Planet;
 import fr.upem.spacekaira.shape.character.Ship;
-import fr.upem.spacekaira.shape.character.TIE;
 import fr.upem.spacekaira.shape.character.factory.FactoryPool;
+import fr.upem.spacekaira.util.Util;
 import org.jbox2d.dynamics.World;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * This class contains all figure present on the screen
  */
 public class Map {
-    private final int HEIGHT;
-    private final int WIDTH;
+    private final int height;
+    private final int width;
 
     private Ship ship;
     private List<Planet> planets;
@@ -24,24 +26,28 @@ public class Map {
 
     private World world;
     private Draw d;
-    private FactoryPool fP;
+    private FactoryPool factoryPool;
 
 
-    public Map(World world,Draw d,final int HEIGHT, final int WIDTH) {
+    public Map(World world,Draw d,final int height, final int width) {
         this.world = world;
         planets = new ArrayList<Planet>();
         enemies = new LinkedList<Enemy>();
-        this.HEIGHT = HEIGHT;
-        this.WIDTH = WIDTH;
+        this.height = height;
+        this.width = width;
         this.d = d;
-        this.fP = new FactoryPool(world);
+        this.factoryPool = new FactoryPool(world);
     }
 
     public void initMap() {
         //TODO config class pour la l'init
-        ship=fP.getShipFactory().createShip(false); /* <- hard ship core*/
-        planets.addAll(Arrays.asList(fP.getPlanetFactory().createPlanet(2,2),fP.getPlanetFactory().createPlanet(10,30),fP.getPlanetFactory().createPlanet(10,100)));
-        enemies.add(fP.getEnemyFactory().createEnemy(10,10));
+        ship = factoryPool.getShipFactory().createShip(false); /* <- hard ship core*/
+        enemies.add(factoryPool.getEnemyFactory().createEnemy(10, 10));
+        planets.addAll(Arrays.asList(
+                factoryPool.getPlanetFactory().createPlanet(2, 2),
+                factoryPool.getPlanetFactory().createPlanet(10, 30),
+                factoryPool.getPlanetFactory().createPlanet(10, 100)
+        ));
     }
 
     public Ship getShip() {
@@ -70,15 +76,24 @@ public class Map {
         enemies.forEach(e->e.checkForBulletOutScreen(d));
     }
 
-    public void draw(ApplicationContext context, Draw d) {
+    public void draw(ApplicationContext context, Draw d, long startTime) {
         context.render(graphics -> {
             //clear screen
-            graphics.clearRect(0, 0, WIDTH, HEIGHT);
+            graphics.clearRect(0, 0, width, height);
 
             //draw Map
             ship.draw(graphics, d);
             planets.forEach(p -> p.draw(graphics, d));
             enemies.forEach(e -> e.draw(graphics, d));
+
+            drawTimeCounter(startTime, graphics);
         });
+    }
+
+    private void drawTimeCounter(long startTime, Graphics2D graphics) {
+        Font font = new Font("arial", Font.BOLD, 30);
+        graphics.setPaint(new Color(255, 255, 255));
+        graphics.setFont(font);
+        graphics.drawString(Util.makeTimeCounter(startTime), width - 80, 50);
     }
 }

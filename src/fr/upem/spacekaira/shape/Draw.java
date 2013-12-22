@@ -18,13 +18,13 @@ import java.util.Arrays;
  */
 public class Draw {
     private OBBViewportTransform obb;
-    private final int HEIGHT;
-    private final int WIDTH;
+    private final int height;
+    private final int width;
     private float scale = 1;
 
     public Draw(int width, int height) {
-        HEIGHT = height;
-        WIDTH = width;
+        this.height = height;
+        this.width = width;
         obb = new OBBViewportTransform();
         obb.setCamera(0, 0, 1);
         obb.setExtents(width/2,height/2);
@@ -36,7 +36,7 @@ public class Draw {
 
     public boolean isInScreen(Vec2 worldVector) {
         Vec2 v = getWorldVectorToScreen(worldVector);
-        return v.x >= 0 && v.x <= WIDTH && v.y >= 0 && v.y <= HEIGHT;
+        return v.x >= 0 && v.x <= width && v.y >= 0 && v.y <= height;
     }
 
     public Vec2 getWorldVectorToScreen(Vec2 argWorld) {
@@ -136,7 +136,7 @@ public class Draw {
         return Math.abs(f) > 0.5;
     }
 
-    public static void drawGameOver(ApplicationContext context) {
+    public void drawGameOver(ApplicationContext context) {
         context.render((graphics) -> {
             Font font;
             graphics.setPaint(new Color(255, 0, 0));
@@ -147,7 +147,7 @@ public class Draw {
 
             font = new Font("arial", Font.BOLD, 20);
             graphics.setFont(font);
-            graphics.drawString("Press any key to exit.", 200, 250);
+            graphics.drawString("Press Q to quit.", 200, 250);
         });
     }
 }

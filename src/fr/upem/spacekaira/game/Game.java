@@ -2,6 +2,7 @@ package fr.upem.spacekaira.game;
 
 import fr.umlv.zen3.ApplicationContext;
 import fr.umlv.zen3.KeyboardEvent;
+import fr.umlv.zen3.KeyboardKey;
 import fr.upem.spacekaira.map.Map;
 import fr.upem.spacekaira.shape.Draw;
 import fr.upem.spacekaira.shape.character.Ship;
@@ -49,18 +50,22 @@ public class Game {
             checkKeyboardAction(context, map.getShip());
             world.step(REFRESH_TIME, 6, 8);
             map.computeDataGame();
-            map.draw(context,draw);
+            map.draw(context, draw, startTime);
             draw.setCenter(map.getShip().getPosition());
             syn.waitToSynchronize();
         }
 
-        Draw.drawGameOver(context);
-        while (context.pollKeyboard() == null);
-        System.exit(0);
+        draw.drawGameOver(context);
+        while (true) {
+            KeyboardEvent event = context.pollKeyboard();
+            if (event != null && event.getKey() == KeyboardKey.Q) {
+                System.exit(0);
+            }
+        }
     }
 
     private static void checkKeyboardAction(ApplicationContext context,Ship s) {
-        for (KeyboardEvent ke; (ke =context.pollKeyboard()) != null;) {
+        for (KeyboardEvent ke; (ke = context.pollKeyboard()) != null; ) {
             switch (ke.getKey()) {
                 case UP: s.up();
                     break;
