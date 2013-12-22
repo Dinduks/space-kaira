@@ -55,6 +55,8 @@ public class Game {
         }
 
         Draw.drawGameOver(context);
+        while (context.pollKeyboard() == null);
+        System.exit(0);
     }
 
     private static void checkKeyboardAction(ApplicationContext context,Ship s) {

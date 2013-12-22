@@ -138,10 +138,16 @@ public class Draw {
 
     public static void drawGameOver(ApplicationContext context) {
         context.render((graphics) -> {
-            Font font = new Font("arial", Font.BOLD, 60);
-            graphics.setFont(font);
+            Font font;
             graphics.setPaint(new Color(255, 0, 0));
+
+            font = new Font("arial", Font.BOLD, 60);
+            graphics.setFont(font);
             graphics.drawString("GAME OVER", 200, 200);
+
+            font = new Font("arial", Font.BOLD, 20);
+            graphics.setFont(font);
+            graphics.drawString("Press any key to exit.", 200, 250);
         });
     }
 }
