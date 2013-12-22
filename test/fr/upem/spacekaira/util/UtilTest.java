@@ -6,9 +6,9 @@ import org.junit.Test;
 
 public class UtilTest {
     @Test
-    public void testMakeTimeCounter() {
+    public void testGetTimeLeftAsString() {
         long startTime;
-        long gameDuration;
+        int gameDuration;
 
         startTime = System.currentTimeMillis();
         gameDuration = 0;
@@ -36,7 +36,7 @@ public class UtilTest {
     }
 
     @Test
-    public void testHowManyTimeLeft() {
+    public void testGetTimeLeftAsLong() {
         long startTime;
         int gameDuration;
 

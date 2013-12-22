@@ -56,6 +56,14 @@ public class Game {
         }
 
         draw.drawGameOver(context);
+        waitForExitRequest(context);
+    }
+
+    /**
+     * Used in the GAME OVER screen, waits for the user to press the Q key
+     * @param context
+     */
+    private static void waitForExitRequest(ApplicationContext context) {
         while (true) {
             KeyboardEvent event = context.pollKeyboard();
             if (event != null && event.getKey() == KeyboardKey.Q) {

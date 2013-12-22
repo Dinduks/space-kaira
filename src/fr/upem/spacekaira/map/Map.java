@@ -93,6 +93,13 @@ public class Map {
         });
     }
 
+    /**
+     * Draws the time countdown in the top right of the screen
+     * The counter becomes red when less than 10 seconds is left
+     * @param graphics
+     * @param startTime
+     * @param gameDuration
+     */
     private void drawTimeCounter(Graphics2D graphics,
                                  long startTime,
                                  int gameDuration) {
