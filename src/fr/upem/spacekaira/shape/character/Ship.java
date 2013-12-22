@@ -120,7 +120,9 @@ public class Ship extends AbstractShape implements Shooter {
         shieldFix.setUserData((shield) ? new Brush(Color.BLUE, false) : null);
         super.draw(graphics, d);
         bullets.forEach(b->b.draw(graphics,d));
-        if(Draw.isZero(body.getLinearVelocity().x) || Draw.isZero(body.getLinearVelocity().y) || Draw.isZero(body.getAngularVelocity())) {
+        if (Draw.isZero(body.getLinearVelocity().x) ||
+                Draw.isZero(body.getLinearVelocity().y) ||
+                Draw.isZero(body.getAngularVelocity())) {
             drawMotors(graphics, d);
         }
     }

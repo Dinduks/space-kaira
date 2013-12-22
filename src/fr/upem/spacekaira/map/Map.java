@@ -2,18 +2,27 @@ package fr.upem.spacekaira.map;
 
 import fr.umlv.zen3.ApplicationContext;
 import fr.upem.spacekaira.shape.Draw;
+<<<<<<< HEAD
 import fr.upem.spacekaira.shape.character.*;
+=======
+import fr.upem.spacekaira.shape.character.Enemy;
+import fr.upem.spacekaira.shape.character.Planet;
+import fr.upem.spacekaira.shape.character.Ship;
+>>>>>>> 04a6da9e543f1b212901178d8be5ac989252c137
 import fr.upem.spacekaira.shape.character.factory.FactoryPool;
+import fr.upem.spacekaira.util.Util;
 import org.jbox2d.dynamics.World;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * This class contains all figure present on the screen
  */
 public class Map {
-    private final int HEIGHT;
-    private final int WIDTH;
+    private final int height;
+    private final int width;
 
     private Ship ship;
     private List<Planet> planets;
@@ -22,23 +31,38 @@ public class Map {
 
     private World world;
     private Draw d;
-    private FactoryPool fP;
+    private FactoryPool factoryPool;
 
+<<<<<<< HEAD
     public Map(World world,Draw d,final int HEIGHT, final int WIDTH) {
+=======
+
+    public Map(World world,Draw d,final int height, final int width) {
+>>>>>>> 04a6da9e543f1b212901178d8be5ac989252c137
         this.world = world;
         planets = new ArrayList<Planet>();
         enemies = new LinkedList<Enemy>();
-        this.HEIGHT = HEIGHT;
-        this.WIDTH = WIDTH;
+        this.height = height;
+        this.width = width;
         this.d = d;
-        this.fP = new FactoryPool(world);
+        this.factoryPool = new FactoryPool(world);
     }
 
     public void initMap() {
         //TODO config class pour la l'init
+<<<<<<< HEAD
         ship=fP.getShipFactory().createShip(false); /* <- hard ship core*/
         enemies.add(fP.getEnemyFactory().createEnemy(10,10));
         planetGenerator = PlanetGenerator.newPlanetGenerator(4,d,WIDTH,HEIGHT,ship, fP.getPlanetFactory());
+=======
+        ship = factoryPool.getShipFactory().createShip(false); /* <- hard ship core*/
+        enemies.add(factoryPool.getEnemyFactory().createEnemy(10, 10));
+        planets.addAll(Arrays.asList(
+                factoryPool.getPlanetFactory().createPlanet(2, 2),
+                factoryPool.getPlanetFactory().createPlanet(10, 30),
+                factoryPool.getPlanetFactory().createPlanet(10, 100)
+        ));
+>>>>>>> 04a6da9e543f1b212901178d8be5ac989252c137
     }
 
     public Ship getShip() {
@@ -67,15 +91,41 @@ public class Map {
         enemies.forEach(e->e.checkForBulletOutScreen(d));
     }
 
-    public void draw(ApplicationContext context, Draw d) {
+    public void draw(ApplicationContext context,
+                     Draw d,
+                     long startTime,
+                     int gameDuration) {
         context.render(graphics -> {
             //clear screen
-            graphics.clearRect(0, 0, WIDTH, HEIGHT);
+            graphics.clearRect(0, 0, width, height);
 
             //draw Map
             ship.draw(graphics, d);
             planetGenerator.getPlanetSet().forEach(p-> p.draw(graphics,d));
             enemies.forEach(e -> e.draw(graphics, d));
+
+            drawTimeCounter(graphics, startTime, gameDuration);
         });
+    }
+
+    /**
+     * Draws the time countdown in the top right of the screen
+     * The counter becomes red when less than 10 seconds is left
+     * @param graphics
+     * @param startTime
+     * @param gameDuration
+     */
+    private void drawTimeCounter(Graphics2D graphics,
+                                 long startTime,
+                                 int gameDuration) {
+        if (Util.getTimeLeftAsLong(startTime, gameDuration) >= 10) {
+            graphics.setPaint(new Color(255, 255, 255));
+        } else {
+            graphics.setPaint(new Color(255, 0, 0));
+        }
+        Font font = new Font("arial", Font.BOLD, 30);
+        graphics.setFont(font);
+        String leftTime = Util.getTimeLeftAsString(startTime, gameDuration);
+        graphics.drawString(leftTime, width - 80, 50);
     }
 }

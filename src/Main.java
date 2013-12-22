@@ -17,7 +17,7 @@ public class Main {
                 ConfigurationBuilder.buildFrom(configurationFile);*/
 
         Application.run("Space Kaïra" , WIDTH, HEIGHT, context -> {
-            Game.run(HEIGHT, WIDTH, context);
+            Game.run(HEIGHT, WIDTH, context, configuration.getGameDuration());
         });
     }
 
