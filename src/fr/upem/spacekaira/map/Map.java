@@ -2,10 +2,7 @@ package fr.upem.spacekaira.map;
 
 import fr.umlv.zen3.ApplicationContext;
 import fr.upem.spacekaira.shape.Draw;
-import fr.upem.spacekaira.shape.character.Enemy;
-import fr.upem.spacekaira.shape.character.Planet;
-import fr.upem.spacekaira.shape.character.Ship;
-import fr.upem.spacekaira.shape.character.TIE;
+import fr.upem.spacekaira.shape.character.*;
 import fr.upem.spacekaira.shape.character.factory.FactoryPool;
 import org.jbox2d.dynamics.World;
 
@@ -21,11 +18,11 @@ public class Map {
     private Ship ship;
     private List<Planet> planets;
     private List<Enemy> enemies;
+    private PlanetGenerator planetGenerator;
 
     private World world;
     private Draw d;
     private FactoryPool fP;
-
 
     public Map(World world,Draw d,final int HEIGHT, final int WIDTH) {
         this.world = world;
@@ -40,8 +37,8 @@ public class Map {
     public void initMap() {
         //TODO config class pour la l'init
         ship=fP.getShipFactory().createShip(false); /* <- hard ship core*/
-        planets.addAll(Arrays.asList(fP.getPlanetFactory().createPlanet(2,2),fP.getPlanetFactory().createPlanet(10,30),fP.getPlanetFactory().createPlanet(10,100)));
         enemies.add(fP.getEnemyFactory().createEnemy(10,10));
+        planetGenerator = PlanetGenerator.newPlanetGenerator(4,d,WIDTH,HEIGHT,ship, fP.getPlanetFactory());
     }
 
     public Ship getShip() {
@@ -77,7 +74,7 @@ public class Map {
 
             //draw Map
             ship.draw(graphics, d);
-            planets.forEach(p -> p.draw(graphics, d));
+            planetGenerator.getPlanetSet().forEach(p-> p.draw(graphics,d));
             enemies.forEach(e -> e.draw(graphics, d));
         });
     }

@@ -88,6 +88,10 @@ public class Ship extends AbstractShape implements Shooter {
         body.applyTorque(10.0f);
     }
 
+    /**
+     * Return the WorldShip position
+     * @return a Vec2 who represent the position
+     */
     public Vec2 getPosition() {
         return body.getWorldCenter();
     }
