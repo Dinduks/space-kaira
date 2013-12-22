@@ -2,28 +2,66 @@ package fr.upem.spacekaira.util;
 
 import static junit.framework.Assert.*;
 
-import fr.upem.spacekaira.shape.Draw;
 import org.junit.Test;
 
 public class UtilTest {
     @Test
     public void testMakeTimeCounter() {
-        Draw draw = new Draw(0, 0);
         long startTime;
+        long gameDuration;
 
         startTime = System.currentTimeMillis();
-        assertEquals("0:00", Util.makeTimeCounter(startTime));
+        gameDuration = 0;
+        assertEquals("0:00", Util.getTimeLeftAsString(startTime, gameDuration));
 
-        startTime = System.currentTimeMillis() - 1 * 1000;
-        assertEquals("0:01", Util.makeTimeCounter(startTime));
+        gameDuration = 12;
+        startTime = System.currentTimeMillis() - 5 * 1000;
+        assertEquals("0:07", Util.getTimeLeftAsString(startTime, gameDuration));
 
-        startTime = System.currentTimeMillis() - 11 * 1000;
-        assertEquals("0:11", Util.makeTimeCounter(startTime));
-
+        gameDuration = 60;
         startTime = System.currentTimeMillis() - 60 * 1000;
-        assertEquals("1:00", Util.makeTimeCounter(startTime));
+        assertEquals("0:00", Util.getTimeLeftAsString(startTime, gameDuration));
 
-        startTime = System.currentTimeMillis() - 90 * 1000;
-        assertEquals("1:30", Util.makeTimeCounter(startTime));
+        gameDuration = 60;
+        startTime = System.currentTimeMillis() - 59 * 1000;
+        assertEquals("0:01", Util.getTimeLeftAsString(startTime, gameDuration));
+
+        gameDuration = 120;
+        startTime = System.currentTimeMillis() - 60 * 1000;
+        assertEquals("1:00", Util.getTimeLeftAsString(startTime, gameDuration));
+
+        gameDuration = 120;
+        startTime = System.currentTimeMillis() - 30 * 1000;
+        assertEquals("1:30", Util.getTimeLeftAsString(startTime, gameDuration));
+    }
+
+    @Test
+    public void testHowManyTimeLeft() {
+        long startTime;
+        int gameDuration;
+
+        startTime = System.currentTimeMillis();
+        gameDuration = 0;
+        assertEquals(0, Util.getTimeLeftAsLong(startTime, gameDuration));
+
+        gameDuration = 12;
+        startTime = System.currentTimeMillis() - 5 * 1000;
+        assertEquals(7, Util.getTimeLeftAsLong(startTime, gameDuration));
+
+        gameDuration = 60;
+        startTime = System.currentTimeMillis() - 60 * 1000;
+        assertEquals(0, Util.getTimeLeftAsLong(startTime, gameDuration));
+
+        gameDuration = 60;
+        startTime = System.currentTimeMillis() - 59 * 1000;
+        assertEquals(1, Util.getTimeLeftAsLong(startTime, gameDuration));
+
+        gameDuration = 120;
+        startTime = System.currentTimeMillis() - 60 * 1000;
+        assertEquals(60, Util.getTimeLeftAsLong(startTime, gameDuration));
+
+        gameDuration = 120;
+        startTime = System.currentTimeMillis() - 30 * 1000;
+        assertEquals(90, Util.getTimeLeftAsLong(startTime, gameDuration));
     }
 }

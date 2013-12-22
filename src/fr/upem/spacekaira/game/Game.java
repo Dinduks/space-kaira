@@ -8,7 +8,7 @@ import fr.upem.spacekaira.shape.Draw;
 import fr.upem.spacekaira.shape.character.Ship;
 import fr.upem.spacekaira.shape.character.collision.MpContactListener;
 import fr.upem.spacekaira.time.Synchronizer;
-import org.jbox2d.callbacks.ContactFilter;
+import fr.upem.spacekaira.util.Util;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
@@ -45,12 +45,12 @@ public class Game {
 
         long startTime = System.currentTimeMillis();
 
-        while (System.currentTimeMillis() <= startTime + gameDuration * 1000) {
+        while (Util.anyTimeLeft(startTime, gameDuration)) {
             syn.start();
             checkKeyboardAction(context, map.getShip());
             world.step(REFRESH_TIME, 6, 8);
             map.computeDataGame();
-            map.draw(context, draw, startTime);
+            map.draw(context, draw, startTime, gameDuration);
             draw.setCenter(map.getShip().getPosition());
             syn.waitToSynchronize();
         }

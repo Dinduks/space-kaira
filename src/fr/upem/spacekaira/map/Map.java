@@ -76,7 +76,10 @@ public class Map {
         enemies.forEach(e->e.checkForBulletOutScreen(d));
     }
 
-    public void draw(ApplicationContext context, Draw d, long startTime) {
+    public void draw(ApplicationContext context,
+                     Draw d,
+                     long startTime,
+                     int gameDuration) {
         context.render(graphics -> {
             //clear screen
             graphics.clearRect(0, 0, width, height);
@@ -86,14 +89,21 @@ public class Map {
             planets.forEach(p -> p.draw(graphics, d));
             enemies.forEach(e -> e.draw(graphics, d));
 
-            drawTimeCounter(startTime, graphics);
+            drawTimeCounter(graphics, startTime, gameDuration);
         });
     }
 
-    private void drawTimeCounter(long startTime, Graphics2D graphics) {
+    private void drawTimeCounter(Graphics2D graphics,
+                                 long startTime,
+                                 int gameDuration) {
+        if (Util.getTimeLeftAsLong(startTime, gameDuration) >= 10) {
+            graphics.setPaint(new Color(255, 255, 255));
+        } else {
+            graphics.setPaint(new Color(255, 0, 0));
+        }
         Font font = new Font("arial", Font.BOLD, 30);
-        graphics.setPaint(new Color(255, 255, 255));
         graphics.setFont(font);
-        graphics.drawString(Util.makeTimeCounter(startTime), width - 80, 50);
+        String leftTime = Util.getTimeLeftAsString(startTime, gameDuration);
+        graphics.drawString(leftTime, width - 80, 50);
     }
 }
