@@ -1,7 +1,7 @@
 package fr.upem.spacekaira.map;
 
 import fr.umlv.zen3.ApplicationContext;
-import fr.upem.spacekaira.shape.Draw;
+import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.character.*;
 import fr.upem.spacekaira.shape.character.factory.FactoryPool;
 import fr.upem.spacekaira.util.Util;
@@ -25,10 +25,10 @@ public class Map {
 
     private World world;
     private int planetsDensity;
-    private Draw d;
+    private Viewport viewport;
     private FactoryPool factoryPool;
 
-    public Map(World world, Draw d, final int height, final int width,
+    public Map(World world, Viewport viewport, final int height, final int width,
                int planetsDensity) {
         this.world = world;
         this.planetsDensity = planetsDensity;
@@ -36,7 +36,7 @@ public class Map {
         enemies = new LinkedList<Enemy>();
         this.height = height;
         this.width = width;
-        this.d = d;
+        this.viewport = viewport;
         this.factoryPool = new FactoryPool(world);
     }
 
@@ -45,7 +45,7 @@ public class Map {
         ship = factoryPool.getShipFactory().createShip(false);
         enemies.add(factoryPool.getEnemyFactory().createEnemy(10, 10));
         planetGenerator = PlanetGenerator.newPlanetGenerator(planetsDensity,
-                d,
+                viewport,
                 width,
                 height,
                 ship,
@@ -74,12 +74,12 @@ public class Map {
     }
 
     private void checkBulletOutScreen() {
-        ship.checkForBulletOutScreen(d);
-        enemies.forEach(e->e.checkForBulletOutScreen(d));
+        ship.checkForBulletOutScreen(viewport);
+        enemies.forEach(e->e.checkForBulletOutScreen(viewport));
     }
 
     public void draw(ApplicationContext context,
-                     Draw d,
+                     Viewport viewport,
                      long startTime,
                      int gameDuration) {
         context.render(graphics -> {
@@ -87,9 +87,9 @@ public class Map {
             graphics.clearRect(0, 0, width, height);
 
             //draw Map
-            ship.draw(graphics, d);
-            planetGenerator.getPlanetSet().forEach(p -> p.draw(graphics, d));
-            enemies.forEach(e -> e.draw(graphics, d));
+            ship.draw(graphics, viewport);
+            planetGenerator.getPlanetSet().forEach(p -> p.draw(graphics, viewport));
+            enemies.forEach(e -> e.draw(graphics, viewport));
 
             drawTimeCounter(graphics, startTime, gameDuration);
         });

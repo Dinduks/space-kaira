@@ -1,6 +1,6 @@
 package fr.upem.spacekaira.shape.character;
 
-import fr.upem.spacekaira.shape.Draw;
+import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.character.factory.PlanetFactory;
 import org.jbox2d.common.Vec2;
 import java.util.*;
@@ -12,7 +12,7 @@ public class PlanetGenerator {
     private Ship ship;
     private final int HEIGHT;
     private final int WIDTH;
-    private final Draw draw;
+    private final Viewport viewport;
     private final int density;
     private final Random rand;
     private final PlanetFactory pF;
@@ -21,19 +21,24 @@ public class PlanetGenerator {
 
     /* a factory method to create a planet generator */
     public static PlanetGenerator newPlanetGenerator(int density,
-                                                     Draw draw,
+                                                     Viewport viewport,
                                                      int WIDTH,
                                                      int HEIGHT,
                                                      Ship ship,
                                                      PlanetFactory planetFactory) {
-        PlanetGenerator pg = new PlanetGenerator(density,draw,WIDTH,HEIGHT,ship,planetFactory);
+        PlanetGenerator pg = new PlanetGenerator(density, viewport,WIDTH,HEIGHT,ship,planetFactory);
         pg.execute();
         return pg;
     }
     /* Main private constructor */
-    private PlanetGenerator(int density,Draw draw, int WIDTH, int HEIGHT, Ship ship, PlanetFactory planetFactory) {
+    private PlanetGenerator(int density,
+                            Viewport viewport,
+                            int WIDTH,
+                            int HEIGHT,
+                            Ship ship,
+                            PlanetFactory planetFactory) {
         this.density = density;
-        this.draw = draw;
+        this.viewport = viewport;
         this.WIDTH = WIDTH;
         this.HEIGHT = HEIGHT;
         this.ship = ship;
@@ -44,7 +49,7 @@ public class PlanetGenerator {
 
     /* generate an hash code with the ship position */
     private int genShipZoneCode() {
-        Vec2 pos = ship.getPosition().mul(draw.getCameraScale());
+        Vec2 pos = ship.getPosition().mul(viewport.getCameraScale());
         short x = (short)(pos.x/WIDTH);
         short y = (short)(pos.y/HEIGHT);
         return x<<16|y&0xFFFF;
@@ -93,7 +98,7 @@ public class PlanetGenerator {
                 new Vec2(1,1),new Vec2(1,0),new Vec2(1,-1)));
     }
 
-    /* return a list of list of planet who should be draw */
+    /* return a list of list of planet who should be viewport */
     private List<List<Planet>> getPlanetsToDraw() {
         execute();
         Vec2 shipPos = zoneCodeToIndex(genShipZoneCode());
@@ -106,7 +111,7 @@ public class PlanetGenerator {
     }
 
     /**
-     * Return a set of planet who should be draw
+     * Return a set of planet who should be viewport
      * @warnig should be call at each time step
      * @return a set of planets
      */
@@ -132,7 +137,7 @@ public class PlanetGenerator {
      * @return a list of generated planets
      */
     private List<Planet> generateZone(int zoneCode) {
-        int cameraScale = (int)draw.getCameraScale();
+        int cameraScale = (int) viewport.getCameraScale();
         int i = (WIDTH/cameraScale)/6;
         int j = (HEIGHT/cameraScale)/6;
 

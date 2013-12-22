@@ -4,7 +4,8 @@ import fr.umlv.zen3.ApplicationContext;
 import fr.umlv.zen3.KeyboardEvent;
 import fr.umlv.zen3.KeyboardKey;
 import fr.upem.spacekaira.map.Map;
-import fr.upem.spacekaira.shape.Draw;
+import fr.upem.spacekaira.shape.DrawHelpers;
+import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.character.Ship;
 import fr.upem.spacekaira.shape.character.collision.MpContactListener;
 import fr.upem.spacekaira.time.Synchronizer;
@@ -33,12 +34,12 @@ public class Game {
         World world = new World(new Vec2(0, 0));
         world.setContactListener(new MpContactListener());
 
-        //Init Draw class
-        Draw draw = new Draw(width, height);
-        draw.setCamera(0, 0, CAMERA_SCALE);
+        //Init Viewport class
+        Viewport viewport = new Viewport(width, height);
+        viewport.setCamera(0, 0, CAMERA_SCALE);
 
         //Init Map
-        Map map = new Map(world, draw, height, width, planetsDensity);
+        Map map = new Map(world, viewport, height, width, planetsDensity);
         map.initMap();
 
         Synchronizer syn = new Synchronizer((long)(REFRESH_TIME * 1000));
@@ -50,12 +51,12 @@ public class Game {
             checkKeyboardAction(context, map.getShip());
             world.step(REFRESH_TIME, 6, 8);
             map.computeDataGame();
-            map.draw(context, draw, startTime, gameDuration);
-            draw.setCenter(map.getShip().getPosition());
+            map.draw(context, viewport, startTime, gameDuration);
+            viewport.setCenter(map.getShip().getPosition());
             syn.waitToSynchronize();
         }
 
-        draw.drawGameOver(context);
+        DrawHelpers.drawGameOver(context);
         waitForExitRequest(context);
     }
 

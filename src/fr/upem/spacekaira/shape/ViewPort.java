@@ -1,6 +1,5 @@
 package fr.upem.spacekaira.shape;
 
-import fr.umlv.zen3.ApplicationContext;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.EdgeShape;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -16,22 +15,21 @@ import java.util.Arrays;
 /**
  * Performs vector transformation (local -> world -> screen) and shape drawing
  */
-public class Draw {
+public class Viewport {
     private OBBViewportTransform obb;
     private final int height;
     private final int width;
     private float scale = 1;
 
-    public Draw(int width, int height) {
+    private final Vec2Array vec2Array = new Vec2Array();
+    private final int circlePoints = 13;
+
+    public Viewport(int width, int height) {
         this.height = height;
         this.width = width;
         obb = new OBBViewportTransform();
         obb.setCamera(0, 0, 1);
-        obb.setExtents(width/2,height/2);
-    }
-
-    public void getWorldVectorToScreen(Vec2 argWorld, Vec2 argScreen) {
-        obb.getWorldToScreen(argWorld, argScreen);
+        obb.setExtents(width / 2, height / 2);
     }
 
     public boolean isInScreen(Vec2 worldVector) {
@@ -42,16 +40,12 @@ public class Draw {
     public Vec2 getWorldVectorToScreen(Vec2 argWorld) {
         Vec2 argScreen = new Vec2();
         obb.getWorldToScreen(argWorld, argScreen);
-        return  argScreen;
+        return argScreen;
     }
 
     public void setCamera(float x, float y, float scale) {
         this.scale = scale;
-        obb.setCamera(x,y,scale);
-    }
-
-    public void setCenter(float x, float y) {
-        obb.setCenter(x,y);
+        obb.setCamera(x, y, scale);
     }
 
     public float getCameraScale() {
@@ -61,9 +55,6 @@ public class Draw {
     public void setCenter(Vec2 vec2) {
         obb.setCenter(vec2);
     }
-
-    private final Vec2Array vec2Array = new Vec2Array();
-    private final int circlePoints = 13;
 
     private void generateCircle(Vec2 argCenter, float argRadius, Vec2[] argPoints, int argNumPoints) {
         float inc = MathUtils.TWOPI / argNumPoints;
@@ -86,7 +77,7 @@ public class Draw {
         drawPolygon(vecs, circlePoints, brush, graphics);
     }
 
-    public void drawEdge(Fixture fixture,Graphics2D graphics) {
+    public void drawEdge(Fixture fixture, Graphics2D graphics) {
         Brush brush = (Brush) fixture.getUserData(); if(brush == null) return;
         EdgeShape edgeShape = (EdgeShape)fixture.getShape();
         Vec2 vertex1 = getWorldVectorToScreen(fixture.getBody().getWorldPoint(edgeShape.m_vertex1));
@@ -100,7 +91,7 @@ public class Draw {
                 Math.round(vertex2.y));
     }
 
-    public void drawPolygon(Fixture fixture,Graphics2D graphics) {
+    public void drawPolygon(Fixture fixture, Graphics2D graphics) {
         Brush brush = (Brush) fixture.getUserData(); if(brush == null) return;
         PolygonShape polygonShape = (PolygonShape) fixture.getShape();
 
@@ -114,12 +105,14 @@ public class Draw {
         drawPolygon(vecs, polygonShape.getVertexCount(), brush, graphics);
     }
 
-
-    private void drawPolygon(Vec2[] vertices, int vertexCount, Brush brush, Graphics2D graphics) {
+    private void drawPolygon(Vec2[] vertices,
+                             int vertexCount,
+                             Brush brush,
+                             Graphics2D graphics) {
         int[] xPoints = new int[vertexCount];
         int[] yPoints = new int[vertexCount];
 
-        for (int i=0,n=vertexCount; i<n;i++) {
+        for (int i=0; i < vertexCount;i++) {
             Vec2 vertex = vertices[i];
             xPoints[i] =  Math.round(vertex.x);
             yPoints[i] =  Math.round(vertex.y);
@@ -134,20 +127,5 @@ public class Draw {
 
     public static boolean isZero(float f) {
         return Math.abs(f) > 0.5;
-    }
-
-    public void drawGameOver(ApplicationContext context) {
-        context.render((graphics) -> {
-            Font font;
-            graphics.setPaint(new Color(255, 0, 0));
-
-            font = new Font("arial", Font.BOLD, 60);
-            graphics.setFont(font);
-            graphics.drawString("GAME OVER", 200, 200);
-
-            font = new Font("arial", Font.BOLD, 20);
-            graphics.setFont(font);
-            graphics.drawString("Press Q to quit.", 200, 250);
-        });
     }
 }

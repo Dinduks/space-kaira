@@ -2,7 +2,7 @@ package fr.upem.spacekaira.shape.character;
 
 import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.Draw;
+import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.DynamicContact;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.World;
@@ -26,14 +26,14 @@ public abstract class Enemy extends AbstractShape implements Shooter, DynamicCon
     }
 
     @Override
-    public void draw(Graphics2D graphics, Draw d) {
-        super.draw(graphics, d);
-        bullets.forEach(b->b.draw(graphics,d));
+    public void draw(Graphics2D graphics, Viewport viewport) {
+        super.draw(graphics, viewport);
+        bullets.forEach(b->b.draw(graphics, viewport));
     }
 
     @Override
-    public void checkForBulletOutScreen(Draw d) {
-        Bullet.checkForBulletsOutScreen(d,bullets);
+    public void checkForBulletOutScreen(Viewport viewport) {
+        Bullet.checkForBulletsOutScreen(viewport,bullets);
     }
 
     @Override

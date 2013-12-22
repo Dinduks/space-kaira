@@ -7,5 +7,5 @@ import java.awt.*;
  */
 @FunctionalInterface
 public interface Drawable {
-    public void draw(Graphics2D graphics,Draw d);
+    public void draw(Graphics2D graphics, Viewport viewport);
 }

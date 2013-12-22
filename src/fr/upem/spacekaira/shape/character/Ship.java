@@ -2,7 +2,7 @@ package fr.upem.spacekaira.shape.character;
 
 import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.Draw;
+import fr.upem.spacekaira.shape.Viewport;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
@@ -119,38 +119,38 @@ public class Ship extends AbstractShape implements Shooter {
     }
 
     @Override
-    public void checkForBulletOutScreen(Draw d) {
-        Bullet.checkForBulletsOutScreen(d,bullets);
+    public void checkForBulletOutScreen(Viewport viewport) {
+        Bullet.checkForBulletsOutScreen(viewport,bullets);
     }
 
     @Override
-    public void draw(Graphics2D graphics, Draw d) {
+    public void draw(Graphics2D graphics, Viewport viewport) {
         shieldFix.setUserData((shield) ? new Brush(Color.BLUE, false) : null);
-        super.draw(graphics, d);
-        bullets.forEach(b -> b.draw(graphics, d));
-        if (Draw.isZero(body.getLinearVelocity().x) ||
-                Draw.isZero(body.getLinearVelocity().y) ||
-                Draw.isZero(body.getAngularVelocity())) {
-            drawMotors(graphics, d);
+        super.draw(graphics, viewport);
+        bullets.forEach(b -> b.draw(graphics, viewport));
+        if (Viewport.isZero(body.getLinearVelocity().x) ||
+                Viewport.isZero(body.getLinearVelocity().y) ||
+                Viewport.isZero(body.getAngularVelocity())) {
+            drawMotors(graphics, viewport);
         }
     }
 
-    private void drawMotors(Graphics2D graphics, Draw d) {
+    private void drawMotors(Graphics2D graphics, Viewport viewport) {
         //TODO a faire en dynamique avec une chaine de petites boules et suivant la vitesse
         Vec2 leftMotor = new Vec2(-0.5f, -3.3f);
         Vec2 rightMotor = new Vec2(0.5f, -3.3f);
 
-        leftMotor = d.getWorldVectorToScreen(body.getWorldPoint(leftMotor));
-        rightMotor = d.getWorldVectorToScreen(body.getWorldPoint(rightMotor));
+        leftMotor = viewport.getWorldVectorToScreen(body.getWorldPoint(leftMotor));
+        rightMotor = viewport.getWorldVectorToScreen(body.getWorldPoint(rightMotor));
 
         graphics.setPaint(Color.YELLOW);
-        graphics.fillOval(Math.round(leftMotor.x - (int) d.getCameraScale()/2),
-                Math.round(leftMotor.y - (int) d.getCameraScale()/2),
-                (int) d.getCameraScale(),
-                (int) d.getCameraScale());
-        graphics.fillOval(Math.round(rightMotor.x - (int) d.getCameraScale()/2),
-                Math.round(rightMotor.y - (int) d.getCameraScale()/2),
-                (int) d.getCameraScale(),
-                (int) d.getCameraScale());
+        graphics.fillOval(Math.round(leftMotor.x - (int) viewport.getCameraScale()/2),
+                Math.round(leftMotor.y - (int) viewport.getCameraScale()/2),
+                (int) viewport.getCameraScale(),
+                (int) viewport.getCameraScale());
+        graphics.fillOval(Math.round(rightMotor.x - (int) viewport.getCameraScale()/2),
+                Math.round(rightMotor.y - (int) viewport.getCameraScale()/2),
+                (int) viewport.getCameraScale(),
+                (int) viewport.getCameraScale());
     }
 }

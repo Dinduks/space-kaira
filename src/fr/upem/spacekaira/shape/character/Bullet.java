@@ -3,7 +3,7 @@ package fr.upem.spacekaira.shape.character;
 
 import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.Draw;
+import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.DynamicContact;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
@@ -11,7 +11,6 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
-import org.jbox2d.dynamics.contacts.ContactEdge;
 
 import java.util.Iterator;
 import java.util.List;
@@ -55,16 +54,16 @@ public class Bullet extends AbstractShape implements DynamicContact{
         body.setUserData(this);
     }
 
-    boolean isInScreen(Draw d) {
-        return  d.isInScreen(body.getPosition());
+    boolean isInScreen(Viewport viewport) {
+        return  viewport.isInScreen(body.getPosition());
     }
 
-    public static void checkForBulletsOutScreen(Draw d, List<Bullet> bullets) {
+    public static void checkForBulletsOutScreen(Viewport viewport, List<Bullet> bullets) {
         Iterator<Bullet> it = bullets.iterator();
 
         while(it.hasNext()) {
             Bullet b = it.next();
-            if(!b.isInScreen(d)) {
+            if(!b.isInScreen(viewport)) {
                 b.destroy();
                 it.remove();
             }

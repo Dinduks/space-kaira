@@ -12,16 +12,16 @@ public abstract class AbstractShape implements Drawable {
     protected Body body;
 
     @Override
-    public void draw(Graphics2D graphics,Draw d) {
+    public void draw(Graphics2D graphics, Viewport viewport) {
         Fixture list = body.m_fixtureList;
 
         while (list != null) {
             switch (list.getType()){
-                case CIRCLE: d.drawCircle(list, graphics);
+                case CIRCLE: viewport.drawCircle(list, graphics);
                     break;
-                case EDGE: d.drawEdge(list, graphics);
+                case EDGE: viewport.drawEdge(list, graphics);
                     break;
-                case POLYGON: d.drawPolygon(list, graphics);
+                case POLYGON: viewport.drawPolygon(list, graphics);
                     break;
                 case CHAIN: assert false; //no chain in this project
                     break;
