@@ -27,7 +27,6 @@ public class Bullet extends AbstractShape implements DynamicContact{
      * @param angle the angle a the bullet
      */
     public Bullet(World world,Vec2 position,Vec2 velocity,float angle,Brush color) {
-
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;
         bodyDef.position.set(position);

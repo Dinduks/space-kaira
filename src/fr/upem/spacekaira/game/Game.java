@@ -13,6 +13,8 @@ import fr.upem.spacekaira.util.Util;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import java.util.HashSet;
+
 /**
  * This class draw and compute the game via the run method
  */
@@ -48,7 +50,7 @@ public class Game {
 
         while (Util.anyTimeLeft(startTime, gameDuration)) {
             syn.start();
-            checkKeyboardAction(context, map.getShip());
+            handleKeyboardEvents(context, map.getShip());
             world.step(REFRESH_TIME, 6, 8);
             map.computeDataGame();
             map.draw(context, viewport, startTime, gameDuration);
@@ -73,24 +75,54 @@ public class Game {
         }
     }
 
-    private static void checkKeyboardAction(ApplicationContext context,Ship s) {
-        for (KeyboardEvent ke; (ke = context.pollKeyboard()) != null; ) {
-            switch (ke.getKey()) {
-                case UP: s.up();
-                    break;
-                case LEFT: s.left();
-                    break;
-                case RIGHT: s.right();
-                    break;
-                case SPACE: s.shoot();
-                    break;
-                case B: s.bomb();
-                    break;
-                case S: s.toggleShield();
-                    break;
-                default:
-                    break;
-            }
+    private static HashSet<KeyboardKey> keys = new HashSet<>();
+
+    /**
+     * Stores pressed keys in the {@code keys} {@link java.util.HashSet}, and
+     * removes the released ones from the same collection.
+     * In the end, handles the key presses.
+     * @param context
+     * @param ship
+     */
+    private static void handleKeyboardEvents(ApplicationContext context,
+                                             Ship ship) {
+        KeyboardEvent keyboardEvent;
+
+        keyboardEvent = context.pollKeyboard();
+        if (keyboardEvent != null) keys.add(keyboardEvent.getKey());
+        keyboardEvent = context.pollReleasedKeys();
+        if (keyboardEvent != null) keys.remove(keyboardEvent.getKey());
+
+        keys.forEach(key -> handleKeyPress(key, ship));
+    }
+
+    private static long lastTimeWasShieldToggled = 0;
+    private static void handleKeyPress(KeyboardKey key, Ship ship) {
+        switch (key) {
+            case UP:
+                ship.up();
+                break;
+            case LEFT:
+                ship.left();
+                break;
+            case RIGHT:
+                ship.right();
+                break;
+            case SPACE:
+                ship.shoot();
+                break;
+            case B:
+                ship.bomb();
+                break;
+            case S:
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - lastTimeWasShieldToggled >= 300) {
+                    ship.toggleShield();
+                    lastTimeWasShieldToggled = currentTime;
+                }
+                break;
+            default:
+                break;
         }
     }
 }
