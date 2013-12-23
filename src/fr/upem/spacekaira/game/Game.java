@@ -28,7 +28,8 @@ public class Game {
                            final int width,
                            ApplicationContext context,
                            int gameDuration,
-                           int planetsDensity) {
+                           int planetsDensity,
+                           int bombsFrequency) {
         final float REFRESH_TIME = 1/60f;
         final int CAMERA_SCALE = 10;
 

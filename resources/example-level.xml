@@ -2,4 +2,5 @@
 <configuration>
   <gameDuration>23</gameDuration>
   <planetsDensity>2</planetsDensity>
+  <bombsFrequency>30</bombsFrequency>
 </configuration>
