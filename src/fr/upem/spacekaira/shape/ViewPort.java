@@ -36,7 +36,8 @@ public class Viewport {
 
     public boolean isInScreen(Vec2 worldVector) {
         Vec2 v = getWorldVectorToScreen(worldVector);
-        return v.x >= 0 && v.x <= screenWidth && v.y >= 0 && v.y <= screenHeight;
+        return v.x >= 0 && v.x <= screenWidth &&
+               v.y >= 0 && v.y <= screenHeight;
     }
 
     public Vec2 getWorldVectorToScreen(Vec2 argWorld) {
@@ -83,8 +84,10 @@ public class Viewport {
     public void drawEdge(Fixture fixture, Graphics2D graphics) {
         Brush brush = (Brush) fixture.getUserData(); if(brush == null) return;
         EdgeShape edgeShape = (EdgeShape)fixture.getShape();
-        Vec2 vertex1 = getWorldVectorToScreen(fixture.getBody().getWorldPoint(edgeShape.m_vertex1));
-        Vec2 vertex2 = getWorldVectorToScreen(fixture.getBody().getWorldPoint(edgeShape.m_vertex2));
+        Vec2 vertex1 = getWorldVectorToScreen(
+                fixture.getBody().getWorldPoint(edgeShape.m_vertex1));
+        Vec2 vertex2 = getWorldVectorToScreen(
+                fixture.getBody().getWorldPoint(edgeShape.m_vertex2));
 
         graphics.setPaint(brush.getColor());
         graphics.drawLine(
