@@ -3,6 +3,7 @@ package fr.upem.spacekaira.shape.character;
 import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
 import org.jbox2d.collision.shapes.CircleShape;
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
@@ -14,8 +15,7 @@ import java.awt.*;
  * Represent a simple planet on the screen
  */
 public class Planet extends AbstractShape {
-
-    public Planet(World world,float x, float y,float radius,Brush color) {
+    public Planet(World world, float x, float y, float radius, Brush color) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(x,y);
 

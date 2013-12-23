@@ -5,6 +5,7 @@ import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.character.*;
 import fr.upem.spacekaira.shape.character.factory.FactoryPool;
 import fr.upem.spacekaira.util.Util;
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
 import java.awt.*;
@@ -87,11 +88,23 @@ public class Map {
             graphics.clearRect(0, 0, width, height);
 
             //draw Map
+            Set<Planet> planets = planetGenerator.getPlanetSet();
+
             ship.draw(graphics, viewport);
-            planetGenerator.getPlanetSet().forEach(p -> p.draw(graphics, viewport));
+            planets.forEach(p -> p.draw(graphics, viewport));
             enemies.forEach(e -> e.draw(graphics, viewport));
+            toggleShieldIfNearAPlanet(planets);
 
             drawTimeCounter(graphics, startTime, gameDuration);
+        });
+    }
+
+    private void toggleShieldIfNearAPlanet(Set<Planet> planets) {
+        Vec2 shipCoords = ship.getPosition();
+        planets.forEach(planet -> {
+            float distance = Util.distanceBetweenVectors(shipCoords,
+                    planet.getPosition());
+            if (distance <= 8f) ship.enableShield();
         });
     }
 

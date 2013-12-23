@@ -1,5 +1,6 @@
 package fr.upem.spacekaira.shape;
 
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.Fixture;
 
@@ -38,6 +39,14 @@ public abstract class AbstractShape implements Drawable {
     public void destroy() {
         body.getWorld().destroyBody(body);
         body = null;
+    }
+
+    /**
+     * Return the WorldShip position
+     * @return a Vec2 who represent the position
+     */
+    public Vec2 getPosition() {
+        return body.getWorldCenter();
     }
 }
 

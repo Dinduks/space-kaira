@@ -27,7 +27,7 @@ public class Ship extends AbstractShape implements Shooter {
         this.bulletColor = bulletColor;
 
         //Bullet list
-        bullets = new LinkedList<Bullet>();
+        bullets = new LinkedList<>();
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;
@@ -56,7 +56,7 @@ public class Ship extends AbstractShape implements Shooter {
         {
             CircleShape circleShape = new CircleShape();
             circleShape.setRadius(2);
-            circleShape.m_p.set(0,-1.7f);
+            circleShape.m_p.set(0, -1.7f);
 
             shield = new FixtureDef();
             shield.shape = circleShape;
@@ -84,14 +84,6 @@ public class Ship extends AbstractShape implements Shooter {
 
     public void right() {
         body.applyTorque(10.0f);
-    }
-
-    /**
-     * Return the WorldShip position
-     * @return a Vec2 who represent the position
-     */
-    public Vec2 getPosition() {
-        return body.getWorldCenter();
     }
 
     public void toggleShield() {
@@ -157,5 +149,9 @@ public class Ship extends AbstractShape implements Shooter {
                 Math.round(rightMotor.y - (int) viewport.getCameraScale()/2),
                 (int) viewport.getCameraScale(),
                 (int) viewport.getCameraScale());
+    }
+
+    public void enableShield() {
+        shield = true;
     }
 }

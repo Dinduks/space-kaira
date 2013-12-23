@@ -1,5 +1,7 @@
 package fr.upem.spacekaira.util;
 
+import org.jbox2d.common.Vec2;
+
 public class Util {
     /**
      * @param startTime Start time in milliseconds
@@ -28,5 +30,17 @@ public class Util {
 
     public static boolean anyTimeLeft(long startTime, int gameDuration) {
         return System.currentTimeMillis() <= startTime + gameDuration * 1000;
+    }
+
+    /**
+     * Computes the distance between two vectors
+     * @param v1 The first vector
+     * @param v2 The second vector
+     * @return The distance between the specified vectors
+     */
+    public static float distanceBetweenVectors(Vec2 v1, Vec2 v2) {
+        float x = v1.x - v2.x;
+        float y = v1.y - v2.y;
+        return (float) Math.sqrt(x * x + y * y);
     }
 }
