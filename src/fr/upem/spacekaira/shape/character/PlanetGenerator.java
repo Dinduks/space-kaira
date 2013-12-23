@@ -111,9 +111,9 @@ public class PlanetGenerator {
     }
 
     /**
-     * Return a set of planet who should be viewport
-     * @warnig should be call at each time step
-     * @return a set of planets
+     * Returns a set of planet who should be in the viewport
+     * @warning should be called at each time step
+     * @return A set of planets
      */
     public Set<Planet> getPlanetSet() {
         //TODO mettre en cache le resultat ~[9]

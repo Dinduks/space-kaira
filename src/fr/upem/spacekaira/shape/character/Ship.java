@@ -19,12 +19,12 @@ public class Ship extends AbstractShape implements Shooter {
     private boolean shield;
     private final Fixture shieldFix;
     private List<Bullet> bullets;
-    private final Brush SHIP_COLOR;
-    private final Brush BULLET_COLOR;
+    private final Brush shipColor;
+    private final Brush bulletColor;
 
     public Ship(World world, Brush shipColor, Brush bulletColor) {
-        this.SHIP_COLOR = shipColor;
-        this.BULLET_COLOR = bulletColor;
+        this.shipColor = shipColor;
+        this.bulletColor = bulletColor;
 
         //Bullet list
         bullets = new LinkedList<Bullet>();
@@ -118,7 +118,7 @@ public class Ship extends AbstractShape implements Shooter {
                         body.getPosition(),
                         body.getWorldVector(new Vec2(0, 3)),
                         body.getAngle(),
-                        BULLET_COLOR));
+                        bulletColor));
             }
         }
     }
