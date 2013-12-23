@@ -160,4 +160,8 @@ public class Ship extends AbstractShape implements Shooter {
     public void addBomb() {
         hasBomb = true;
     }
+
+    public boolean hasBomb() {
+        return hasBomb;
+    }
 }
