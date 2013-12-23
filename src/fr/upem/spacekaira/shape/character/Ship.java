@@ -21,6 +21,7 @@ public class Ship extends AbstractShape implements Shooter {
     private List<Bullet> bullets;
     private final Brush shipColor;
     private final Brush bulletColor;
+    private boolean hasBomb;
 
     public Ship(World world, Brush shipColor, Brush bulletColor) {
         this.shipColor = shipColor;
@@ -48,7 +49,10 @@ public class Ship extends AbstractShape implements Shooter {
             ship.density = 2.0f;
             ship.userData = new Brush(Color.BLUE,true);
             ship.filter.categoryBits = FixtureType.SHIP;
-            ship.filter.maskBits = FixtureType.PLANET | FixtureType.STD_ENEMY | FixtureType.BULLET;
+            ship.filter.maskBits = FixtureType.PLANET |
+                    FixtureType.STD_ENEMY |
+                    FixtureType.BULLET |
+                    FixtureType.BOMB;
         }
 
         //Shield
@@ -101,18 +105,16 @@ public class Ship extends AbstractShape implements Shooter {
     private static long lastShootTime = 0;
     @Override
     public void shoot() {
-        if(!shield) {
-            long currentTime = System.currentTimeMillis();
-            if (currentTime - lastShootTime >= 100) {
-                lastShootTime = currentTime;
-                bullets.add(new Bullet(
-                        body.getWorld(),
-                        body.getPosition(),
-                        body.getWorldVector(new Vec2(0, 3)),
-                        body.getAngle(),
-                        bulletColor));
-            }
-        }
+        if (shield) return;
+        if (System.currentTimeMillis() - lastShootTime < 100) return;
+
+        lastShootTime = System.currentTimeMillis();
+        bullets.add(new Bullet(
+                body.getWorld(),
+                body.getPosition(),
+                body.getWorldVector(new Vec2(0, 3)),
+                body.getAngle(),
+                bulletColor));
     }
 
     @Override
@@ -153,5 +155,9 @@ public class Ship extends AbstractShape implements Shooter {
 
     public void enableShield() {
         shield = true;
+    }
+
+    public void addBomb() {
+        hasBomb = true;
     }
 }

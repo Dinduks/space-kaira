@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <configuration>
-  <gameDuration>23</gameDuration>
+  <gameDuration>120</gameDuration>
   <planetsDensity>2</planetsDensity>
   <bombsFrequency>30</bombsFrequency>
 </configuration>

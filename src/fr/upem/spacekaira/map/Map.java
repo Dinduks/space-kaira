@@ -1,8 +1,11 @@
 package fr.upem.spacekaira.map;
 
 import fr.umlv.zen3.ApplicationContext;
+import fr.upem.spacekaira.shape.Brush;
+import fr.upem.spacekaira.shape.BrushFactory;
 import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.character.*;
+import fr.upem.spacekaira.shape.character.factory.BombFactory;
 import fr.upem.spacekaira.shape.character.factory.FactoryPool;
 import fr.upem.spacekaira.util.Util;
 import org.jbox2d.common.Vec2;
@@ -29,12 +32,18 @@ public class Map {
     private Viewport viewport;
     private FactoryPool factoryPool;
 
+    private List<Bomb> bombs = new ArrayList<>();
+    private int bombsFrequency;
+
+    private Brush brush = (new BrushFactory()).createBrush(Color.LIGHT_GRAY, true);
+
     public Map(World world, Viewport viewport, final int height, final int width,
-               int planetsDensity) {
+               int planetsDensity, int bombsFrequency) {
         this.world = world;
         this.planetsDensity = planetsDensity;
-        planets = new ArrayList<Planet>();
-        enemies = new LinkedList<Enemy>();
+        this.bombsFrequency = bombsFrequency;
+        planets = new ArrayList<>();
+        enemies = new LinkedList<>();
         this.height = height;
         this.width = width;
         this.viewport = viewport;
@@ -60,6 +69,19 @@ public class Map {
     public void computeDataGame() {
         checkBulletOutScreen();
         checkComputedCollision();
+        spawnABombIfNecessary();
+    }
+
+    private long lastTimeWasABombSpawned = 0;
+    private void spawnABombIfNecessary() {
+        long currentTime = System.currentTimeMillis();
+        int durationBetweenEachSpawn = (60 / bombsFrequency) * 1000;
+        if (currentTime - lastTimeWasABombSpawned <= durationBetweenEachSpawn)
+            return;
+
+        lastTimeWasABombSpawned = currentTime;
+        Vec2 foo = getShip().getPosition().mul(viewport.getCameraScale());
+        bombs.add(BombFactory.create(world, foo, brush));
     }
 
     private void checkComputedCollision() {
@@ -93,6 +115,7 @@ public class Map {
             ship.draw(graphics, viewport);
             planets.forEach(p -> p.draw(graphics, viewport));
             enemies.forEach(e -> e.draw(graphics, viewport));
+            bombs.forEach(b -> b.draw(graphics, viewport));
             toggleShieldIfNearAPlanet(planets);
 
             drawTimeCounter(graphics, startTime, gameDuration);

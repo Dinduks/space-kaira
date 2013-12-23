@@ -4,33 +4,34 @@ import fr.umlv.zen3.ApplicationContext;
 import fr.umlv.zen3.KeyboardEvent;
 import fr.umlv.zen3.KeyboardKey;
 import fr.upem.spacekaira.map.Map;
+import fr.upem.spacekaira.shape.BrushFactory;
 import fr.upem.spacekaira.shape.DrawHelpers;
 import fr.upem.spacekaira.shape.Viewport;
+import fr.upem.spacekaira.shape.character.Bomb;
+import fr.upem.spacekaira.shape.character.Bullet;
 import fr.upem.spacekaira.shape.character.Ship;
 import fr.upem.spacekaira.shape.character.collision.MpContactListener;
 import fr.upem.spacekaira.time.Synchronizer;
 import fr.upem.spacekaira.util.Util;
 import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
  * This class draw and compute the game via the run method
  */
 public class Game {
-    // TODO: Remove this
-    private Game () {
-        throw null; // no instance
-    }
-
     public static void run(final int height,
                            final int width,
                            ApplicationContext context,
                            int gameDuration,
                            int planetsDensity,
                            int bombsFrequency) {
-        final float REFRESH_TIME = 1/60f;
+        final float REFRESH_TIME = 1 / 60f;
         final int CAMERA_SCALE = 10;
 
         //Jbox2d World creation
@@ -42,7 +43,8 @@ public class Game {
         viewport.setCamera(0, 0, CAMERA_SCALE);
 
         //Init Map
-        Map map = new Map(world, viewport, height, width, planetsDensity);
+        Map map = new Map(world, viewport, height,
+                          width, planetsDensity, bombsFrequency);
         map.initMap();
 
         Synchronizer syn = new Synchronizer((long)(REFRESH_TIME * 1000));
