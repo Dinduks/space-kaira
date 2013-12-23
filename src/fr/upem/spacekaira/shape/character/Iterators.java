@@ -6,6 +6,10 @@ import java.util.List;
 
 public class Iterators {
 
+    /*
+        This static method take all iterator to build an all in one iterator,
+         to iterate over all list with also one iterator
+     */
      public static <E> Iterator<E> asIterator(List<List<E>> lists) {
          List<Iterator<E>> iterators = new ArrayList<>(lists.size());
          for(List<E> list : lists) {

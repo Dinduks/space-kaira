@@ -39,7 +39,7 @@ public class Bullet extends AbstractShape implements DynamicContact{
         body.setTransform(position,angle);
 
         PolygonShape polygonShape = new PolygonShape();
-        Vec2[] tab = {new Vec2(0,0),new Vec2(0.1f,0),new Vec2(0.1f,1),new Vec2(0,1)};
+        Vec2[] tab = {new Vec2(0,-0.5f),new Vec2(0.1f,-0.5f),new Vec2(0.1f,0.5f),new Vec2(0,0.5f)};
         polygonShape.set(tab,4);
 
         FixtureDef bullet = new FixtureDef();

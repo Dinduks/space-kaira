@@ -77,19 +77,18 @@ public class TIE extends Enemy {
         //inner polygon
         {
             PolygonShape polygonShape = new PolygonShape();
-            Vec2[] tab = {new Vec2(0,2),new Vec2(1.5f,2.75f),new Vec2(5.5f,2.75f),new Vec2(7,2),new Vec2(5.5f,1.25f),new Vec2(1.5f,1.25f)};
-            polygonShape.set(tab,6);
+            polygonShape.set(new Vec2[]{new Vec2(0,2),new Vec2(1.5f,2.75f),new Vec2(5.5f,2.75f),new Vec2(7,2),new Vec2(5.5f,1.25f),new Vec2(1.5f,1.25f)},6);
             edgeFix.shape = polygonShape;
             body.createFixture(edgeFix);
         }
     }
 
     private void shootLeft() {
-        bullets.add(new Bullet(body.getWorld(),body.getWorldPoint(new Vec2(0,2)),body.getWorldVector(new Vec2(-1,0)),body.getAngle()+1.57f,BULLET_COLOR));
+        bullets.add(new Bullet(body.getWorld(),body.getWorldPoint(new Vec2(-1,2)),body.getWorldVector(new Vec2(-1,0)),body.getAngle()+1.57f,BULLET_COLOR));
     }
 
     private void shootRight() {
-        bullets.add(new Bullet(body.getWorld(),body.getWorldPoint(new Vec2(7,2)),body.getWorldVector(new Vec2(1,0)),body.getAngle()-1.57f,BULLET_COLOR));
+        bullets.add(new Bullet(body.getWorld(),body.getWorldPoint(new Vec2(8,2)),body.getWorldVector(new Vec2(1,0)),body.getAngle()-1.57f,BULLET_COLOR));
     }
 
     @Override

@@ -1,6 +1,12 @@
 package fr.upem.spacekaira.shape.character;
 
+/*
+    This class holds constant who are used by the contact filter
+ */
 public class FixtureType {
+    /* should be power of 2
+    *  don't forget to fill the switch :)
+    */
     public static final int BULLET = 0x1;
     public static final int PLANET = 0x2;
     public static final int STD_ENEMY = 0x04;

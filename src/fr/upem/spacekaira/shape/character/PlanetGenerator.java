@@ -8,6 +8,27 @@ import java.util.*;
 /**
  * This class compute ship data to generate automatically planet when the ship moves, and holds all planets
  */
+/*
+_____________________________________
+|           |           |           |
+|           |           |           |
+|  (-1,1)   |  (0,1)    |  (1,1)    |
+|___________|___________|___________|
+|           |           |           |
+|           |           |           |
+|  (-1,0)   |  (0,0)    |  (1,0)    |
+|___________|___________|___________|
+|           |           |           |
+|  (-1,-1)  |  (0,-1)   |  (1,-1)   |
+|           |           |           |
+|___________|___________|___________|
+
+All of this 9 zones represent a screen if the ship is in the (0,0) all zones around are
+generated and display.
+Zones are stored in a hashMap, the hash code are built with the coordinate of the zone
+int [OXxxxxyyyy]
+
+ */
 public class PlanetGenerator {
     private Ship ship;
     private final int HEIGHT;
@@ -138,8 +159,8 @@ public class PlanetGenerator {
      */
     private List<Planet> generateZone(int zoneCode) {
         int cameraScale = (int) viewport.getCameraScale();
-        int i = (WIDTH/cameraScale)/6;
-        int j = (HEIGHT/cameraScale)/6;
+        int i = (WIDTH/cameraScale)/6;  /* no more than 6*6 planet per screen*/
+        int j = (HEIGHT/cameraScale)/6;  /* a planet radius should be less than (i>j)?j:i; */
 
         List<Vec2> vec2s = generateRandVec2List(6,6);
         List<Planet> planets = new ArrayList<>(density);
