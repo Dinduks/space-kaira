@@ -80,8 +80,8 @@ public class Map {
             return;
 
         lastTimeWasABombSpawned = currentTime;
-        Vec2 foo = getShip().getPosition().mul(viewport.getCameraScale());
-        bombs.add(BombFactory.create(world, foo, brush));
+        Vec2 position = viewport.getRandomPosition(ship);
+        bombs.add(BombFactory.create(world, position, brush));
     }
 
     private void checkComputedCollision() {
@@ -112,10 +112,10 @@ public class Map {
             //draw Map
             Set<Planet> planets = planetGenerator.getPlanetSet();
 
+            bombs.forEach(b -> b.draw(graphics, viewport));
             ship.draw(graphics, viewport);
             planets.forEach(p -> p.draw(graphics, viewport));
             enemies.forEach(e -> e.draw(graphics, viewport));
-            bombs.forEach(b -> b.draw(graphics, viewport));
             toggleShieldIfNearAPlanet(planets);
 
             drawTimeCounter(graphics, startTime, gameDuration);
