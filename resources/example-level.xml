@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <configuration>
-  <gameDuration>23</gameDuration>
+  <gameDuration>25</gameDuration>
   <planetsDensity>2</planetsDensity>
 </configuration>
