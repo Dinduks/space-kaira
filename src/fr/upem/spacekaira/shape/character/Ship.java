@@ -2,7 +2,9 @@ package fr.upem.spacekaira.shape.character;
 
 import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
+import fr.upem.spacekaira.shape.BrushFactory;
 import fr.upem.spacekaira.shape.Viewport;
+import fr.upem.spacekaira.shape.character.factory.ArmedBombFactory;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
@@ -19,11 +21,12 @@ public class Ship extends AbstractShape implements Shooter {
     private boolean shield;
     private final Fixture shieldFix;
     private List<Bullet> bullets;
-    private final Brush shipColor;
     private final Brush bulletColor;
+    private boolean hasBomb;
+    private boolean mustDropBomb;
+    private ArmedBomb armedBomb;
 
     public Ship(World world, Brush shipColor, Brush bulletColor) {
-        this.shipColor = shipColor;
         this.bulletColor = bulletColor;
 
         //Bullet list
@@ -46,9 +49,12 @@ public class Ship extends AbstractShape implements Shooter {
             ship = new FixtureDef();
             ship.shape = polygonShape;
             ship.density = 2.0f;
-            ship.userData = new Brush(Color.BLUE,true);
+            ship.userData = shipColor;
             ship.filter.categoryBits = FixtureType.SHIP;
-            ship.filter.maskBits = FixtureType.PLANET | FixtureType.STD_ENEMY | FixtureType.BULLET;
+            ship.filter.maskBits = FixtureType.PLANET |
+                    FixtureType.STD_ENEMY |
+                    FixtureType.BULLET |
+                    FixtureType.BOMB;
         }
 
         //Shield
@@ -94,34 +100,38 @@ public class Ship extends AbstractShape implements Shooter {
         return shield;
     }
 
-    public void bomb() {
-        //TODO the code to compute an explosion
+    public void dropBomb() {
+        if (!hasBomb) return;
+        hasBomb = false;
+        armedBomb = ArmedBombFactory.create(body.getWorld(),
+                getPosition(),
+                (new BrushFactory()).createBrush(Color.RED, true),
+                (new BrushFactory()).createBrush(Color.RED, false));
     }
 
     private static long lastShootTime = 0;
     @Override
     public void shoot() {
-        if(!shield) {
-            long currentTime = System.currentTimeMillis();
-            if (currentTime - lastShootTime >= 100) {
-                lastShootTime = currentTime;
-                bullets.add(new Bullet(
-                        body.getWorld(),
-                        body.getPosition(),
-                        body.getWorldVector(new Vec2(0, 3)),
-                        body.getAngle(),
-                        bulletColor));
-            }
-        }
+        if (shield) return;
+        if (System.currentTimeMillis() - lastShootTime < 100) return;
+
+        lastShootTime = System.currentTimeMillis();
+        bullets.add(new Bullet(
+                body.getWorld(),
+                body.getPosition(),
+                body.getWorldVector(new Vec2(0, 3)),
+                body.getAngle(),
+                bulletColor));
     }
 
     @Override
     public void checkForBulletOutScreen(Viewport viewport) {
-        Bullet.checkForBulletsOutScreen(viewport,bullets);
+        Bullet.checkForBulletsOutScreen(viewport, bullets);
     }
 
     @Override
     public void draw(Graphics2D graphics, Viewport viewport) {
+        if (armedBomb != null) handleTheArmedBomb(graphics, viewport);
         shieldFix.setUserData((shield) ? new Brush(Color.BLUE, false) : null);
         super.draw(graphics, viewport);
         bullets.forEach(b -> b.draw(graphics, viewport));
@@ -130,6 +140,27 @@ public class Ship extends AbstractShape implements Shooter {
                 Viewport.isZero(body.getAngularVelocity())) {
             drawMotors(graphics, viewport);
         }
+    }
+
+    private void handleTheArmedBomb(Graphics2D graphics, Viewport viewport) {
+        if (System.currentTimeMillis() - armedBomb.getDropTime() >= 1000) {
+            if (armedBomb.explode()) armedBomb.draw(graphics, viewport);
+            else                     armedBomb = null;
+        } else {
+            armedBomb.draw(graphics, viewport);
+        }
+    }
+
+    public void enableShield() {
+        shield = true;
+    }
+
+    public void addBomb() {
+        hasBomb = true;
+    }
+
+    public boolean hasBomb() {
+        return hasBomb;
     }
 
     private void drawMotors(Graphics2D graphics, Viewport viewport) {
@@ -149,9 +180,5 @@ public class Ship extends AbstractShape implements Shooter {
                 Math.round(rightMotor.y - (int) viewport.getCameraScale()/2),
                 (int) viewport.getCameraScale(),
                 (int) viewport.getCameraScale());
-    }
-
-    public void enableShield() {
-        shield = true;
     }
 }

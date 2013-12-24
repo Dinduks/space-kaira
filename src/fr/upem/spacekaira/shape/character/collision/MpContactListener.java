@@ -1,6 +1,7 @@
 package fr.upem.spacekaira.shape.character.collision;
 
 import fr.upem.spacekaira.shape.Brush;
+import fr.upem.spacekaira.shape.character.Enemy;
 import fr.upem.spacekaira.shape.character.FixtureType;
 import fr.upem.spacekaira.shape.character.Ship;
 import org.jbox2d.callbacks.ContactImpulse;
@@ -14,7 +15,7 @@ import java.util.function.BiConsumer;
 // TODO: Add Doc
 public class MpContactListener implements ContactListener {
     @FunctionalInterface
-    interface ContactAction extends BiConsumer<Fixture,Fixture> {}
+    interface ContactAction extends BiConsumer<Fixture, Fixture> {}
 
     // TODO: Rename this
     private static ContactAction dSD =  (f1,f2) -> {
@@ -44,24 +45,45 @@ public class MpContactListener implements ContactListener {
         }
     };
 
+    private static ContactAction bomb = (f1, f2) -> {
+        f2.setUserData(Brush.DESTROY_BRUSH);
+        if (f1.getBody().getUserData() instanceof Ship) {
+            ((Ship) f1.getBody().getUserData()).addBomb();
+        } else {
+            ((Ship) f2.getBody().getUserData()).addBomb();
+        }
+    };
+
+    private static ContactAction bombOnEnemy = (f1, f2) -> {
+        if (f1.getBody().getUserData() instanceof Enemy) {
+            f1.setUserData(Brush.DESTROY_BRUSH);
+        } else {
+            f2.setUserData(Brush.DESTROY_BRUSH);
+        }
+    };
+
     private static ContactAction [][] action = {
-                        /*BULLET PLANET STD_ENEMY SHIP*/
-        /*BULLET*/      {nil,   rSD,    dSD,    dSD},
-        /*PLANET*/      {lSD,   nil,    nil,    nil},
-        /*STD_ENEMY*/   {dSD,   nil,    nil,    enemyVsShip},
-        /*SHIP*/        {dSD,   nil,    shipVsEnemy,  nil}};
+                       /* BULLET PLANET STD_ENEMY    SHIP         BOMB, ARMED_BOMB */
+        /* BULLET */    { nil,   rSD,   dSD,         dSD,         nil,  nil },
+        /* PLANET */    { lSD,   nil,   nil,         nil,         nil,  nil },
+        /* STD_ENEMY */ { dSD,   nil,   nil,         enemyVsShip, nil,  bombOnEnemy },
+        /* SHIP */      { dSD,   nil,   shipVsEnemy, nil,         bomb, nil },
+        /* BOMB */      { nil,   nil,   nil,         bomb,        nil,  nil },
+        /* ARMED_BOMB */{ nil,   nil,   bombOnEnemy, nil,         nil,  nil }
+    };
 
     @Override
     public void beginContact(Contact contact) {
         //TODO suppress debug stuff
-        /*System.out.println(contact.getFixtureA().getBody().getUserData().getClass().getName() + " & " +
-                contact.getFixtureB().getBody().getUserData().getClass().getName() + "\n");*/
+//        System.out.println(contact.getFixtureA().getBody().getUserData().getClass().getName() + " & " +
+//                contact.getFixtureB().getBody().getUserData().getClass().getName() + "\n");
 
         Fixture f1 = contact.getFixtureA();
         Fixture f2 = contact.getFixtureB();
 
         // TODO: Make this readable
-        action[FixtureType.typeToIndex(f1.getFilterData().categoryBits)][FixtureType.typeToIndex(f2.getFilterData().categoryBits)].accept(f1, f2);
+        action[FixtureType.typeToIndex(f1.getFilterData().categoryBits)]
+              [FixtureType.typeToIndex(f2.getFilterData().categoryBits)].accept(f1, f2);
     }
 
     @Override

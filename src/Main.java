@@ -19,7 +19,8 @@ public class Main {
         Application.run("Space Kaïra" , WIDTH, HEIGHT, context -> {
             Game.run(HEIGHT, WIDTH, context,
                     configuration.getGameDuration(),
-                    configuration.getPlanetsDensity());
+                    configuration.getPlanetsDensity(),
+                    configuration.getBombsFrequency());
         });
     }
 

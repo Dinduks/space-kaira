@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <configuration>
-  <gameDuration>23</gameDuration>
-  <planetsDensity>2</planetsDensity>
+  <gameDuration>120</gameDuration>
+  <planetsDensity>2</planetsDensity> // How many planets per screen?
+  <bombsFrequency>30</bombsFrequency> // How many bombs per minute?
 </configuration>

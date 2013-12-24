@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Configuration {
     private int gameDuration;
     private int planetsDensity;
+    private int bombsFrequency;
 
     public Configuration() {
     }
@@ -30,5 +31,14 @@ public class Configuration {
     @XmlElement
     public void setPlanetsDensity(int planetsDensity) {
         this.planetsDensity = planetsDensity;
+    }
+
+    public int getBombsFrequency() {
+        return bombsFrequency;
+    }
+
+    @XmlElement
+    public void setBombsFrequency(int bombsFrequency) {
+        this.bombsFrequency = bombsFrequency;
     }
 }

@@ -1,5 +1,6 @@
 package fr.upem.spacekaira.shape;
 
+import fr.upem.spacekaira.shape.character.Ship;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.EdgeShape;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -11,30 +12,32 @@ import org.jbox2d.pooling.arrays.Vec2Array;
 
 import java.awt.*;
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * Performs vector transformation (local -> world -> screen) and shape drawing
  */
 public class Viewport {
     private OBBViewportTransform obb;
-    private final int height;
-    private final int width;
+    private final int screenHeight;
+    private final int screenWidth;
     private float scale = 1;
 
     private final Vec2Array vec2Array = new Vec2Array();
     private final int circlePoints = 13;
 
-    public Viewport(int width, int height) {
-        this.height = height;
-        this.width = width;
+    public Viewport(int screenWidth, int screenHeight) {
+        this.screenHeight = screenHeight;
+        this.screenWidth = screenWidth;
         obb = new OBBViewportTransform();
         obb.setCamera(0, 0, 1);
-        obb.setExtents(width / 2, height / 2);
+        obb.setExtents(screenWidth / 2, screenHeight / 2);
     }
 
     public boolean isInScreen(Vec2 worldVector) {
         Vec2 v = getWorldVectorToScreen(worldVector);
-        return v.x >= 0 && v.x <= width && v.y >= 0 && v.y <= height;
+        return v.x >= 0 && v.x <= screenWidth &&
+               v.y >= 0 && v.y <= screenHeight;
     }
 
     public Vec2 getWorldVectorToScreen(Vec2 argWorld) {
@@ -56,7 +59,8 @@ public class Viewport {
         obb.setCenter(vec2);
     }
 
-    private void generateCircle(Vec2 argCenter, float argRadius, Vec2[] argPoints, int argNumPoints) {
+    private void generateCircle(Vec2 argCenter, float argRadius,
+                                Vec2[] argPoints, int argNumPoints) {
         float inc = MathUtils.TWOPI / argNumPoints;
 
         for (int i = 0; i < argNumPoints; i++) {
@@ -66,7 +70,8 @@ public class Viewport {
     }
 
     public void drawCircle(Fixture fixture,Graphics2D graphics) {
-        Brush brush = (Brush) fixture.getUserData(); if(brush == null) return;
+        Brush brush = (Brush) fixture.getUserData();
+        if (brush == null) return;
         CircleShape circleShape = (CircleShape) fixture.getShape();
         Vec2 centroid = fixture.getBody().getWorldPoint(circleShape.m_p);
         float radius = circleShape.getRadius();
@@ -80,8 +85,10 @@ public class Viewport {
     public void drawEdge(Fixture fixture, Graphics2D graphics) {
         Brush brush = (Brush) fixture.getUserData(); if(brush == null) return;
         EdgeShape edgeShape = (EdgeShape)fixture.getShape();
-        Vec2 vertex1 = getWorldVectorToScreen(fixture.getBody().getWorldPoint(edgeShape.m_vertex1));
-        Vec2 vertex2 = getWorldVectorToScreen(fixture.getBody().getWorldPoint(edgeShape.m_vertex2));
+        Vec2 vertex1 = getWorldVectorToScreen(
+                fixture.getBody().getWorldPoint(edgeShape.m_vertex1));
+        Vec2 vertex2 = getWorldVectorToScreen(
+                fixture.getBody().getWorldPoint(edgeShape.m_vertex2));
 
         graphics.setPaint(brush.getColor());
         graphics.drawLine(
@@ -105,9 +112,7 @@ public class Viewport {
         drawPolygon(vecs, polygonShape.getVertexCount(), brush, graphics);
     }
 
-    private void drawPolygon(Vec2[] vertices,
-                             int vertexCount,
-                             Brush brush,
+    private void drawPolygon(Vec2[] vertices, int vertexCount, Brush brush,
                              Graphics2D graphics) {
         int[] xPoints = new int[vertexCount];
         int[] yPoints = new int[vertexCount];
@@ -127,5 +132,28 @@ public class Viewport {
 
     public static boolean isZero(float f) {
         return Math.abs(f) > 0.5;
+    }
+
+    /**
+     * Returns a random position in the current view port. The position will be
+     * at least 1f away from the ship.
+     * @param ship
+     * @return A position on the current view port
+     */
+    public Vec2 getRandomPosition(Ship ship) {
+        Random random = new Random();
+
+        int halfScreenWidth = screenWidth / 2 / (int) getCameraScale();
+        int halfScreenHeight = screenHeight / 2 / (int) getCameraScale();
+        float randomXPosition = (float) (random.nextInt(halfScreenWidth - 1)) + 1;
+        float randomYPosition = (float) (random.nextInt(halfScreenHeight) - 1) + 1;
+
+        float negOrPos;
+        negOrPos = random.nextBoolean() ? 1 : -1;
+        float x = (ship.getPosition().x + randomXPosition) * negOrPos;
+        negOrPos = random.nextBoolean() ? 1 : -1;
+        float y = (ship.getPosition().y + randomYPosition) * negOrPos;
+
+        return new Vec2(x, y);
     }
 }

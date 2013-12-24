@@ -19,17 +19,13 @@ import java.util.HashSet;
  * This class draw and compute the game via the run method
  */
 public class Game {
-    // TODO: Remove this
-    private Game () {
-        throw null; // no instance
-    }
-
     public static void run(final int height,
                            final int width,
                            ApplicationContext context,
                            int gameDuration,
-                           int planetsDensity) {
-        final float REFRESH_TIME = 1/60f;
+                           int planetsDensity,
+                           int bombsFrequency) {
+        final float REFRESH_TIME = 1 / 60f;
         final int CAMERA_SCALE = 10;
 
         //Jbox2d World creation
@@ -41,7 +37,8 @@ public class Game {
         viewport.setCamera(0, 0, CAMERA_SCALE);
 
         //Init Map
-        Map map = new Map(world, viewport, height, width, planetsDensity);
+        Map map = new Map(world, viewport, height,
+                          width, planetsDensity, bombsFrequency);
         map.initMap();
 
         Synchronizer syn = new Synchronizer((long)(REFRESH_TIME * 1000));
@@ -112,7 +109,7 @@ public class Game {
                 ship.shoot();
                 break;
             case B:
-                ship.bomb();
+                ship.dropBomb();
                 break;
             case S:
                 long currentTime = System.currentTimeMillis();
