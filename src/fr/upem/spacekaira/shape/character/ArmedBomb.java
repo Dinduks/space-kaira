@@ -57,6 +57,7 @@ public class ArmedBomb extends AbstractShape implements DynamicContact {
         circleShape.setRadius((radius = radius + 0.5f));
         armedBombFixtureDef.shape = circleShape;
         armedBombFixtureDef.userData = brushAfterExploding;
+        armedBombFixtureDef.filter.maskBits = FixtureType.STD_ENEMY;
         body.destroyFixture(fixture);
         body.createFixture(armedBombFixtureDef);
 
