@@ -16,7 +16,7 @@ public class DrawHelpers {
 
             font = new Font("arial", Font.BOLD, 20);
             graphics.setFont(font);
-            graphics.drawString("Press Q to quit.", 200, 250);
+            graphics.drawString("Press Q to quit or R to restart.", 200, 250);
         });
     }
 }

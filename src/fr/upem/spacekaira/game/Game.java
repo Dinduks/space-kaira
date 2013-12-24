@@ -3,6 +3,7 @@ package fr.upem.spacekaira.game;
 import fr.umlv.zen3.ApplicationContext;
 import fr.umlv.zen3.KeyboardEvent;
 import fr.umlv.zen3.KeyboardKey;
+import fr.upem.spacekaira.Main;
 import fr.upem.spacekaira.config.Configuration;
 import fr.upem.spacekaira.map.Map;
 import fr.upem.spacekaira.shape.DrawHelpers;
@@ -20,10 +21,21 @@ import java.util.HashSet;
  * This class draw and compute the game via the run method
  */
 public class Game {
-    public static void run(final int height,
-                           final int width,
-                           ApplicationContext context,
-                           Configuration config) {
+    private final int width;
+
+    private final int height;
+    private final Configuration config;
+
+    private HashSet<KeyboardKey> keys = new HashSet<>();
+    private long lastTimeWasShieldToggled = 0;
+
+    public Game(int width, int height, Configuration config) {
+        this.width = width;
+        this.height = height;
+        this.config = config;
+    }
+
+    public void run(ApplicationContext context) {
         final float REFRESH_TIME = 1 / 60f;
         final int CAMERA_SCALE = 10;
 
@@ -55,23 +67,34 @@ public class Game {
         }
 
         DrawHelpers.drawGameOver(context);
-        waitForExitRequest(context);
+        waitForPlayerDecision(context);
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 
     /**
-     * Used in the GAME OVER screen, waits for the user to press the Q key
+     * Used in the GAME OVER screen, waits for the user to press the Q key to
+     * quit, or the R key to restart
      * @param context
      */
-    private static void waitForExitRequest(ApplicationContext context) {
+    private void waitForPlayerDecision(ApplicationContext context) {
         while (true) {
             KeyboardEvent event = context.pollKeyboard();
-            if (event != null && event.getKey() == KeyboardKey.Q) {
+            if (event == null) continue;
+            if (event.getKey() == KeyboardKey.Q) {
                 System.exit(0);
+            } else if (event.getKey() == KeyboardKey.R) {
+                Game game = new Game(width, height, config);
+                Main.startTheGame(game);
             }
         }
     }
-
-    private static HashSet<KeyboardKey> keys = new HashSet<>();
 
     /**
      * Stores pressed keys in the {@code keys} {@link java.util.HashSet}, and
@@ -80,8 +103,7 @@ public class Game {
      * @param context
      * @param ship
      */
-    private static void handleKeyboardEvents(ApplicationContext context,
-                                             Ship ship) {
+    private void handleKeyboardEvents(ApplicationContext context, Ship ship) {
         KeyboardEvent keyboardEvent;
 
         keyboardEvent = context.pollKeyboard();
@@ -92,8 +114,7 @@ public class Game {
         keys.forEach(key -> handleKeyPress(key, ship));
     }
 
-    private static long lastTimeWasShieldToggled = 0;
-    private static void handleKeyPress(KeyboardKey key, Ship ship) {
+    private void handleKeyPress(KeyboardKey key, Ship ship) {
         switch (key) {
             case UP:
                 ship.up();

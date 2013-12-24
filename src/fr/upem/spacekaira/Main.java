@@ -1,3 +1,5 @@
+package fr.upem.spacekaira;
+
 import fr.umlv.zen3.Application;
 import fr.upem.spacekaira.config.Configuration;
 import fr.upem.spacekaira.config.ConfigurationBuilder;
@@ -16,9 +18,12 @@ public class Main {
         Configuration configuration =
                 ConfigurationBuilder.buildFrom(configurationFile);
 
-        Application.run("Space Kaïra" , WIDTH, HEIGHT, context -> {
-            Game.run(HEIGHT, WIDTH, context, configuration);
-        });
+        Game game = new Game(WIDTH, HEIGHT, configuration);
+        startTheGame(game);
     }
 
+    public static void startTheGame(Game game) {
+        Application.run("Space Kaïra", game.getWidth(), game.getHeight(),
+        game::run);
+    }
 }
