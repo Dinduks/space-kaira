@@ -4,21 +4,15 @@ import fr.umlv.zen3.ApplicationContext;
 import fr.umlv.zen3.KeyboardEvent;
 import fr.umlv.zen3.KeyboardKey;
 import fr.upem.spacekaira.map.Map;
-import fr.upem.spacekaira.shape.BrushFactory;
 import fr.upem.spacekaira.shape.DrawHelpers;
 import fr.upem.spacekaira.shape.Viewport;
-import fr.upem.spacekaira.shape.character.Bomb;
-import fr.upem.spacekaira.shape.character.Bullet;
 import fr.upem.spacekaira.shape.character.Ship;
 import fr.upem.spacekaira.shape.character.collision.MpContactListener;
 import fr.upem.spacekaira.time.Synchronizer;
 import fr.upem.spacekaira.util.Util;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -115,7 +109,7 @@ public class Game {
                 ship.shoot();
                 break;
             case B:
-                ship.bomb();
+                ship.dropBomb();
                 break;
             case S:
                 long currentTime = System.currentTimeMillis();

@@ -5,7 +5,6 @@ import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.DynamicContact;
 import org.jbox2d.dynamics.Fixture;
-import org.jbox2d.dynamics.World;
 
 import java.awt.*;
 import java.util.*;
@@ -15,14 +14,14 @@ import java.util.List;
  * This abstract class represent a base to construct a Enemy
  */
 public abstract class Enemy extends AbstractShape implements Shooter, DynamicContact {
-    protected final Brush ENEMY_COLOR;
-    protected final Brush BULLET_COLOR;
+    protected final Brush enemyColor;
+    protected final Brush bulletColor;
     protected List<Bullet> bullets;
 
-    public Enemy(World world,float x, float y, Brush color, Brush bulletColor) {
+    public Enemy(Brush color, Brush bulletColor) {
         this.bullets = new LinkedList<>();
-        this.ENEMY_COLOR = color;
-        this.BULLET_COLOR = bulletColor;
+        this.enemyColor = color;
+        this.bulletColor = bulletColor;
     }
 
     @Override
@@ -39,15 +38,15 @@ public abstract class Enemy extends AbstractShape implements Shooter, DynamicCon
     @Override
     public void computeTimeStepData() {
         for (Fixture fix = body.getFixtureList(); fix != null; fix = fix.getNext()) {
-            if(fix.getUserData() == Brush.DESTROY_BRUSH) {
+            if (fix.getUserData() == Brush.DESTROY_BRUSH) {
                 body.setUserData(Brush.DESTROY_BRUSH);
             }
         }
 
         Iterator<Bullet> it = bullets.iterator();
-        while(it.hasNext()) {
+        while (it.hasNext()) {
             Bullet b = it.next();
-            if(b.isDead()) {
+            if (b.isDead()) {
                 b.destroy();
                 it.remove();
             }

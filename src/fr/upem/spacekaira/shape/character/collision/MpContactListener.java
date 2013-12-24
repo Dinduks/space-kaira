@@ -54,12 +54,13 @@ public class MpContactListener implements ContactListener {
     };
 
     private static ContactAction [][] action = {
-                       /* BULLET PLANET STD_ENEMY    SHIP         BOMB */
-        /* BULLET */    { nil,   rSD,   dSD,         dSD,         nil  },
-        /* PLANET */    { lSD,   nil,   nil,         nil,         nil  },
-        /* STD_ENEMY */ { dSD,   nil,   nil,         enemyVsShip, nil  },
-        /* SHIP */      { dSD,   nil,   shipVsEnemy, nil,         bomb },
-        /* BOMB */      { nil,   nil,   nil,         bomb,        nil  }
+                       /* BULLET PLANET STD_ENEMY    SHIP         BOMB, ARMED_BOMB */
+        /* BULLET */    { nil,   rSD,   dSD,         dSD,         nil,  nil },
+        /* PLANET */    { lSD,   nil,   nil,         nil,         nil,  nil },
+        /* STD_ENEMY */ { dSD,   nil,   nil,         enemyVsShip, nil,  nil },
+        /* SHIP */      { dSD,   nil,   shipVsEnemy, nil,         bomb, nil },
+        /* BOMB */      { nil,   nil,   nil,         bomb,        nil,  nil },
+        /* ARMED_BOMB */{ nil,   nil,   nil,         nil,         nil,  nil }
     };
 
     @Override

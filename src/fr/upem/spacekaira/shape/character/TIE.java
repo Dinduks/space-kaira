@@ -9,15 +9,13 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
-import java.awt.*;
-
 /**
  * The space ship Enemy
  */
 public class TIE extends Enemy {
 
     public TIE(World world, float x, float y, Brush color, Brush bulletColor) {
-        super(world, x, y, color, bulletColor);
+        super(color, bulletColor);
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;
@@ -30,7 +28,7 @@ public class TIE extends Enemy {
 
         FixtureDef edgeFix = new FixtureDef();
         edgeFix.density = 1.0f;
-        edgeFix.userData = ENEMY_COLOR;
+        edgeFix.userData = enemyColor;
         edgeFix.filter.categoryBits = FixtureType.STD_ENEMY;
         edgeFix.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP;
 
@@ -85,11 +83,11 @@ public class TIE extends Enemy {
     }
 
     private void shootLeft() {
-        bullets.add(new Bullet(body.getWorld(),body.getWorldPoint(new Vec2(0,2)),body.getWorldVector(new Vec2(-1,0)),body.getAngle()+1.57f,BULLET_COLOR));
+        bullets.add(new Bullet(body.getWorld(),body.getWorldPoint(new Vec2(0,2)),body.getWorldVector(new Vec2(-1,0)),body.getAngle()+1.57f, bulletColor));
     }
 
     private void shootRight() {
-        bullets.add(new Bullet(body.getWorld(),body.getWorldPoint(new Vec2(7,2)),body.getWorldVector(new Vec2(1,0)),body.getAngle()-1.57f,BULLET_COLOR));
+        bullets.add(new Bullet(body.getWorld(),body.getWorldPoint(new Vec2(7,2)),body.getWorldVector(new Vec2(1,0)),body.getAngle()-1.57f, bulletColor));
     }
 
     @Override
