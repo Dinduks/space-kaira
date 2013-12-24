@@ -1,30 +1,34 @@
-package fr.upem.spacekaira.shape.character;
+package fr.upem.spacekaira.shape.character.bomb.nonarmed;
 
-
-import fr.upem.spacekaira.shape.*;
+import fr.upem.spacekaira.shape.AbstractShape;
+import fr.upem.spacekaira.shape.Brush;
+import fr.upem.spacekaira.shape.DynamicContact;
+import fr.upem.spacekaira.shape.character.FixtureType;
+import fr.upem.spacekaira.shape.character.bomb.BombType;
 import org.jbox2d.collision.shapes.CircleShape;
-import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
-import java.awt.*;
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * Represents a bomb
  */
-public class Bomb extends AbstractShape implements DynamicContact {
+public class AbstractBomb extends AbstractShape implements DynamicContact {
+    private BombType bombType;
+
     /**
-     * Build A new bomb
+     * Builds a new bomb
      * @param world The current world
      * @param position The position of the bomb
      * @param color
+     * @param bombType
      */
-    public Bomb(World world, Vec2 position, Brush color) {
+    public AbstractBomb(World world, Vec2 position, Brush color,
+                        BombType bombType) {
+        this.bombType = bombType;
+
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;
         bodyDef.position.set(position);

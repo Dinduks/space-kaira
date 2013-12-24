@@ -5,7 +5,8 @@ import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.BrushFactory;
 import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.character.*;
-import fr.upem.spacekaira.shape.character.factory.BombFactory;
+import fr.upem.spacekaira.shape.character.bomb.nonarmed.AbstractBomb;
+import fr.upem.spacekaira.shape.character.factory.bomb.nonarmed.NormalBombFactory;
 import fr.upem.spacekaira.shape.character.factory.FactoryPool;
 import fr.upem.spacekaira.util.Util;
 import org.jbox2d.common.Vec2;
@@ -31,7 +32,7 @@ public class Map {
     private Viewport viewport;
     private FactoryPool factoryPool;
 
-    private List<Bomb> bombs = new ArrayList<>();
+    private List<AbstractBomb> bombs = new ArrayList<>();
     private int bombsFrequency;
 
     private Brush brush =
@@ -92,7 +93,7 @@ public class Map {
 
         lastTimeWasABombSpawned = currentTime;
         Vec2 position = viewport.getRandomPosition(ship);
-        bombs.add(BombFactory.create(world, position, brush));
+        bombs.add(NormalBombFactory.create(world, position, brush));
     }
 
     private void cleanDeadElements() {
@@ -106,9 +107,9 @@ public class Map {
             }
         }
 
-        Iterator<Bomb> bombIt = bombs.iterator();
+        Iterator<AbstractBomb> bombIt = bombs.iterator();
         while (bombIt.hasNext()) {
-            Bomb bomb = bombIt.next();
+            AbstractBomb bomb = bombIt.next();
             if (bomb.isDead()) {
                 bomb.destroy();
                 bombIt.remove();

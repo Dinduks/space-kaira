@@ -1,19 +1,19 @@
-package fr.upem.spacekaira.shape.character;
-
+package fr.upem.spacekaira.shape.character.bomb.armed;
 
 import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.DynamicContact;
+import fr.upem.spacekaira.shape.character.FixtureType;
+import fr.upem.spacekaira.shape.character.bomb.BombType;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
 
-/**
- * Represents a bomb that has been dropped
- */
-public class ArmedBomb extends AbstractShape implements DynamicContact {
+abstract public class AbstractArmedBomb
+        extends AbstractShape implements DynamicContact {
     private FixtureDef armedBombFixtureDef = new FixtureDef();
     private Brush brushAfterExploding;
+    private BombType bombType;
     private CircleShape circleShape = new CircleShape();
     private final long dropTime = System.currentTimeMillis();
     private Fixture fixture;
@@ -21,13 +21,15 @@ public class ArmedBomb extends AbstractShape implements DynamicContact {
 
     /**
      * Build A new armed bomb
+     *
      * @param world The current world
      * @param position The position of the armed bomb
      * @param initialBrush
      * @param brushAfterExploding
      */
-    public ArmedBomb(World world, Vec2 position, Brush initialBrush,
-                     Brush brushAfterExploding) {
+    public AbstractArmedBomb(World world, Vec2 position, Brush initialBrush,
+                     Brush brushAfterExploding, BombType bombType) {
+        this.bombType = bombType;
         this.brushAfterExploding = brushAfterExploding;
 
         BodyDef bodyDef = new BodyDef();

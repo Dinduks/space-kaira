@@ -1,7 +1,12 @@
 package fr.upem.spacekaira.shape.character;
 
 import fr.upem.spacekaira.shape.*;
-import fr.upem.spacekaira.shape.character.factory.ArmedBombFactory;
+import fr.upem.spacekaira.shape.AbstractShape;
+import fr.upem.spacekaira.shape.Brush;
+import fr.upem.spacekaira.shape.BrushFactory;
+import fr.upem.spacekaira.shape.Viewport;
+import fr.upem.spacekaira.shape.character.bomb.armed.AbstractArmedBomb;
+import fr.upem.spacekaira.shape.character.factory.bomb.armed.NormalArmedBombFactory;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
@@ -21,7 +26,7 @@ public class Ship extends AbstractShape implements DynamicContact{
     private final Brush bulletColor;
     private boolean hasBomb;
     private boolean mustDropBomb;
-    private ArmedBomb armedBomb;
+    private AbstractArmedBomb armedBomb;
 
     public Ship(World world, Brush shipColor, Brush bulletColor) {
         this.bulletColor = bulletColor;
@@ -100,7 +105,7 @@ public class Ship extends AbstractShape implements DynamicContact{
     public void dropBomb() {
         if (!hasBomb) return;
         hasBomb = false;
-        armedBomb = ArmedBombFactory.create(body.getWorld(),
+        armedBomb = NormalArmedBombFactory.create(body.getWorld(),
                 getPosition(),
                 (new BrushFactory()).createBrush(Color.RED, true),
                 (new BrushFactory()).createBrush(Color.RED, false));
