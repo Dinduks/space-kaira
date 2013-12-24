@@ -105,7 +105,8 @@ public class Ship extends AbstractShape implements Shooter {
         hasBomb = false;
         armedBomb = ArmedBombFactory.create(body.getWorld(),
                 getPosition(),
-                (new BrushFactory()).createBrush(Color.RED, true));
+                (new BrushFactory()).createBrush(Color.RED, true),
+                (new BrushFactory()).createBrush(Color.RED, false));
     }
 
     private static long lastShootTime = 0;
@@ -130,7 +131,7 @@ public class Ship extends AbstractShape implements Shooter {
 
     @Override
     public void draw(Graphics2D graphics, Viewport viewport) {
-        if (armedBomb != null) armedBomb.draw(graphics, viewport);
+        if (armedBomb != null) handleTheArmedBomb(graphics, viewport);
         shieldFix.setUserData((shield) ? new Brush(Color.BLUE, false) : null);
         super.draw(graphics, viewport);
         bullets.forEach(b -> b.draw(graphics, viewport));
@@ -138,6 +139,15 @@ public class Ship extends AbstractShape implements Shooter {
                 Viewport.isZero(body.getLinearVelocity().y) ||
                 Viewport.isZero(body.getAngularVelocity())) {
             drawMotors(graphics, viewport);
+        }
+    }
+
+    private void handleTheArmedBomb(Graphics2D graphics, Viewport viewport) {
+        if (System.currentTimeMillis() - armedBomb.getDropTime() >= 1000) {
+            if (armedBomb.explode()) armedBomb.draw(graphics, viewport);
+            else                     armedBomb = null;
+        } else {
+            armedBomb.draw(graphics, viewport);
         }
     }
 

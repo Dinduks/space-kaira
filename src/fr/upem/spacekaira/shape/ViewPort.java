@@ -70,7 +70,8 @@ public class Viewport {
     }
 
     public void drawCircle(Fixture fixture,Graphics2D graphics) {
-        Brush brush = (Brush) fixture.getUserData(); if(brush == null) return;
+        Brush brush = (Brush) fixture.getUserData();
+        if (brush == null) return;
         CircleShape circleShape = (CircleShape) fixture.getShape();
         Vec2 centroid = fixture.getBody().getWorldPoint(circleShape.m_p);
         float radius = circleShape.getRadius();
