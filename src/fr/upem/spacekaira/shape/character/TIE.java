@@ -32,52 +32,55 @@ public class TIE extends Enemy {
         edgeFix.density = 1.0f;
         edgeFix.userData = ENEMY_COLOR;
         edgeFix.filter.categoryBits = FixtureType.STD_ENEMY;
-        edgeFix.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP | FixtureType.PLANET;
+        edgeFix.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP | FixtureType.PLANET | FixtureType.STD_ENEMY;
+
 
         //left-side-down
        {
-            EdgeShape edgeShape = new EdgeShape();
-            edgeShape.set(new Vec2(0,2),new Vec2(2,4));
-            edgeFix.shape = edgeShape;
+            PolygonShape polygonShape = new PolygonShape();
+            polygonShape.set(new Vec2[]{new Vec2(0,2), new Vec2(0,2.1f), new Vec2(2,4.1f),new Vec2(2,4)},4);
+            edgeFix.shape = polygonShape;
             body.createFixture(edgeFix);
         }
 
         //left-side-up
        {
-            EdgeShape edgeShape = new EdgeShape();
-            edgeShape.set(new Vec2(0,2),new Vec2(2,0));
-            edgeFix.shape = edgeShape;
+            PolygonShape polygonShape = new PolygonShape();
+            polygonShape.set(new Vec2[]{new Vec2(0,2), new Vec2(0,2.1f), new Vec2(2,0.1f), new Vec2(2,0)},4);
+            edgeFix.shape = polygonShape;
             body.createFixture(edgeFix);
         }
 
         //right-side-down
        {
-            EdgeShape edgeShape = new EdgeShape();
-            edgeShape.set(new Vec2(7,2),new Vec2(5,4));
-            edgeFix.shape = edgeShape;
-            body.createFixture(edgeFix);
+           PolygonShape polygonShape = new PolygonShape();
+           polygonShape.set(new Vec2[]{new Vec2(7, 2), new Vec2(7, 2.1f), new Vec2(5, 4.1f), new Vec2(5, 4)}, 4);
+           edgeFix.shape = polygonShape;
+           body.createFixture(edgeFix);
         }
 
         //right-side-up
         {
-            EdgeShape edgeShape = new EdgeShape();
-            edgeShape.set(new Vec2(7,2),new Vec2(5,0));
-            edgeFix.shape = edgeShape;
+            PolygonShape polygonShape = new PolygonShape();
+            polygonShape.set(new Vec2[]{new Vec2(7, 2), new Vec2(7, 2.1f), new Vec2(5, 0.1f), new Vec2(5, 0)}, 4);
+            edgeFix.shape = polygonShape;
             body.createFixture(edgeFix);
         }
 
+
         //middle
         {
-            EdgeShape edgeShape = new EdgeShape();
-            edgeShape.set(new Vec2(2,2),new Vec2(5,2));
-            edgeFix.shape = edgeShape;
+            PolygonShape polygonShape = new PolygonShape();
+            polygonShape.set(new Vec2[]{new Vec2(2, 2), new Vec2(2, 2.1f), new Vec2(5, 2.1f), new Vec2(5, 2)}, 4);
+            edgeFix.shape = polygonShape;
             body.createFixture(edgeFix);
         }
+
 
         //inner polygon
         {
             PolygonShape polygonShape = new PolygonShape();
-            polygonShape.set(new Vec2[]{new Vec2(0,2),new Vec2(1.5f,2.75f),new Vec2(5.5f,2.75f),new Vec2(7,2),new Vec2(5.5f,1.25f),new Vec2(1.5f,1.25f)},6);
+            polygonShape.set(new Vec2[]{new Vec2(0, 2), new Vec2(1.5f, 2.75f), new Vec2(5.5f, 2.75f), new Vec2(7, 2), new Vec2(5.5f, 1.25f), new Vec2(1.5f, 1.25f)}, 6);
             edgeFix.shape = polygonShape;
             body.createFixture(edgeFix);
         }

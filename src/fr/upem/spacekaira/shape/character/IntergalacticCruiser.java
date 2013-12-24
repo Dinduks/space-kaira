@@ -29,7 +29,7 @@ public class IntergalacticCruiser extends Enemy {
         cruiserFix.density = 1.0f;
         cruiserFix.userData = ENEMY_COLOR;
         cruiserFix.filter.categoryBits = FixtureType.STD_ENEMY;
-        cruiserFix.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP;
+        cruiserFix.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP | FixtureType.PLANET | FixtureType.STD_ENEMY;
 
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.set(new Vec2[]{new Vec2(0, 0), new Vec2(0, 2), new Vec2(7, 2), new Vec2(7, 0)},4);
@@ -58,6 +58,7 @@ public class IntergalacticCruiser extends Enemy {
 
     @Override
     public void move(Ship ship) {
-        //TODO
+        Vec2 speed = followAlgo(ship.getPosition(),body.getPosition(),ship.getLinearVelocity(),body.getLinearVelocity(),0.1f);
+        body.setLinearVelocity(speed);
     }
 }

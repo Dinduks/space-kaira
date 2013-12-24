@@ -36,7 +36,7 @@ public class Squadron extends Enemy {
             fixtureDef.userData = ENEMY_COLOR;
             fixtureDef.shape = ps;
             fixtureDef.filter.categoryBits = FixtureType.STD_ENEMY;
-            fixtureDef.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP | FixtureType.PLANET;
+            fixtureDef.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP | FixtureType.PLANET ;
             body.createFixture(fixtureDef);
         }
         {

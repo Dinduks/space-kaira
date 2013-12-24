@@ -48,6 +48,7 @@ public class Map {
         enemies.add(factoryPool.getEnemyFactory().createEnemy(10, 10));
         enemies.add(factoryPool.getEnemyFactory().createEnemy(20, 20));
         enemies.add(new Squadron(world,20,20,new Brush(Color.BLUE,false),new Brush(Color.BLUE,false)));
+        enemies.add(new IntergalacticCruiser(world,40,40,new Brush(Color.BLUE,false),new Brush(Color.BLUE,false)));
         planetGenerator = PlanetGenerator.newPlanetGenerator(planetsDensity,
                 viewport,
                 width,
