@@ -55,4 +55,9 @@ public class IntergalacticCruiser extends Enemy {
     public void shoot() {
         shootUp(); shootDown();
     }
+
+    @Override
+    public void move(Ship ship) {
+        //TODO
+    }
 }

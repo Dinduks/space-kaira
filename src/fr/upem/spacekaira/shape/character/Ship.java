@@ -45,7 +45,7 @@ public class Ship extends AbstractShape implements Shooter {
 
             ship = new FixtureDef();
             ship.shape = polygonShape;
-            ship.density = 2.0f;
+            ship.density = 1.0f;
             ship.userData = new Brush(Color.BLUE,true);
             ship.filter.categoryBits = FixtureType.SHIP;
             ship.filter.maskBits = FixtureType.PLANET | FixtureType.STD_ENEMY | FixtureType.BULLET;
@@ -92,6 +92,10 @@ public class Ship extends AbstractShape implements Shooter {
 
     public boolean shield() {
         return shield;
+    }
+
+    public Vec2 getLinearVelocity() {
+        return body.getLinearVelocity();
     }
 
     public void bomb() {

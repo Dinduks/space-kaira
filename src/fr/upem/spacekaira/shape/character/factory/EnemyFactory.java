@@ -20,8 +20,8 @@ public class EnemyFactory {
 
     public Enemy createEnemy(float x, float y) {
         //TODO random with all enemy
-        //return new TIE(world,x,y,bF.createBrush(Color.BLUE,false),bF.createBrush(Color.RED,true));
+        return new TIE(world,x,y,bF.createBrush(Color.BLUE,false),bF.createBrush(Color.RED,true));
         //return new IntergalacticCruiser(world,x,y,bF.createBrush(Color.BLUE,false),bF.createBrush(Color.RED,true));
-        return new Squadron(world,x,y,bF.createBrush(Color.BLUE,false),bF.createBrush(Color.RED,true));
+        //return new Squadron(world,x,y,bF.createBrush(Color.BLUE,false),bF.createBrush(Color.RED,true));
     }
 }

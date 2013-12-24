@@ -32,7 +32,7 @@ public class TIE extends Enemy {
         edgeFix.density = 1.0f;
         edgeFix.userData = ENEMY_COLOR;
         edgeFix.filter.categoryBits = FixtureType.STD_ENEMY;
-        edgeFix.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP;
+        edgeFix.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP | FixtureType.PLANET;
 
         //left-side-down
        {
@@ -81,6 +81,12 @@ public class TIE extends Enemy {
             edgeFix.shape = polygonShape;
             body.createFixture(edgeFix);
         }
+    }
+
+    @Override
+    public void move(Ship ship) {
+        Vec2 speed = rotateAlgo(ship.getPosition(),body.getPosition(),10,0.017f);
+        body.setLinearVelocity(speed.mul(100));
     }
 
     private void shootLeft() {

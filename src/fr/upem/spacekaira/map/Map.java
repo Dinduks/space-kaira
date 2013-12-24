@@ -1,6 +1,7 @@
 package fr.upem.spacekaira.map;
 
 import fr.umlv.zen3.ApplicationContext;
+import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.character.*;
 import fr.upem.spacekaira.shape.character.factory.FactoryPool;
@@ -45,6 +46,8 @@ public class Map {
         //TODO config class pour la l'init
         ship = factoryPool.getShipFactory().createShip(false);
         enemies.add(factoryPool.getEnemyFactory().createEnemy(10, 10));
+        enemies.add(factoryPool.getEnemyFactory().createEnemy(20, 20));
+        enemies.add(new Squadron(world,20,20,new Brush(Color.BLUE,false),new Brush(Color.BLUE,false)));
         planetGenerator = PlanetGenerator.newPlanetGenerator(planetsDensity,
                 viewport,
                 width,
@@ -60,6 +63,7 @@ public class Map {
     public void computeDataGame() {
         checkBulletOutScreen();
         checkComputedCollision();
+        moveEnemy();
     }
 
     private void checkComputedCollision() {
@@ -77,6 +81,10 @@ public class Map {
     private void checkBulletOutScreen() {
         ship.checkForBulletOutScreen(viewport);
         enemies.forEach(e->e.checkForBulletOutScreen(viewport));
+    }
+
+    private void moveEnemy() {
+        enemies.forEach(e->e.move(ship));
     }
 
     public void draw(ApplicationContext context,

@@ -36,7 +36,7 @@ public class Squadron extends Enemy {
             fixtureDef.userData = ENEMY_COLOR;
             fixtureDef.shape = ps;
             fixtureDef.filter.categoryBits = FixtureType.STD_ENEMY;
-            fixtureDef.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP;
+            fixtureDef.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP | FixtureType.PLANET;
             body.createFixture(fixtureDef);
         }
         {
@@ -53,8 +53,8 @@ public class Squadron extends Enemy {
             fd.userData = ENEMY_COLOR;
             fd.density = 5.0f;
             fd.shape = shape;
-            //fd.filter.categoryBits
-            //fd.filter.maskBits
+            fd.filter.categoryBits = FixtureType.STD_ENEMY;
+            fd.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP | FixtureType.PLANET;
 
             DistanceJointDef jd = new DistanceJointDef();
             Vec2 p1,p2,d;
@@ -123,6 +123,12 @@ public class Squadron extends Enemy {
     }
 
     @Override
+    public void move(Ship ship) {
+        Vec2 speed = followAlgo(ship.getPosition(),body.getPosition(),ship.getLinearVelocity(),body.getLinearVelocity(),0.1f);
+        body.setLinearVelocity(speed);
+    }
+
+    @Override
     public boolean isDead() {
         return false;
     }
@@ -131,4 +137,6 @@ public class Squadron extends Enemy {
     public void shoot() {
 
     }
+
+
 }

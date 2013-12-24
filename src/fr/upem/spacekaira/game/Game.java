@@ -13,6 +13,7 @@ import fr.upem.spacekaira.util.Util;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import javax.xml.transform.sax.SAXSource;
 import java.util.HashSet;
 
 /**
@@ -88,12 +89,15 @@ public class Game {
                                              Ship ship) {
         KeyboardEvent keyboardEvent;
 
-        keyboardEvent = context.pollKeyboard();
-        if (keyboardEvent != null) keys.add(keyboardEvent.getKey());
+
+       /* if (keyboardEvent != null) keys.add(keyboardEvent.getKey());
         keyboardEvent = context.pollReleasedKeys();
         if (keyboardEvent != null) keys.remove(keyboardEvent.getKey());
 
-        keys.forEach(key -> handleKeyPress(key, ship));
+        keys.forEach(key -> handleKeyPress(key, ship));*/
+
+        while ((keyboardEvent = context.pollKeyboard()) != null )
+            handleKeyPress(keyboardEvent.getKey(),ship);
     }
 
     private static long lastTimeWasShieldToggled = 0;
