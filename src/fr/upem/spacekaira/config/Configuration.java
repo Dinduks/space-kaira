@@ -29,7 +29,7 @@ public class Configuration {
     }
 
     @XmlElement
-    public void setPlanetsDensity(int planetsDensity) {
+    private void setPlanetsDensity(int planetsDensity) {
         this.planetsDensity = planetsDensity;
     }
 
@@ -38,7 +38,7 @@ public class Configuration {
     }
 
     @XmlElement
-    public void setBombsFrequency(int bombsFrequency) {
+    private void setBombsFrequency(int bombsFrequency) {
         this.bombsFrequency = bombsFrequency;
     }
 }

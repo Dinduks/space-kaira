@@ -3,6 +3,7 @@ package fr.upem.spacekaira.game;
 import fr.umlv.zen3.ApplicationContext;
 import fr.umlv.zen3.KeyboardEvent;
 import fr.umlv.zen3.KeyboardKey;
+import fr.upem.spacekaira.config.Configuration;
 import fr.upem.spacekaira.map.Map;
 import fr.upem.spacekaira.shape.DrawHelpers;
 import fr.upem.spacekaira.shape.Viewport;
@@ -22,9 +23,7 @@ public class Game {
     public static void run(final int height,
                            final int width,
                            ApplicationContext context,
-                           int gameDuration,
-                           int planetsDensity,
-                           int bombsFrequency) {
+                           Configuration config) {
         final float REFRESH_TIME = 1 / 60f;
         final int CAMERA_SCALE = 10;
 
@@ -37,20 +36,20 @@ public class Game {
         viewport.setCamera(0, 0, CAMERA_SCALE);
 
         //Init Map
-        Map map = new Map(world, viewport, height,
-                          width, planetsDensity, bombsFrequency);
+        Map map = new Map(world, viewport, height, width,
+                config.getPlanetsDensity(), config.getBombsFrequency());
         map.initMap();
 
         Synchronizer syn = new Synchronizer((long)(REFRESH_TIME * 1000));
 
         long startTime = System.currentTimeMillis();
 
-        while (Util.anyTimeLeft(startTime, gameDuration)) {
+        while (Util.anyTimeLeft(startTime, config.getGameDuration())) {
             syn.start();
             handleKeyboardEvents(context, map.getShip());
             world.step(REFRESH_TIME, 6, 8);
             map.computeDataGame();
-            map.draw(context, viewport, startTime, gameDuration);
+            map.draw(context, viewport, startTime, config.getGameDuration());
             viewport.setCenter(map.getShip().getPosition());
             syn.waitToSynchronize();
         }
