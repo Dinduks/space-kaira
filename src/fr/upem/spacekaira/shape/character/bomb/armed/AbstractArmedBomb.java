@@ -11,13 +11,13 @@ import org.jbox2d.dynamics.*;
 
 abstract public class AbstractArmedBomb
         extends AbstractShape implements DynamicContact {
-    private FixtureDef armedBombFixtureDef = new FixtureDef();
-    private Brush brushAfterExploding;
+    protected FixtureDef armedBombFixtureDef = new FixtureDef();
+    protected Brush brushAfterExploding;
     private BombType bombType;
-    private CircleShape circleShape = new CircleShape();
+    protected CircleShape circleShape = new CircleShape();
     private final long dropTime = System.currentTimeMillis();
-    private Fixture fixture;
-    private float radius = 0.5f;
+    protected Fixture fixture;
+    protected float radius = 0.5f;
 
     /**
      * Build A new armed bomb
@@ -54,17 +54,7 @@ abstract public class AbstractArmedBomb
     /**
      * @return true if exploded, false if still exploding
      */
-    public boolean explode() {
-        if (radius >= 5.0f) return false;
-        circleShape.setRadius((radius = radius + 0.5f));
-        armedBombFixtureDef.shape = circleShape;
-        armedBombFixtureDef.userData = brushAfterExploding;
-        armedBombFixtureDef.filter.maskBits = FixtureType.STD_ENEMY;
-        body.destroyFixture(fixture);
-        body.createFixture(armedBombFixtureDef);
-
-        return true;
-    }
+    abstract public boolean explode();
 
     @Override
     public void computeTimeStepData() {
@@ -77,5 +67,13 @@ abstract public class AbstractArmedBomb
 
     public long getDropTime() {
         return dropTime;
+    }
+
+    protected float getRadius() {
+        return radius;
+    }
+
+    public void setRadius(float radius) {
+        this.radius = radius;
     }
 }

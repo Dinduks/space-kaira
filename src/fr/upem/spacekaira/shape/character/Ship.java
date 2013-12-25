@@ -25,7 +25,7 @@ public class Ship extends AbstractShape implements DynamicContact{
     private List<Bullet> bullets;
     private final Brush bulletColor;
     private boolean hasBomb;
-    private boolean mustDropBomb;
+    private boolean megaBomb;
     private AbstractArmedBomb armedBomb;
 
     public Ship(World world, Brush shipColor, Brush bulletColor) {
@@ -45,8 +45,11 @@ public class Ship extends AbstractShape implements DynamicContact{
         FixtureDef ship = null;
         {
             PolygonShape polygonShape = new PolygonShape();
-            Vec2[] tab = {new Vec2(0,0),new Vec2(-1,-3),new Vec2(0,-3),new Vec2(1,-3)};
-            polygonShape.set(tab,4);
+            Vec2[] tab = {new Vec2(0, 0),
+                    new Vec2(-1, -3),
+                    new Vec2(0, -3),
+                    new Vec2(1, -3)};
+            polygonShape.set(tab, 4);
 
             ship = new FixtureDef();
             ship.shape = polygonShape;
@@ -104,11 +107,13 @@ public class Ship extends AbstractShape implements DynamicContact{
 
     public void dropBomb() {
         if (!hasBomb) return;
-        hasBomb = false;
-        armedBomb = NormalArmedBombFactory.create(body.getWorld(),
-                getPosition(),
-                (new BrushFactory()).createBrush(Color.RED, true),
-                (new BrushFactory()).createBrush(Color.RED, false));
+        if (!megaBomb) {
+            hasBomb = false;
+            armedBomb = NormalArmedBombFactory.create(body.getWorld(),
+                    getPosition(),
+                    (new BrushFactory()).createBrush(Color.RED, true),
+                    (new BrushFactory()).createBrush(Color.RED, false));
+        }
     }
 
     public Vec2 getLinearVelocity() {
@@ -163,6 +168,11 @@ public class Ship extends AbstractShape implements DynamicContact{
 
     public void enableShield() {
         shield = true;
+    }
+
+    public void addMegaBomb() {
+        megaBomb = true;
+        hasBomb = true;
     }
 
     public void addBomb() {

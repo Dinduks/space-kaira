@@ -55,6 +55,15 @@ public class MpContactListener implements ContactListener {
         }
     };
 
+    private static ContactAction mbomb = (f1, f2) -> {
+        f2.setUserData(Brush.DESTROY_BRUSH);
+        if (f1.getBody().getUserData() instanceof Ship) {
+            ((Ship) f1.getBody().getUserData()).addMegaBomb();
+        } else {
+            ((Ship) f2.getBody().getUserData()).addMegaBomb();
+        }
+    };
+
     private static ContactAction bombOnEnemy = (f1, f2) -> {
         if (f1.getBody().getUserData() instanceof Enemy) {
             f1.setUserData(Brush.DESTROY_BRUSH);
