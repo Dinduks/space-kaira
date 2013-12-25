@@ -109,6 +109,10 @@ public class Ship extends AbstractShape implements Shooter {
                 (new BrushFactory()).createBrush(Color.RED, false));
     }
 
+    public Vec2 getLinearVelocity() {
+        return body.getLinearVelocity();
+    }
+
     private static long lastShootTime = 0;
     @Override
     public void shoot() {

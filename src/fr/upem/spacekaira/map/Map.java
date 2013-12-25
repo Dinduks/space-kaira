@@ -60,6 +60,10 @@ public class Map {
         //TODO config class pour la l'init
         ship = factoryPool.getShipFactory().createShip(false);
         enemies.add(factoryPool.getEnemyFactory().createEnemy(10, 10));
+        enemies.add(factoryPool.getEnemyFactory().createEnemy(20, 20));
+        Brush blueBrush = new Brush(Color.BLUE, false);
+        enemies.add(new Squadron(world, blueBrush, blueBrush));
+        enemies.add(new IntergalacticCruiser(world,40,40, blueBrush, blueBrush));
         planetGenerator = PlanetGenerator.newPlanetGenerator(planetsDensity,
                 viewport,
                 width,
@@ -75,6 +79,7 @@ public class Map {
     public void computeDataGame() {
         checkBulletOutScreen();
         checkComputedCollision();
+        moveEnemy();
         spawnABombIfNecessary();
     }
 
@@ -104,7 +109,11 @@ public class Map {
 
     private void checkBulletOutScreen() {
         ship.checkForBulletOutScreen(viewport);
-        enemies.forEach(e->e.checkForBulletOutScreen(viewport));
+        enemies.forEach(e -> e.checkForBulletOutScreen(viewport));
+    }
+
+    private void moveEnemy() {
+        enemies.forEach(e->e.move(ship));
     }
 
     public void draw(ApplicationContext context,
