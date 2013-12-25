@@ -1,11 +1,14 @@
 package fr.upem.spacekaira.map;
 
 import fr.umlv.zen3.ApplicationContext;
+import fr.upem.spacekaira.config.Configuration;
 import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.BrushFactory;
 import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.character.*;
 import fr.upem.spacekaira.shape.character.bomb.nonarmed.AbstractBomb;
+import fr.upem.spacekaira.shape.character.factory.bomb.armed.NormalArmedBombFactory;
+import fr.upem.spacekaira.shape.character.factory.bomb.nonarmed.MegaBombFactory;
 import fr.upem.spacekaira.shape.character.factory.bomb.nonarmed.NormalBombFactory;
 import fr.upem.spacekaira.shape.character.factory.FactoryPool;
 import fr.upem.spacekaira.util.Util;
@@ -34,18 +37,19 @@ public class Map {
 
     private List<AbstractBomb> bombs = new ArrayList<>();
     private int bombsFrequency;
-
-    private Brush brush =
-            (new BrushFactory()).createBrush(Color.LIGHT_GRAY, true);
+    private final int megaBombsPerCent;
 
     private int hudXPosition;
     private int hudYPosition;
 
+    private Random random = new Random();
+
     public Map(World world, Viewport viewport, final int height,
-               final int width, int planetsDensity, int bombsFrequency) {
+               final int width, Configuration config) {
         this.world = world;
-        this.planetsDensity = planetsDensity;
-        this.bombsFrequency = bombsFrequency;
+        this.planetsDensity = config.getPlanetsDensity();
+        this.bombsFrequency = config.getBombsFrequency();
+        this.megaBombsPerCent = config.getMegaBombsPerCent();
         enemies = new LinkedList<>();
         this.height = height;
         this.width = width;
@@ -93,7 +97,11 @@ public class Map {
 
         lastTimeWasABombSpawned = currentTime;
         Vec2 position = viewport.getRandomPosition(ship);
-        bombs.add(NormalBombFactory.create(world, position, brush));
+        if (random.nextInt(100) < megaBombsPerCent) {
+            bombs.add(NormalBombFactory.create(world, position));
+        } else {
+            bombs.add(MegaBombFactory.create(world, position));
+        }
     }
 
     private void cleanDeadElements() {

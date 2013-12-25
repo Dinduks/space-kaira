@@ -11,6 +11,7 @@ public class Configuration {
     private int gameDuration;
     private int planetsDensity;
     private int bombsFrequency;
+    private int megaBombsPerCent;
 
     public Configuration() {
     }
@@ -40,5 +41,14 @@ public class Configuration {
     @XmlElement
     private void setBombsFrequency(int bombsFrequency) {
         this.bombsFrequency = bombsFrequency;
+    }
+
+    public int getMegaBombsPerCent() {
+        return megaBombsPerCent;
+    }
+
+    @XmlElement
+    private void setMegaBombsPerCent(int megaBombsPerCent) {
+        this.megaBombsPerCent = megaBombsPerCent;
     }
 }
