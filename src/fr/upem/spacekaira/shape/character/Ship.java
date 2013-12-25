@@ -6,6 +6,7 @@ import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.BrushFactory;
 import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.character.bomb.armed.AbstractArmedBomb;
+import fr.upem.spacekaira.shape.character.factory.bomb.armed.ArmedMegaBombFactory;
 import fr.upem.spacekaira.shape.character.factory.bomb.armed.NormalArmedBombFactory;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -109,12 +110,14 @@ public class Ship extends AbstractShape implements DynamicContact{
 
     public void dropBomb() {
         if (!hasBomb) return;
+
+        hasBomb = false;
         if (!megaBomb) {
-            hasBomb = false;
             armedBomb = NormalArmedBombFactory.create(body.getWorld(),
-                    getPosition(),
-                    (new BrushFactory()).createBrush(Color.RED, true),
-                    (new BrushFactory()).createBrush(Color.RED, false));
+                    getPosition());
+        } else {
+            armedBomb = ArmedMegaBombFactory.create(body.getWorld(),
+                    getPosition());
         }
     }
 
@@ -172,13 +175,15 @@ public class Ship extends AbstractShape implements DynamicContact{
         shield = true;
     }
 
+    // TODO: Refactor this shit
     public void addMegaBomb() {
-        megaBomb = true;
         hasBomb = true;
+        megaBomb = true;
     }
 
     public void addBomb() {
         hasBomb = true;
+        megaBomb = false;
     }
 
     public boolean hasBomb() {

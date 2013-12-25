@@ -6,6 +6,7 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
 import static fr.upem.spacekaira.shape.character.bomb.BombType.MEGA_BOMB;
+import static fr.upem.spacekaira.shape.character.bomb.BombType.NORMAL_BOMB;
 
 /**
  * Represents a bomb that has been dropped
@@ -21,7 +22,7 @@ public class ArmedNormalBomb extends AbstractArmedBomb {
      */
     public ArmedNormalBomb(World world, Vec2 position, Brush initialBrush,
                            Brush brushAfterExploding) {
-        super(world, position, initialBrush, brushAfterExploding, MEGA_BOMB);
+        super(world, position, initialBrush, brushAfterExploding, NORMAL_BOMB);
     }
 
     @Override

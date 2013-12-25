@@ -73,11 +73,6 @@ public class MpContactListener implements ContactListener {
     };
 
     private static ContactAction mBombOnEnemy = (f1, f2) -> {
-//        if (f1.getBody().getUserData() instanceof Enemy) {
-//            f1.setUserData(Brush.DESTROY_BRUSH);
-//        } else {
-//            f2.setUserData(Brush.DESTROY_BRUSH);
-//        }
     };
 
     private static ContactAction [][] action = {
