@@ -97,7 +97,7 @@ public class Map {
 
         lastTimeWasABombSpawned = currentTime;
         Vec2 position = viewport.getRandomPosition(ship);
-        if (random.nextInt(100) < megaBombsPerCent) {
+        if (random.nextInt(100) > megaBombsPerCent) {
             bombs.add(NormalBombFactory.create(world, position));
         } else {
             bombs.add(MegaBombFactory.create(world, position));

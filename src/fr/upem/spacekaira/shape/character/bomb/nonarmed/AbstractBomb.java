@@ -12,6 +12,8 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
+import java.util.HashMap;
+
 /**
  * Represents a bomb
  */
@@ -42,7 +44,8 @@ public class AbstractBomb extends AbstractShape implements DynamicContact {
         bombFixtureDef.shape = circleShape;
         bombFixtureDef.density = 1.0f;
         bombFixtureDef.userData = color;
-        bombFixtureDef.filter.categoryBits = FixtureType.BOMB;
+        bombFixtureDef.filter.categoryBits = BombType.getFixtureType(bombType);
+
         bombFixtureDef.filter.maskBits = FixtureType.SHIP;
 
         body.createFixture(bombFixtureDef);
