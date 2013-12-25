@@ -9,7 +9,7 @@ import org.jbox2d.dynamics.World;
 import java.awt.*;
 
 // TODO: Rename to ArmedNormal…
-public class NormalArmedBombFactory {
+public class ArmedNormalBombFactory {
     public static ArmedNormalBomb create(World world, Vec2 position) {
         BrushFactory brushFactory = new BrushFactory();
         Brush initialBrush = brushFactory.createBrush(Color.RED, true);
