@@ -16,14 +16,14 @@ public class Squadron extends Enemy {
     private Body m_bodies[] = new Body[nBodies];
     private Joint m_joints[] = new Joint[nBodies*2];
 
-    public Squadron(World world, Brush color, Brush bulletColor) {
+    public Squadron(World world, int x, int y, Brush color, Brush bulletColor) {
         super(color, bulletColor);
 
         /*Le carre principale Body de l'ennemi*/
         {
             BodyDef bd = new BodyDef();
             bd.type = BodyType.DYNAMIC;
-            bd.position.set(0, 10);
+            bd.position.set(x, y);
             bd.angularDamping = 25;
             body = world.createBody(bd);
             body.setUserData(this);
@@ -36,7 +36,9 @@ public class Squadron extends Enemy {
             fixtureDef.userData = enemyColor;
             fixtureDef.shape = ps;
             fixtureDef.filter.categoryBits = FixtureType.STD_ENEMY;
-            fixtureDef.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP | FixtureType.PLANET ;
+            fixtureDef.filter.maskBits = FixtureType.BULLET |
+                    FixtureType.SHIP |
+                    FixtureType.PLANET;
             body.createFixture(fixtureDef);
         }
         {
@@ -124,7 +126,7 @@ public class Squadron extends Enemy {
 
     @Override
     public void move(Ship ship) {
-        Vec2 speed = followAlgo(ship.getPosition(),body.getPosition(),ship.getLinearVelocity(),body.getLinearVelocity(),0.1f);
+        Vec2 speed = follow(ship.getPosition(), body.getPosition(), ship.getLinearVelocity(), body.getLinearVelocity(), 0.1f);
         body.setLinearVelocity(speed);
     }
 

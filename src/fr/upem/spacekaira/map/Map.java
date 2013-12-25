@@ -23,7 +23,6 @@ public class Map {
     private final int width;
 
     private Ship ship;
-    private List<Planet> planets;
     private List<Enemy> enemies;
     private PlanetGenerator planetGenerator;
 
@@ -35,17 +34,17 @@ public class Map {
     private List<Bomb> bombs = new ArrayList<>();
     private int bombsFrequency;
 
-    private Brush brush = (new BrushFactory()).createBrush(Color.LIGHT_GRAY, true);
+    private Brush brush =
+            (new BrushFactory()).createBrush(Color.LIGHT_GRAY, true);
 
     private int hudXPosition;
     private int hudYPosition;
 
-    public Map(World world, Viewport viewport, final int height, final int width,
-               int planetsDensity, int bombsFrequency) {
+    public Map(World world, Viewport viewport, final int height,
+               final int width, int planetsDensity, int bombsFrequency) {
         this.world = world;
         this.planetsDensity = planetsDensity;
         this.bombsFrequency = bombsFrequency;
-        planets = new ArrayList<>();
         enemies = new LinkedList<>();
         this.height = height;
         this.width = width;
@@ -62,14 +61,13 @@ public class Map {
         enemies.add(factoryPool.getEnemyFactory().createEnemy(10, 10));
         enemies.add(factoryPool.getEnemyFactory().createEnemy(20, 20));
         Brush blueBrush = new Brush(Color.BLUE, false);
-        enemies.add(new Squadron(world, blueBrush, blueBrush));
-        enemies.add(new IntergalacticCruiser(world,40,40, blueBrush, blueBrush));
+        Squadron squadron = new Squadron(world, 0, 10, blueBrush, blueBrush);
+        IntergalacticCruiser cruiser =
+                new IntergalacticCruiser(world, 40, 40, blueBrush, blueBrush);
+        enemies.add(squadron);
+        enemies.add(cruiser);
         planetGenerator = PlanetGenerator.newPlanetGenerator(planetsDensity,
-                viewport,
-                width,
-                height,
-                ship,
-                factoryPool.getPlanetFactory());
+                viewport, width, height, ship, factoryPool.getPlanetFactory());
     }
 
     public Ship getShip() {

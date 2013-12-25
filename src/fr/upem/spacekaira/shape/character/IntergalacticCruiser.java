@@ -1,15 +1,12 @@
 package fr.upem.spacekaira.shape.character;
 
 import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.Viewport;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
-
-import java.awt.*;
 
 public class IntergalacticCruiser extends Enemy {
 
@@ -71,7 +68,7 @@ public class IntergalacticCruiser extends Enemy {
 
     @Override
     public void move(Ship ship) {
-        Vec2 speed = followAlgo(ship.getPosition(),body.getPosition(),ship.getLinearVelocity(),body.getLinearVelocity(),0.1f);
+        Vec2 speed = follow(ship.getPosition(), body.getPosition(), ship.getLinearVelocity(), body.getLinearVelocity(), 0.1f);
         body.setLinearVelocity(speed);
     }
 }

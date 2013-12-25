@@ -1,7 +1,6 @@
 package fr.upem.spacekaira.shape.character;
 
 import fr.upem.spacekaira.shape.Brush;
-import org.jbox2d.collision.shapes.EdgeShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
@@ -30,15 +29,15 @@ public class TIE extends Enemy {
         edgeFix.density = 1.0f;
         edgeFix.userData = enemyColor;
         edgeFix.filter.categoryBits = FixtureType.STD_ENEMY;
-        edgeFix.filter.maskBits = FixtureType.BULLET |
-                FixtureType.SHIP |
-                FixtureType.STD_ENEMY |
-                FixtureType.ARMED_BOMB;
+        edgeFix.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP |
+                FixtureType.STD_ENEMY | FixtureType.ARMED_BOMB;
 
         //left-side-down
        {
             PolygonShape polygonShape = new PolygonShape();
-            polygonShape.set(new Vec2[]{new Vec2(0,2), new Vec2(0,2.1f), new Vec2(2,4.1f),new Vec2(2,4)},4);
+           Vec2[] vertices = { new Vec2(0, 2), new Vec2(0, 2.1f),
+                   new Vec2(2, 4.1f), new Vec2(2, 4) };
+           polygonShape.set(vertices, 4);
             edgeFix.shape = polygonShape;
             body.createFixture(edgeFix);
         }
@@ -46,7 +45,9 @@ public class TIE extends Enemy {
         //left-side-up
        {
             PolygonShape polygonShape = new PolygonShape();
-            polygonShape.set(new Vec2[]{new Vec2(0,2), new Vec2(0,2.1f), new Vec2(2,0.1f), new Vec2(2,0)},4);
+           Vec2[] vertices = { new Vec2(0, 2), new Vec2(0, 2.1f),
+                   new Vec2(2, 0.1f), new Vec2(2, 0) };
+           polygonShape.set(vertices, 4);
             edgeFix.shape = polygonShape;
             body.createFixture(edgeFix);
         }
@@ -54,7 +55,9 @@ public class TIE extends Enemy {
         //right-side-down
        {
            PolygonShape polygonShape = new PolygonShape();
-           polygonShape.set(new Vec2[]{new Vec2(7, 2), new Vec2(7, 2.1f), new Vec2(5, 4.1f), new Vec2(5, 4)}, 4);
+           Vec2[] vertices = { new Vec2(7, 2), new Vec2(7, 2.1f),
+                   new Vec2(5, 4.1f), new Vec2(5, 4) };
+           polygonShape.set(vertices, 4);
            edgeFix.shape = polygonShape;
            body.createFixture(edgeFix);
         }
@@ -62,7 +65,9 @@ public class TIE extends Enemy {
         //right-side-up
         {
             PolygonShape polygonShape = new PolygonShape();
-            polygonShape.set(new Vec2[]{new Vec2(7, 2), new Vec2(7, 2.1f), new Vec2(5, 0.1f), new Vec2(5, 0)}, 4);
+            Vec2[] vertices = { new Vec2(7, 2), new Vec2(7, 2.1f),
+                    new Vec2(5, 0.1f), new Vec2(5, 0) };
+            polygonShape.set(vertices, 4);
             edgeFix.shape = polygonShape;
             body.createFixture(edgeFix);
         }
@@ -71,7 +76,9 @@ public class TIE extends Enemy {
         //middle
         {
             PolygonShape polygonShape = new PolygonShape();
-            polygonShape.set(new Vec2[]{new Vec2(2, 2), new Vec2(2, 2.1f), new Vec2(5, 2.1f), new Vec2(5, 2)}, 4);
+            Vec2[] vertices = { new Vec2(2, 2), new Vec2(2, 2.1f),
+                    new Vec2(5, 2.1f), new Vec2(5, 2) };
+            polygonShape.set(vertices, 4);
             edgeFix.shape = polygonShape;
             body.createFixture(edgeFix);
         }
@@ -80,7 +87,10 @@ public class TIE extends Enemy {
         //inner polygon
         {
             PolygonShape polygonShape = new PolygonShape();
-            polygonShape.set(new Vec2[]{new Vec2(0, 2), new Vec2(1.5f, 2.75f), new Vec2(5.5f, 2.75f), new Vec2(7, 2), new Vec2(5.5f, 1.25f), new Vec2(1.5f, 1.25f)}, 6);
+            Vec2[] vertices = { new Vec2(0, 2), new Vec2(1.5f, 2.75f),
+                    new Vec2(5.5f, 2.75f), new Vec2(7, 2),
+                    new Vec2(5.5f, 1.25f), new Vec2(1.5f, 1.25f) };
+            polygonShape.set(vertices, 6);
             edgeFix.shape = polygonShape;
             body.createFixture(edgeFix);
         }
@@ -88,7 +98,7 @@ public class TIE extends Enemy {
 
     @Override
     public void move(Ship ship) {
-        Vec2 speed = rotateAlgo(ship.getPosition(),body.getPosition(),10,0.017f);
+        Vec2 speed = rotate(ship.getPosition(), body.getPosition(), 10, 0.017f);
         body.setLinearVelocity(speed.mul(100));
     }
 

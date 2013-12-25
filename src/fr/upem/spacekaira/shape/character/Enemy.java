@@ -68,7 +68,7 @@ public abstract class Enemy extends AbstractShape implements Shooter, DynamicCon
      * @param angleByCall Angle to give at B at each call (in radian)
      * @return the new Speed of B (~0.017f)
      */
-    protected Vec2 rotateAlgo(Vec2 A, Vec2 B, float limit, float angleByCall) {
+    protected Vec2 rotate(Vec2 A, Vec2 B, float limit, float angleByCall) {
         Vec2 BA = A.sub(B);
         float length = BA.length();
 
@@ -99,7 +99,7 @@ public abstract class Enemy extends AbstractShape implements Shooter, DynamicCon
      *
      * You should do B.getPosition().set(B.getPosition().add(new_Speed_of_B));
      */
-    protected Vec2 followAlgo(Vec2 A, Vec2 B, Vec2 Va, Vec2 Vb, float alpha) {
+    protected Vec2 follow(Vec2 A, Vec2 B, Vec2 Va, Vec2 Vb, float alpha) {
         Vec2 BA = A.sub(B);
         if(BA.length() == 0) return Vb;
         return Vb.mul(1-alpha).add(BA.mul(Math.abs(Va.length())/Math.abs(BA.length())*alpha));
