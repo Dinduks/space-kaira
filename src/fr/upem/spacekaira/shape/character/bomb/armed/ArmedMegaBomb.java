@@ -2,13 +2,11 @@ package fr.upem.spacekaira.shape.character.bomb.armed;
 
 import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.character.Enemy;
-import fr.upem.spacekaira.shape.character.FixtureType;
 import fr.upem.spacekaira.util.Util;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static fr.upem.spacekaira.shape.character.bomb.BombType.MEGA_BOMB;
@@ -30,25 +28,28 @@ public class ArmedMegaBomb extends AbstractArmedBomb {
         super(world, position, initialBrush, brushAfterExploding, MEGA_BOMB);
     }
 
+    private List<Enemy> enemiesToDestroy = new ArrayList<>();
     @Override
     public boolean explode(List<Enemy> enemies) {
-        List<Enemy> closeEnemies = getCloseEnemies(enemies);
-        closeEnemies.forEach(enemy -> {
-            Vec2 dir = body.getWorldCenter().sub(enemy.getPosition());
-            dir.normalize();
-            dir.mulLocal(10000);
-            enemy.moveToward(dir);
+        if (enemiesToDestroy.isEmpty()) {
+            enemiesToDestroy = getCloseEnemies(enemies);
+            return true;
+        } else {
+            enemiesToDestroy.forEach(enemy -> {
+                if (roundedPosEqual(getPosition(), enemy.getPosition())) {
+                    enemiesToDestroy.remove(enemy);
+                    enemies.remove(enemy);
+                    return;
+                }
 
-        });
+                Vec2 dir = body.getWorldCenter().sub(enemy.getPosition());
+                dir.normalize();
+                dir.mulLocal(10000);
+                enemy.moveToward(dir);
+            });
 
-//        circleShape.setRadius((radius = radius + 0.5f));
-//        armedBombFixtureDef.shape = circleShape;
-//        armedBombFixtureDef.userData = brushAfterExploding;
-//        armedBombFixtureDef.filter.maskBits = FixtureType.STD_ENEMY;
-//        body.destroyFixture(fixture);
-//        body.createFixture(armedBombFixtureDef);
-
-        return true;
+            return !enemiesToDestroy.isEmpty();
+        }
     }
 
     /**
@@ -59,12 +60,24 @@ public class ArmedMegaBomb extends AbstractArmedBomb {
      * @return
      */
     public List<Enemy> getCloseEnemies(List<Enemy> enemies) {
-        return Collections.unmodifiableList(enemies)
-                .stream()
-                .filter(e ->
-                        Util.distanceBetweenVectors(
-                                e.getPosition(), getPosition()) < 50
-                )
-                .collect(Collectors.toList());
+        return new LinkedList<>(enemies.stream()
+                .filter(e -> {
+                    float d = Util.distanceBetweenVectors(e.getPosition(),
+                            getPosition());
+                    return d <= 15;
+                })
+                .collect(Collectors.toList()));
+    }
+
+    /**
+     * Takes two vectors, round their positions and check if they're equal
+     *
+     * @param position1
+     * @param position2
+     * @return
+     */
+    private boolean roundedPosEqual(Vec2 position1, Vec2 position2) {
+        return (Math.ceil(position1.x) == Math.ceil(position2.x) &&
+                (Math.ceil(position1.y) == Math.ceil(position2.y)));
     }
 }

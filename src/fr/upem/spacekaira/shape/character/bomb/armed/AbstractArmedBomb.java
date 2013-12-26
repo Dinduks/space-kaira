@@ -57,7 +57,7 @@ abstract public class AbstractArmedBomb
     }
 
     /**
-     * @return true if exploded, false if still exploding
+     * @return true if done exploding, false otherwise
      * @param enemies
      */
     abstract public boolean explode(List<Enemy> enemies);
