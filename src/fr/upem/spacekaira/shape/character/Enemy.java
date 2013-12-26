@@ -104,4 +104,14 @@ public abstract class Enemy extends AbstractShape implements Shooter, DynamicCon
         if(BA.length() == 0) return Vb;
         return Vb.mul(1-alpha).add(BA.mul(Math.abs(Va.length())/Math.abs(BA.length())*alpha));
     }
+
+    @Override
+    public void checkForDeadBullet() {
+        Bullet.checkForDeadBullet(bullets);
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+    }
 }

@@ -15,4 +15,9 @@ public interface Shooter {
         This method tell to a shooter that he should remove his bullet outOfScreen
      */
     public void checkForBulletOutScreen(Viewport viewport);
+
+    /*
+         This method tell to a shooter that he should remove his dead bullet outOfScreen
+     */
+    public void checkForDeadBullet();
 }

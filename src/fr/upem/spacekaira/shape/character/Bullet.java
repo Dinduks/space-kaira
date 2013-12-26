@@ -69,6 +69,18 @@ public class Bullet extends AbstractShape implements DynamicContact{
         }
     }
 
+    public static void checkForDeadBullet(List<Bullet> bullets) {
+        Iterator<Bullet> it = bullets.iterator();
+
+        while(it.hasNext()) {
+            Bullet b = it.next();
+            if(b.isDead()) {
+                b.destroy();
+                it.remove();
+            }
+        }
+    }
+
     @Override
     public void computeTimeStepData() {
     }

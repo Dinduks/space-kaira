@@ -38,7 +38,6 @@ public abstract class AbstractShape implements Drawable {
 
     public void destroy() {
         body.getWorld().destroyBody(body);
-        body = null;
     }
 
     /**

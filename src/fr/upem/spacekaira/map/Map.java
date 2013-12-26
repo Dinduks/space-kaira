@@ -1,5 +1,6 @@
 package fr.upem.spacekaira.map;
 
+import com.sun.org.omg.SendingContext._CodeBaseImplBase;
 import fr.umlv.zen3.ApplicationContext;
 import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.BrushFactory;
@@ -76,6 +77,7 @@ public class Map {
 
     public void computeDataGame() {
         checkBulletOutScreen();
+        ship.computeTimeStepData();
         checkComputedCollision();
         moveEnemy();
         spawnABombIfNecessary();

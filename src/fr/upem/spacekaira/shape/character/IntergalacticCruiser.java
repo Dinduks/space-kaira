@@ -29,8 +29,7 @@ public class IntergalacticCruiser extends Enemy {
         cruiserFix.filter.categoryBits = FixtureType.STD_ENEMY;
         cruiserFix.filter.maskBits = FixtureType.BULLET |
                 FixtureType.SHIP |
-                FixtureType.PLANET |
-                FixtureType.STD_ENEMY;
+                FixtureType.PLANET;
 
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.set(new Vec2[]{new Vec2(0, 0), new Vec2(0, 2), new Vec2(7, 2), new Vec2(7, 0)},4);

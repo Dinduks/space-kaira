@@ -6,20 +6,24 @@ import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.MathUtils;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
+import org.jbox2d.dynamics.joints.DistanceJoint;
 import org.jbox2d.dynamics.joints.DistanceJointDef;
 import org.jbox2d.dynamics.joints.Joint;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class Squadron extends Enemy {
     private int nBodies = 8;
-    private Body m_bodies[] = new Body[nBodies];
-    private Joint m_joints[] = new Joint[nBodies*2];
+    private List<Body> m_bodies = new ArrayList<>(nBodies);
+    private List<Joint> m_joints = new ArrayList<>(nBodies*2);
 
     public Squadron(World world, int x, int y, Brush color, Brush bulletColor) {
         super(color, bulletColor);
 
-        /*Le carre principale Body de l'ennemi*/
+        /*Main square*/
         {
             BodyDef bd = new BodyDef();
             bd.type = BodyType.DYNAMIC;
@@ -42,7 +46,7 @@ public class Squadron extends Enemy {
             body.createFixture(fixtureDef);
         }
         {
-          /*Les triangles*/
+          /*Triangles*/
             PolygonShape shape = new PolygonShape();
             shape.set(new Vec2[]{new Vec2(0.0f,0.5f),new Vec2(-0.5f,-0.5f),new Vec2(0.5f,-0.5f) }, 3);
 
@@ -66,6 +70,8 @@ public class Squadron extends Enemy {
             float rx = 5.0f;
             float ry = 5.0f;
 
+            Body b;
+
             for (int i = 0; i < nBodies; ++i) {
                 float angle = MathUtils.map(i, 0, nBodies, 0, 2 * 3.1415f);
 
@@ -73,11 +79,11 @@ public class Squadron extends Enemy {
                 float yy = cy + ry * (float) Math.cos(angle);
 
                 bd.position.set(xx,yy);
-                m_bodies[i] = world.createBody(bd);
-                m_bodies[i].createFixture(fd);
+                m_bodies.add(b = world.createBody(bd));
+                b.createFixture(fd);
 
             /*joint core-triangle*/
-                jd.bodyA = m_bodies[i];
+                jd.bodyA = b;
                 jd.bodyB = body;
                 /*jd.localAnchorA.set(0.0f, 0.0f);
                 jd.localAnchorB.set(0.0f,0.0f);*/
@@ -85,32 +91,32 @@ public class Squadron extends Enemy {
                 p2 = jd.bodyB.getWorldPoint(jd.localAnchorB);
                 d = p2.sub(p1);
                 jd.length = d.length();
-                m_joints[i] = world.createJoint(jd);
+                world.createJoint(jd);
             }
 
             for (int i = 0; i < nBodies; ++i) {
-            /*joint triangle-triangle suivant*/
+            /*joint triangle-triangle_next*/
                 if(i != nBodies-1) {
-                    jd.bodyA = m_bodies[i];
-                    jd.bodyB = m_bodies[i+1];
+                    jd.bodyA = m_bodies.get(i);
+                    jd.bodyB = m_bodies.get(i+1);
                     /*jd.localAnchorA.set(0.0f, 0.0f);
                     jd.localAnchorB.set(0.0f, 0.0f);*/
                     p1 = jd.bodyA.getWorldPoint(jd.localAnchorA);
                     p2 = jd.bodyB.getWorldPoint(jd.localAnchorB);
                     d = p2.sub(p1);
                     jd.length = d.length();
-                    m_joints[i] = world.createJoint(jd);
+                    m_joints.add(world.createJoint(jd));
                 }
 
-                jd.bodyA = m_bodies[0];
-                jd.bodyB = m_bodies[nBodies-1];
+                jd.bodyA = m_bodies.get(0);
+                jd.bodyB = m_bodies.get(nBodies-1);
                 /*jd.localAnchorA.set(0.0f, 0.0f);
                 jd.localAnchorB.set(0.0f, 0.0f);*/
                 p1 = jd.bodyA.getWorldPoint(jd.localAnchorA);
                 p2 = jd.bodyB.getWorldPoint(jd.localAnchorB);
                 d = p2.sub(p1);
                 jd.length = d.length();
-                m_joints[nBodies*2-1] = world.createJoint(jd);
+                m_joints.add(world.createJoint(jd));
              }
         }
 
@@ -132,13 +138,57 @@ public class Squadron extends Enemy {
 
     @Override
     public boolean isDead() {
-        return false;
+        return body.getUserData() == Brush.DESTROY_BRUSH;
+    }
+
+    @Override
+    public void computeTimeStepData() {
+        super.computeTimeStepData();
+        /* check for all triangles */
+        Iterator<Body> it = m_bodies.iterator();
+        while (it.hasNext()) {
+            Body b = it.next();
+            if( b.m_fixtureList.getUserData() == Brush.DESTROY_BRUSH ) {
+                destroyTriangle(b);
+                it.remove();
+            }
+        }
+    }
+
+    /* destroy the triangle and put every triangle at each equal distance between each */
+    private void destroyTriangle(Body b) {
+        int index = m_bodies.indexOf(b);
+        DistanceJointDef jd = new DistanceJointDef();
+        float length = (((DistanceJoint)(m_joints.get(0))).getLength() * m_bodies.size()) / (m_bodies.size()-1);
+
+        int indexA, indexB;
+
+        if(m_bodies.size() > 2) {
+            if(index == 0) {
+                indexA = 1;
+                indexB = m_bodies.size()-1;
+            }
+            else if(index == m_bodies.size()-1) {
+                indexA = index-1;
+                indexB = 0;
+            }
+            else {
+                indexA = index-1;
+                indexB = index+1;
+            }
+
+            jd.bodyA = m_bodies.get(indexA);
+            jd.bodyB = m_bodies.get(indexB);
+            jd.length = length;
+            body.getWorld().createJoint(jd);
+        }
+        body.getWorld().destroyBody(b);
+
+        m_joints.forEach(j->(((DistanceJoint)(j)).setLength(length)));
     }
 
     @Override
     public void shoot() {
 
     }
-
-
 }

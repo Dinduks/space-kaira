@@ -12,7 +12,7 @@ public class Brush {
     private final boolean isOpaque;
     /*Constant Brush who mark that a fixture should die at next time step*/
     public static final Brush DESTROY_BRUSH;
-    static {DESTROY_BRUSH = new Brush(Color.BLACK,false);}
+    static {DESTROY_BRUSH = new Brush(Color.RED,false);}
 
     public Brush(Color color, boolean isOpaque) {
         this.color = color;

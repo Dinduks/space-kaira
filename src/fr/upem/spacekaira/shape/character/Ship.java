@@ -1,9 +1,6 @@
 package fr.upem.spacekaira.shape.character;
 
-import fr.upem.spacekaira.shape.AbstractShape;
-import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.BrushFactory;
-import fr.upem.spacekaira.shape.Viewport;
+import fr.upem.spacekaira.shape.*;
 import fr.upem.spacekaira.shape.character.factory.ArmedBombFactory;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -17,7 +14,7 @@ import java.util.List;
 /**
  * The player ship
  */
-public class Ship extends AbstractShape implements Shooter {
+public class Ship extends AbstractShape implements Shooter, DynamicContact{
     private boolean shield;
     private final Fixture shieldFix;
     private List<Bullet> bullets;
@@ -134,6 +131,11 @@ public class Ship extends AbstractShape implements Shooter {
     }
 
     @Override
+    public void checkForDeadBullet() {
+        Bullet.checkForDeadBullet(bullets);
+    }
+
+    @Override
     public void draw(Graphics2D graphics, Viewport viewport) {
         if (armedBomb != null) handleTheArmedBomb(graphics, viewport);
         shieldFix.setUserData((shield) ? new Brush(Color.BLUE, false) : null);
@@ -184,5 +186,15 @@ public class Ship extends AbstractShape implements Shooter {
                 Math.round(rightMotor.y - (int) viewport.getCameraScale()/2),
                 (int) viewport.getCameraScale(),
                 (int) viewport.getCameraScale());
+    }
+
+    @Override
+    public void computeTimeStepData() {
+        Bullet.checkForDeadBullet(bullets);
+    }
+
+    @Override
+    public boolean isDead() {
+        return false;
     }
 }
