@@ -14,7 +14,7 @@ public class KeyboardMain {
       Random random = new Random(0);
       Font font = new Font("arial", Font.BOLD, 30);
       for(;;) {
-        KeyboardEvent event = context.waitKeyboard();
+        KeyboardEvent event = context.waitKeys();
         if (event == null) {
           return;
         }

@@ -105,10 +105,14 @@ public class Game {
     private void handleKeyboardEvents(ApplicationContext context, Ship ship) {
         KeyboardEvent keyboardEvent;
 
-        keyboardEvent = context.pollKeyboard();
-        if (keyboardEvent != null) keys.add(keyboardEvent.getKey());
-        keyboardEvent = context.pollReleasedKeys();
-        if (keyboardEvent != null) keys.remove(keyboardEvent.getKey());
+        keyboardEvent = context.pollKeys();
+        if (keyboardEvent != null) {
+            if (keyboardEvent.isReleased()) {
+                keys.remove(keyboardEvent.getKey());
+            } else {
+                keys.add(keyboardEvent.getKey());
+            }
+        }
 
         keys.forEach(key -> handleKeyPress(key, ship));
     }

@@ -10,11 +10,13 @@ import fr.umlv.zen3.KeyboardKey.Modifier;
 public class KeyboardEvent {
   private final KeyboardKey key;
   private final int modifiers;
+  private final boolean released;
   private /*lazy*/ Set<Modifier> modifierSet;
 
-  KeyboardEvent(KeyboardKey key, int modifiers) {
+  KeyboardEvent(KeyboardKey key, int modifiers, boolean released) {
     this.key = key;
     this.modifiers = modifiers;
+    this.released = released;
   }
   
   /** Returns the keyboard key.
@@ -22,6 +24,13 @@ public class KeyboardEvent {
    */
   public KeyboardKey getKey() {
     return key;
+  }
+  
+  /** Returns true if the keyboard key is released.
+   * @return true is the keybord key is released.
+   */
+  public boolean isReleased() {
+    return released;
   }
   
   /** A set of the modifier keys that can contain
@@ -37,6 +46,6 @@ public class KeyboardEvent {
   
   @Override
   public String toString() {
-    return getModifiers()+" "+getKey();
+    return getModifiers() + " " + getKey() + ' ' + isReleased();
   }
 }

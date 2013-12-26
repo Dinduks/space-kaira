@@ -20,7 +20,7 @@ import javax.swing.WindowConstants;
 
 /**
  *  Main class of the Zen framework.
- *  Starting a GUI application is as simple as calling {@link #run(String, int, int, java.util.function.Consumer)}.
+ *  Starting a GUI application is as simple as calling {@link #run(String, int, int, Consumer)}. 
  */
 public class Application {
   private Application() {
@@ -68,22 +68,22 @@ public class Application {
         g.drawImage(buffer, 0, 0, null);
       }
     }
-
+    
     ArrayBlockingQueue<KeyboardEvent> keyboardEventQueue =
-        new ArrayBlockingQueue<>(20);
-    ArrayBlockingQueue<KeyboardEvent> releasedKeysEventQueue =
         new ArrayBlockingQueue<>(20);
     
     Canvas canvas = new Canvas();
     canvas.addKeyListener(new KeyAdapter() {
       @Override
       public void keyPressed(KeyEvent e) {
-        keyboardEventQueue.offer(new KeyboardEvent(KeyboardKey.key(e.getKeyCode()), e.getModifiersEx()));
+        offerKey(e, false);
       }
-
       @Override
       public void keyReleased(KeyEvent e) {
-        releasedKeysEventQueue.offer(new KeyboardEvent(KeyboardKey.key(e.getKeyCode()), e.getModifiersEx()));
+        offerKey(e, true);
+      }
+      private void offerKey(KeyEvent e, boolean isReleased) {
+        keyboardEventQueue.offer(new KeyboardEvent(KeyboardKey.key(e.getKeyCode()), e.getModifiersEx(), isReleased));
       }
     });
     
@@ -101,21 +101,43 @@ public class Application {
           throw new IllegalStateException("try to do something with another thread than the application thread");
         }
       }
-
+      
       @Override
       public KeyboardEvent pollKeyboard() {
         checkThread();
-        return keyboardEventQueue.poll();
-      }
-
-      @Override
-      public KeyboardEvent pollReleasedKeys() {
-        checkThread();
-        return releasedKeysEventQueue.poll();
+        KeyboardEvent event;
+        while((event = keyboardEventQueue.poll()) != null) {
+          if (!event.isReleased()) {
+            return event;
+          }
+        }
+        return null;
       }
       
       @Override
       public KeyboardEvent waitKeyboard() {
+        checkThread();
+        try {
+          for(;;) {
+            KeyboardEvent event = keyboardEventQueue.take();
+            if (!event.isReleased()) {
+              return event;
+            }
+          }
+        } catch (InterruptedException e) {
+          Thread.currentThread().interrupt();
+          return null;
+        }
+      }
+      
+      @Override
+      public KeyboardEvent pollKeys() {
+        checkThread();
+        return keyboardEventQueue.poll();
+      }
+      
+      @Override
+      public KeyboardEvent waitKeys() {
         checkThread();
         try {
           return keyboardEventQueue.take();

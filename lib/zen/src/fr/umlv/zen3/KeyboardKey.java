@@ -11,7 +11,7 @@ import java.util.Set;
  * A keyboard key.
  * 
  * @see KeyboardEvent
- * @see fr.umlv.zen3.KeyboardKey.Modifier
+ * @see Modifier
  */
 public enum KeyboardKey {
   META(KeyEvent.VK_META),
