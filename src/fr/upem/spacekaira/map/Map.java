@@ -61,10 +61,10 @@ public class Map {
     public void initMap() {
         //TODO config class pour la l'init
         ship = factoryPool.getShipFactory().createShip(enemies, false);
-        enemies.add(factoryPool.getEnemyFactory().createEnemy(10, 10));
+        enemies.add(factoryPool.getEnemyFactory().createEnemy(-10, -10));
         enemies.add(factoryPool.getEnemyFactory().createEnemy(20, 20));
         Brush blueBrush = new Brush(Color.BLUE, false);
-        Squadron squadron = new Squadron(world, 0, 10, blueBrush, blueBrush);
+        Squadron squadron = new Squadron(world, -20, 10, blueBrush, blueBrush);
         IntergalacticCruiser cruiser =
                 new IntergalacticCruiser(world, 40, 40, blueBrush, blueBrush);
         enemies.add(squadron);

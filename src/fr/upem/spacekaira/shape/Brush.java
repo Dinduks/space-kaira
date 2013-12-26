@@ -3,6 +3,7 @@ package fr.upem.spacekaira.shape;
 import org.jbox2d.common.Vec2;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * Contains data to draw a shape

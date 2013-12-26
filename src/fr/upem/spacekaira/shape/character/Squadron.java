@@ -19,7 +19,7 @@ public class Squadron extends Enemy {
     private List<Body> m_bodies = new ArrayList<>(nBodies);
     private List<Joint> m_joints = new ArrayList<>(nBodies*2);
 
-    public Squadron(World world, int x, int y, Brush color, Brush bulletColor) {
+    public Squadron(World world, float x, float y, Brush color, Brush bulletColor) {
         super(color, bulletColor);
 
         /*Main square*/
@@ -41,7 +41,8 @@ public class Squadron extends Enemy {
             fixtureDef.filter.categoryBits = FixtureType.STD_ENEMY;
             fixtureDef.filter.maskBits = FixtureType.BULLET |
                     FixtureType.SHIP |
-                    FixtureType.PLANET;
+                    FixtureType.PLANET |
+                    FixtureType.STD_ENEMY;
             body.createFixture(fixtureDef);
         }
         {
@@ -59,13 +60,13 @@ public class Squadron extends Enemy {
             fd.density = 5.0f;
             fd.shape = shape;
             fd.filter.categoryBits = FixtureType.STD_ENEMY;
-            fd.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP | FixtureType.PLANET;
+            fd.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP | FixtureType.PLANET | FixtureType.STD_ENEMY;
 
             DistanceJointDef jd = new DistanceJointDef();
             Vec2 p1,p2,d;
 
-            float cx = 0.0f;
-            float cy = 10.0f;
+            float cx = x;
+            float cy = y;
             float rx = 5.0f;
             float ry = 5.0f;
 
