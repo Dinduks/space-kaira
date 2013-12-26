@@ -46,11 +46,12 @@ public class MpContactListener implements ContactListener {
     };
 
     private static ContactAction bomb = (f1, f2) -> {
-        f2.setUserData(Brush.DESTROY_BRUSH);
         if (f1.getBody().getUserData() instanceof Ship) {
             ((Ship) f1.getBody().getUserData()).addBomb();
+            f2.setUserData(Brush.DESTROY_BRUSH);
         } else {
             ((Ship) f2.getBody().getUserData()).addBomb();
+            f1.setUserData(Brush.DESTROY_BRUSH);
         }
     };
 

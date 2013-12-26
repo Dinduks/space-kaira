@@ -109,9 +109,4 @@ public abstract class Enemy extends AbstractShape implements Shooter, DynamicCon
     public void checkForDeadBullet() {
         Bullet.checkForDeadBullet(bullets);
     }
-
-    @Override
-    public void destroy() {
-        super.destroy();
-    }
 }

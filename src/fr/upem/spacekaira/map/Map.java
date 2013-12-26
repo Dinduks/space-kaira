@@ -1,6 +1,5 @@
 package fr.upem.spacekaira.map;
 
-import com.sun.org.omg.SendingContext._CodeBaseImplBase;
 import fr.umlv.zen3.ApplicationContext;
 import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.BrushFactory;
@@ -78,7 +77,7 @@ public class Map {
     public void computeDataGame() {
         checkBulletOutScreen();
         ship.computeTimeStepData();
-        checkComputedCollision();
+        cleanDeadElements();
         moveEnemy();
         spawnABombIfNecessary();
     }
@@ -95,14 +94,23 @@ public class Map {
         bombs.add(BombFactory.create(world, position, brush));
     }
 
-    private void checkComputedCollision() {
-        Iterator<Enemy> it = enemies.iterator();
-        while (it.hasNext()) {
-            Enemy e = it.next();
+    private void cleanDeadElements() {
+        Iterator<Enemy> enemyIt = enemies.iterator();
+        while (enemyIt.hasNext()) {
+            Enemy e = enemyIt.next();
             e.computeTimeStepData();
             if (e.isDead()) {
                 e.destroy();
-                it.remove();
+                enemyIt.remove();
+            }
+        }
+
+        Iterator<Bomb> bombIt = bombs.iterator();
+        while (bombIt.hasNext()) {
+            Bomb bomb = bombIt.next();
+            if (bomb.isDead()) {
+                bomb.destroy();
+                bombIt.remove();
             }
         }
     }
