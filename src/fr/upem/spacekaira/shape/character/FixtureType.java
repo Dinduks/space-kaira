@@ -11,8 +11,10 @@ public class FixtureType {
     public static final int PLANET = 0x2;
     public static final int STD_ENEMY = 0x04;
     public static final int SHIP = 0x08;
-    public static final int BOMB = 0x16;
-    public static final int ARMED_BOMB = 0x32;
+    public static final int BOMB = 0x10;
+    public static final int ARMED_BOMB = 0x20;
+    public static final int MBOMB = 0x40;
+    public static final int ARMED_MBOMB = 0x80;
 
     public static int typeToIndex(int fixtureType) {
         switch (fixtureType) {
@@ -22,6 +24,8 @@ public class FixtureType {
             case SHIP:      return 3;
             case BOMB:      return 4;
             case ARMED_BOMB: return 5;
+            case MBOMB:      return 6;
+            case ARMED_MBOMB:return 7;
             default:        return -1;
         }
     }

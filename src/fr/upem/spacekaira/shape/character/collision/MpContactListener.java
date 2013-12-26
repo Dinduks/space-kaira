@@ -55,6 +55,15 @@ public class MpContactListener implements ContactListener {
         }
     };
 
+    private static ContactAction mbomb = (f1, f2) -> {
+        f2.setUserData(Brush.DESTROY_BRUSH);
+        if (f1.getBody().getUserData() instanceof Ship) {
+            ((Ship) f1.getBody().getUserData()).addMegaBomb();
+        } else {
+            ((Ship) f2.getBody().getUserData()).addMegaBomb();
+        }
+    };
+
     private static ContactAction bombOnEnemy = (f1, f2) -> {
         if (f1.getBody().getUserData() instanceof Enemy) {
             f1.setUserData(Brush.DESTROY_BRUSH);
@@ -63,14 +72,19 @@ public class MpContactListener implements ContactListener {
         }
     };
 
+    private static ContactAction mBombOnEnemy = (f1, f2) -> {
+    };
+
     private static ContactAction [][] action = {
-                       /* BULLET PLANET STD_ENEMY    SHIP         BOMB, ARMED_BOMB */
-        /* BULLET */    { nil,   rSD,   dSD,         dSD,         nil,  nil },
-        /* PLANET */    { lSD,   nil,   nil,         nil,         nil,  nil },
-        /* STD_ENEMY */ { dSD,   nil,   nil,         enemyVsShip, nil,  bombOnEnemy },
-        /* SHIP */      { dSD,   nil,   shipVsEnemy, nil,         bomb, nil },
-        /* BOMB */      { nil,   nil,   nil,         bomb,        nil,  nil },
-        /* ARMED_BOMB */{ nil,   nil,   bombOnEnemy, nil,         nil,  nil }
+                       /* BULLET PLANET STD_ENEMY    SHIP         BOMB, ARMED_BOMB,  MBOMB, ARMED_MBOMB */
+        /* BULLET */    { nil,   rSD,   dSD,         dSD,         nil,  nil,         nil,   nil },
+        /* PLANET */    { lSD,   nil,   nil,         nil,         nil,  nil ,        nil,   nil},
+        /* STD_ENEMY */ { dSD,   nil,   nil,         enemyVsShip, nil,  bombOnEnemy, nil,   mBombOnEnemy },
+        /* SHIP */      { dSD,   nil,   shipVsEnemy, nil,         bomb, nil,         mbomb, nil },
+        /* BOMB */      { nil,   nil,   nil,         bomb,        nil,  nil,         nil,   nil },
+        /* ARMED_BOMB */{ nil,   nil,   bombOnEnemy, nil,         nil,  nil,         nil,   nil },
+        /* MBOMB */     { nil,   nil,   nil,         mbomb,       nil,  nil,         nil,   nil },
+        /* ARMED_MBOMB*/{ nil,   nil,   mBombOnEnemy,nil,         nil,  nil,         nil,   nil }
     };
 
     @Override

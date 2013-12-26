@@ -1,33 +1,40 @@
-package fr.upem.spacekaira.shape.character;
-
+package fr.upem.spacekaira.shape.character.bomb.armed;
 
 import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.DynamicContact;
+import fr.upem.spacekaira.shape.character.Enemy;
+import fr.upem.spacekaira.shape.character.FixtureType;
+import fr.upem.spacekaira.shape.character.bomb.BombType;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
 
-/**
- * Represents a bomb that has been dropped
- */
-public class ArmedBomb extends AbstractShape implements DynamicContact {
-    private FixtureDef armedBombFixtureDef = new FixtureDef();
-    private Brush brushAfterExploding;
-    private CircleShape circleShape = new CircleShape();
+import java.util.List;
+
+abstract public class AbstractArmedBomb
+        extends AbstractShape implements DynamicContact {
+    protected FixtureDef armedBombFixtureDef = new FixtureDef();
+    protected Brush brushAfterExploding;
+    final private Vec2 position;
+    private BombType bombType;
+    protected CircleShape circleShape = new CircleShape();
     private final long dropTime = System.currentTimeMillis();
-    private Fixture fixture;
-    private float radius = 0.5f;
+    protected Fixture fixture;
+    protected float radius = 0.5f;
 
     /**
      * Build A new armed bomb
+     *
      * @param world The current world
      * @param position The position of the armed bomb
      * @param initialBrush
      * @param brushAfterExploding
      */
-    public ArmedBomb(World world, Vec2 position, Brush initialBrush,
-                     Brush brushAfterExploding) {
+    public AbstractArmedBomb(World world, Vec2 position, Brush initialBrush,
+                     Brush brushAfterExploding, BombType bombType) {
+        this.position = position;
+        this.bombType = bombType;
         this.brushAfterExploding = brushAfterExploding;
 
         BodyDef bodyDef = new BodyDef();
@@ -50,19 +57,10 @@ public class ArmedBomb extends AbstractShape implements DynamicContact {
     }
 
     /**
-     * @return true if exploded, false if still exploding
+     * @return true if done exploding, false otherwise
+     * @param enemies
      */
-    public boolean explode() {
-        if (radius >= 5.0f) return false;
-        circleShape.setRadius((radius = radius + 0.5f));
-        armedBombFixtureDef.shape = circleShape;
-        armedBombFixtureDef.userData = brushAfterExploding;
-        armedBombFixtureDef.filter.maskBits = FixtureType.STD_ENEMY;
-        body.destroyFixture(fixture);
-        body.createFixture(armedBombFixtureDef);
-
-        return true;
-    }
+    abstract public boolean explode(List<Enemy> enemies);
 
     @Override
     public void computeTimeStepData() {
@@ -75,5 +73,13 @@ public class ArmedBomb extends AbstractShape implements DynamicContact {
 
     public long getDropTime() {
         return dropTime;
+    }
+
+    protected float getRadius() {
+        return radius;
+    }
+
+    public void setRadius(float radius) {
+        this.radius = radius;
     }
 }

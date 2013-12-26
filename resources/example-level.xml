@@ -2,5 +2,6 @@
 <configuration>
   <gameDuration>120</gameDuration>
   <planetsDensity>2</planetsDensity> // How many planets per screen?
-  <bombsFrequency>30</bombsFrequency> // How many bombs per minute?
+  <bombsFrequency>60</bombsFrequency> // How many bombs per minute?
+  <megaBombsPerCent>100</megaBombsPerCent> // Percentage on mega bombs
 </configuration>

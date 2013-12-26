@@ -15,7 +15,6 @@ import fr.upem.spacekaira.util.Util;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
-import javax.xml.transform.sax.SAXSource;
 import java.util.HashSet;
 
 /**
@@ -49,8 +48,7 @@ public class Game {
         viewport.setCamera(0, 0, CAMERA_SCALE);
 
         //Init Map
-        Map map = new Map(world, viewport, height, width,
-                config.getPlanetsDensity(), config.getBombsFrequency());
+        Map map = new Map(world, viewport, height, width, config);
         map.initMap();
 
         Synchronizer syn = new Synchronizer((long)(REFRESH_TIME * 1000));

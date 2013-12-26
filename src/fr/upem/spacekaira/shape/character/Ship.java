@@ -1,7 +1,12 @@
 package fr.upem.spacekaira.shape.character;
 
 import fr.upem.spacekaira.shape.*;
-import fr.upem.spacekaira.shape.character.factory.ArmedBombFactory;
+import fr.upem.spacekaira.shape.AbstractShape;
+import fr.upem.spacekaira.shape.Brush;
+import fr.upem.spacekaira.shape.Viewport;
+import fr.upem.spacekaira.shape.character.bomb.armed.AbstractArmedBomb;
+import fr.upem.spacekaira.shape.character.factory.bomb.armed.ArmedMegaBombFactory;
+import fr.upem.spacekaira.shape.character.factory.bomb.armed.ArmedNormalBombFactory;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
@@ -20,10 +25,13 @@ public class Ship extends AbstractShape implements DynamicContact{
     private List<Bullet> bullets;
     private final Brush bulletColor;
     private boolean hasBomb;
-    private boolean mustDropBomb;
-    private ArmedBomb armedBomb;
+    private boolean megaBomb;
+    private AbstractArmedBomb armedBomb;
+    private List<Enemy> enemies;
 
-    public Ship(World world, Brush shipColor, Brush bulletColor) {
+    public Ship(World world, List<Enemy> enemies, Brush shipColor,
+                Brush bulletColor) {
+        this.enemies = enemies;
         this.bulletColor = bulletColor;
 
         //Bullet list
@@ -40,8 +48,11 @@ public class Ship extends AbstractShape implements DynamicContact{
         FixtureDef ship = null;
         {
             PolygonShape polygonShape = new PolygonShape();
-            Vec2[] tab = {new Vec2(0,0),new Vec2(-1,-3),new Vec2(0,-3),new Vec2(1,-3)};
-            polygonShape.set(tab,4);
+            Vec2[] tab = {new Vec2(0, 0),
+                    new Vec2(-1, -3),
+                    new Vec2(0, -3),
+                    new Vec2(1, -3)};
+            polygonShape.set(tab, 4);
 
             ship = new FixtureDef();
             ship.shape = polygonShape;
@@ -51,7 +62,8 @@ public class Ship extends AbstractShape implements DynamicContact{
             ship.filter.maskBits = FixtureType.PLANET |
                     FixtureType.STD_ENEMY |
                     FixtureType.BULLET |
-                    FixtureType.BOMB;
+                    FixtureType.BOMB |
+                    FixtureType.MBOMB;
         }
 
         //Shield
@@ -66,7 +78,8 @@ public class Ship extends AbstractShape implements DynamicContact{
             shield.density = 0;
             shield.userData = null; //Use with caution
             shield.filter.categoryBits = FixtureType.SHIP;
-            shield.filter.maskBits = FixtureType.PLANET | FixtureType.STD_ENEMY | FixtureType.BULLET;
+            shield.filter.maskBits = FixtureType.PLANET |
+                    FixtureType.STD_ENEMY | FixtureType.BULLET;
         }
 
         body.createFixture(ship);
@@ -99,11 +112,15 @@ public class Ship extends AbstractShape implements DynamicContact{
 
     public void dropBomb() {
         if (!hasBomb) return;
+
         hasBomb = false;
-        armedBomb = ArmedBombFactory.create(body.getWorld(),
-                getPosition(),
-                (new BrushFactory()).createBrush(Color.RED, true),
-                (new BrushFactory()).createBrush(Color.RED, false));
+        if (!megaBomb) {
+            armedBomb = ArmedNormalBombFactory.create(body.getWorld(),
+                    getPosition());
+        } else {
+            armedBomb = ArmedMegaBombFactory.create(body.getWorld(),
+                    getPosition());
+        }
     }
 
     public Vec2 getLinearVelocity() {
@@ -149,8 +166,11 @@ public class Ship extends AbstractShape implements DynamicContact{
 
     private void handleTheArmedBomb(Graphics2D graphics, Viewport viewport) {
         if (System.currentTimeMillis() - armedBomb.getDropTime() >= 1000) {
-            if (armedBomb.explode()) armedBomb.draw(graphics, viewport);
-            else                     armedBomb = null;
+            if (armedBomb.explode(enemies)) {
+                armedBomb.draw(graphics, viewport);
+            } else {
+                armedBomb = null;
+            }
         } else {
             armedBomb.draw(graphics, viewport);
         }
@@ -160,8 +180,15 @@ public class Ship extends AbstractShape implements DynamicContact{
         shield = true;
     }
 
+    // TODO: Refactor this shit
+    public void addMegaBomb() {
+        hasBomb = true;
+        megaBomb = true;
+    }
+
     public void addBomb() {
         hasBomb = true;
+        megaBomb = false;
     }
 
     public boolean hasBomb() {

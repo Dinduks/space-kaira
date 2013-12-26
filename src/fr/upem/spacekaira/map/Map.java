@@ -1,11 +1,13 @@
 package fr.upem.spacekaira.map;
 
 import fr.umlv.zen3.ApplicationContext;
+import fr.upem.spacekaira.config.Configuration;
 import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.BrushFactory;
 import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.character.*;
-import fr.upem.spacekaira.shape.character.factory.BombFactory;
+import fr.upem.spacekaira.shape.character.bomb.nonarmed.AbstractBomb;
+import fr.upem.spacekaira.shape.character.factory.bomb.nonarmed.MegaBombFactory;
+import fr.upem.spacekaira.shape.character.factory.bomb.nonarmed.NormalBombFactory;
 import fr.upem.spacekaira.shape.character.factory.FactoryPool;
 import fr.upem.spacekaira.util.Util;
 import org.jbox2d.common.Vec2;
@@ -31,20 +33,21 @@ public class Map {
     private Viewport viewport;
     private FactoryPool factoryPool;
 
-    private List<Bomb> bombs = new ArrayList<>();
+    private List<AbstractBomb> bombs = new ArrayList<>();
     private int bombsFrequency;
-
-    private Brush brush =
-            (new BrushFactory()).createBrush(Color.LIGHT_GRAY, true);
+    private final int megaBombsPerCent;
 
     private int hudXPosition;
     private int hudYPosition;
 
+    private Random random = new Random();
+
     public Map(World world, Viewport viewport, final int height,
-               final int width, int planetsDensity, int bombsFrequency) {
+               final int width, Configuration config) {
         this.world = world;
-        this.planetsDensity = planetsDensity;
-        this.bombsFrequency = bombsFrequency;
+        this.planetsDensity = config.getPlanetsDensity();
+        this.bombsFrequency = config.getBombsFrequency();
+        this.megaBombsPerCent = config.getMegaBombsPerCent();
         enemies = new LinkedList<>();
         this.height = height;
         this.width = width;
@@ -57,7 +60,7 @@ public class Map {
 
     public void initMap() {
         //TODO config class pour la l'init
-        ship = factoryPool.getShipFactory().createShip(false);
+        ship = factoryPool.getShipFactory().createShip(enemies, false);
         enemies.add(factoryPool.getEnemyFactory().createEnemy(10, 10));
         enemies.add(factoryPool.getEnemyFactory().createEnemy(20, 20));
         Brush blueBrush = new Brush(Color.BLUE, false);
@@ -92,7 +95,11 @@ public class Map {
 
         lastTimeWasABombSpawned = currentTime;
         Vec2 position = viewport.getRandomPosition(ship);
-        bombs.add(BombFactory.create(world, position, brush));
+        if (random.nextInt(100) > megaBombsPerCent) {
+            bombs.add(NormalBombFactory.create(world, position));
+        } else {
+            bombs.add(MegaBombFactory.create(world, position));
+        }
     }
 
     private void cleanDeadElements() {
@@ -106,9 +113,9 @@ public class Map {
             }
         }
 
-        Iterator<Bomb> bombIt = bombs.iterator();
+        Iterator<AbstractBomb> bombIt = bombs.iterator();
         while (bombIt.hasNext()) {
-            Bomb bomb = bombIt.next();
+            AbstractBomb bomb = bombIt.next();
             if (bomb.isDead()) {
                 bomb.destroy();
                 bombIt.remove();
