@@ -15,7 +15,6 @@ public class FixtureType {
     public static final int ARMED_BOMB = 0x20;
     public static final int MBOMB = 0x40;
     public static final int ARMED_MBOMB = 0x80;
-//    public static final int BULLET_ENEMY = 0x64;
     public static final int BULLET_ENEMY = 0x100;
 
     public static int typeToIndex(int fixtureType) {
