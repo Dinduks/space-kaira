@@ -147,10 +147,6 @@ public class Ship extends AbstractShape implements DynamicContact{
         Bullet.checkForBulletsOutScreen(viewport, bullets);
     }
 
-    public void checkForDeadBullet() {
-        Bullet.checkForDeadBullet(bullets);
-    }
-
     @Override
     public void draw(Graphics2D graphics, Viewport viewport) {
         if (armedBomb != null) handleTheArmedBomb(graphics, viewport);
@@ -193,6 +189,14 @@ public class Ship extends AbstractShape implements DynamicContact{
 
     public boolean hasBomb() {
         return hasBomb;
+    }
+
+    public boolean hasNormalBomb() {
+        return hasBomb && !megaBomb;
+    }
+
+    public boolean hasMegaBomb() {
+        return hasBomb && megaBomb;
     }
 
     private void drawMotors(Graphics2D graphics, Viewport viewport) {

@@ -82,7 +82,7 @@ public class Map {
         ship.computeTimeStepData();
         cleanDeadElements();
         moveEnemy();
-        enemies.forEach(e->e.shoot(ship));
+        enemies.forEach(e -> e.shoot(ship));
         spawnABombIfNecessary();
     }
 
@@ -148,17 +148,23 @@ public class Map {
             planets.forEach(p -> p.draw(graphics, viewport));
             enemies.forEach(e -> e.draw(graphics, viewport));
             toggleShieldIfNearAPlanet(planets);
-            if (ship.hasBomb()) drawBombIcon(graphics);
+            if (ship.hasBomb()) updateBombInfo(graphics);
 
             drawTimeCounter(graphics, startTime, gameDuration);
         });
     }
 
-    private void drawBombIcon(Graphics2D graphics) {
+    private void updateBombInfo(Graphics2D graphics) {
         Font font = new Font("arial", Font.BOLD, 19);
-        graphics.setPaint(new Color(255, 255, 255));
         graphics.setFont(font);
-        graphics.drawString("BOMB", hudXPosition, hudYPosition + 30);
+        if (ship.hasMegaBomb()) {
+            graphics.setPaint(Color.YELLOW);
+            graphics.drawString("MEGA", hudXPosition, hudYPosition + 30);
+            graphics.drawString("BOMB", hudXPosition, hudYPosition + 47);
+        } else {
+            graphics.setPaint(Color.WHITE);
+            graphics.drawString("BOMB", hudXPosition, hudYPosition + 30);
+        }
     }
 
     private void toggleShieldIfNearAPlanet(Set<Planet> planets) {

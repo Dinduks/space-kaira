@@ -17,7 +17,7 @@ import java.util.HashMap;
 /**
  * Represents a bomb
  */
-public class AbstractBomb extends AbstractShape implements DynamicContact {
+public abstract class AbstractBomb extends AbstractShape implements DynamicContact {
     private BombType bombType;
 
     /**
