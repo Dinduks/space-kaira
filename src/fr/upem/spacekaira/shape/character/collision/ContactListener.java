@@ -5,15 +5,13 @@ import fr.upem.spacekaira.shape.character.Enemy;
 import fr.upem.spacekaira.shape.character.FixtureType;
 import fr.upem.spacekaira.shape.character.Ship;
 import org.jbox2d.callbacks.ContactImpulse;
-import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.contacts.Contact;
 
 import java.util.function.BiConsumer;
 
-// TODO: Add Doc
-public class MpContactListener implements ContactListener {
+public class ContactListener implements org.jbox2d.callbacks.ContactListener {
     @FunctionalInterface
     interface ContactAction extends BiConsumer<Fixture, Fixture> {}
 
@@ -23,25 +21,25 @@ public class MpContactListener implements ContactListener {
         f2.setUserData(Brush.DESTROY_BRUSH);
     };
 
-    private static ContactAction lSD =  (f1,f2) -> {
+    private static ContactAction lSD = (f1,f2) -> {
         f1.setUserData(Brush.DESTROY_BRUSH);
     };
 
-    private static ContactAction rSD =  (f1,f2) -> {
+    private static ContactAction rSD = (f1,f2) -> {
         f1.setUserData(Brush.DESTROY_BRUSH);
     };
 
-    private static ContactAction nil =  (f1,f2) -> {};
+    private static ContactAction nil = (f1,f2) -> {};
 
-    private static ContactAction enemyVsShip =  (f1,f2) -> {
-        if (((Ship) f2.getBody().getUserData()).shield()) {
-            f1.setUserData(Brush.DESTROY_BRUSH);
-        }
-    };
-
-    private static ContactAction shipVsEnemy =  (f1,f2) -> {
-        if (((Ship) f1.getBody().getUserData()).shield()) {
-            f2.setUserData(Brush.DESTROY_BRUSH);
+    private static ContactAction shipVsEnemy = (f1, f2) -> {
+        if (f1.getBody().getUserData() instanceof Ship) {
+            if (((Ship) f1.getBody().getUserData()).shield()) {
+                f2.setUserData(Brush.DESTROY_BRUSH);
+            }
+        } else {
+            if (((Ship) f2.getBody().getUserData()).shield()) {
+                f1.setUserData(Brush.DESTROY_BRUSH);
+            }
         }
     };
 
@@ -72,32 +70,24 @@ public class MpContactListener implements ContactListener {
         }
     };
 
-    private static ContactAction mBombOnEnemy = (f1, f2) -> {
-    };
-
-    private static ContactAction [][] action = {
+    private static ContactAction[][] action = {
                           /* BULLET PLANET STD_ENEMY    SHIP         BOMB, ARMED_BOMB,  MBOMB, ARMED_MBOMB   BULLET_ENEMY */
         /* BULLET */       { nil,   rSD,   dSD,         nil,         nil,  nil,         nil,   nil,          nil },
         /* PLANET */       { lSD,   nil,   nil,         nil,         nil,  nil ,        nil,   nil,          nil },
-        /* STD_ENEMY */    { dSD,   nil,   nil,         enemyVsShip, nil,  bombOnEnemy, nil,   mBombOnEnemy, nil },
+        /* STD_ENEMY */    { dSD,   nil,   nil,         shipVsEnemy, nil,  bombOnEnemy, nil,   nil,          nil },
         /* SHIP */         { nil,   nil,   shipVsEnemy, nil,         bomb, nil,         mbomb, nil,          shipVsEnemy },
         /* BOMB */         { nil,   nil,   nil,         bomb,        nil,  nil,         nil,   nil,          nil },
         /* ARMED_BOMB */   { nil,   nil,   bombOnEnemy, nil,         nil,  nil,         nil,   nil,          nil },
         /* MBOMB */        { nil,   nil,   nil,         mbomb,       nil,  nil,         nil,   nil,          nil },
-        /* ARMED_MBOMB*/   { nil,   nil,   mBombOnEnemy,nil,         nil,  nil,         nil,   nil,          nil },
-        /* BULLET_ENEMY */ { nil,   nil,   nil,         enemyVsShip, nil,  nil,         nil,   nil,          nil }
+        /* ARMED_MBOMB */  { nil,   nil,   nil,         nil,         nil,  nil,         nil,   nil,          nil },
+        /* BULLET_ENEMY */ { nil,   nil,   nil,         shipVsEnemy, nil,  nil,         nil,   nil,          nil }
     };
 
     @Override
     public void beginContact(Contact contact) {
-        //TODO suppress debug stuff
-//        System.out.println(contact.getFixtureA().getBody().getUserData().getClass().getName() + " & " +
-//                contact.getFixtureB().getBody().getUserData().getClass().getName() + "\n");
-
         Fixture f1 = contact.getFixtureA();
         Fixture f2 = contact.getFixtureB();
 
-        // TODO: Make this readable
         action[FixtureType.typeToIndex(f1.getFilterData().categoryBits)]
               [FixtureType.typeToIndex(f2.getFilterData().categoryBits)].accept(f1, f2);
     }
@@ -115,5 +105,10 @@ public class MpContactListener implements ContactListener {
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
         //Not use
+    }
+
+    private void debug(Contact contact) {
+        System.out.println(contact.getFixtureA().getBody().getUserData().getClass().getName() + " & " +
+                contact.getFixtureB().getBody().getUserData().getClass().getName() + "\n");
     }
 }
