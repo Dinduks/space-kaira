@@ -11,8 +11,7 @@ import org.jbox2d.dynamics.joints.DistanceJointDef;
 import org.jbox2d.dynamics.joints.Joint;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 import java.util.List;
 
 public class Squadron extends Enemy {
@@ -187,8 +186,34 @@ public class Squadron extends Enemy {
         m_joints.forEach(j->(((DistanceJoint)(j)).setLength(length)));
     }
 
+    private static long lastShootTime = 0;
     @Override
     public void shoot(Ship ship) {
 
+        if(m_bodies.size() >= 3) {
+            Map<Body,Float> lengthMap = new HashMap<>(nBodies);
+
+            Vec2 shipSquad = ship.getPosition().sub(body.getPosition());
+            shipSquad.normalize();
+
+            for (Body b : m_bodies) {
+                lengthMap.put(b, ship.getPosition().sub(b.getPosition()).length());
+            }
+            if (System.currentTimeMillis() - lastShootTime < 1000) return;
+
+            int limit = (m_bodies.size() == 3)?1:3;
+
+            lengthMap.entrySet().stream().sorted((o1, o2) -> Float.compare(o1.getValue(), o2.getValue()))
+                    .limit(3).forEach( e -> {
+
+                    bullets.add(new Bullet(
+                            body.getWorld(),
+                            e.getKey().getPosition().add(shipSquad.mul(2)),
+                            ship.getPosition().sub(e.getKey().getPosition()),
+                            e.getKey().getAngle(),
+                            bulletColor));
+                });
+            lastShootTime = System.currentTimeMillis();
+        }
     }
 }

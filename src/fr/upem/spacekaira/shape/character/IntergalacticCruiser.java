@@ -62,12 +62,25 @@ public class IntergalacticCruiser extends Enemy {
 
     @Override
     public void shoot(Ship ship) {
-        //shootUp(); shootDown();
+        Vec2 upCanon = body.getWorldVector(new Vec2(0, 1));
+        Vec2 downCanon = body.getWorldVector(new Vec2(0, -1));
+
+        Vec2 shipIc = ship.getPosition().sub(body.getPosition());
+        shipIc.normalize();
+
+        //Up Canon
+        if( upCanon.sub(shipIc).length() <= 0.05f )
+            shootUp();
+
+        //Down Canon
+        if( downCanon.sub(shipIc).length() <= 0.05f )
+            shootDown();
     }
 
     @Override
     public void move(Ship ship) {
-        Vec2 speed = follow(ship.getPosition(), body.getPosition(), ship.getLinearVelocity(), body.getLinearVelocity(), 0.1f);
+        Vec2 speed = follow(ship.getPosition(), body.getPosition(), ship.getLinearVelocity(), body.getLinearVelocity(), 0.6f);
         body.setLinearVelocity(speed);
+        body.setAngularVelocity(2);
     }
 }

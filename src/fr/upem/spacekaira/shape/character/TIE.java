@@ -134,6 +134,7 @@ public class TIE extends Enemy {
         if( leftCanon.sub(shipTie).length() <= 0.05f )
             shootLeft();
 
+        //rightCanon
         if( rightCanon.sub(shipTie).length() <= 0.05f )
             shootRight();
     }

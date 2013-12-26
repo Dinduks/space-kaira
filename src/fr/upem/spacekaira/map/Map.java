@@ -59,13 +59,13 @@ public class Map {
         //TODO config class pour la l'init
         ship = factoryPool.getShipFactory().createShip(false);
         enemies.add(factoryPool.getEnemyFactory().createEnemy(10, 10));
-        //enemies.add(factoryPool.getEnemyFactory().createEnemy(20, 20));
+        enemies.add(factoryPool.getEnemyFactory().createEnemy(20, 20));
         Brush blueBrush = new Brush(Color.BLUE, false);
-        //Squadron squadron = new Squadron(world, 0, 10, blueBrush, blueBrush);
-        //IntergalacticCruiser cruiser =
+        Squadron squadron = new Squadron(world, 0, 10, blueBrush, blueBrush);
+        IntergalacticCruiser cruiser =
                 new IntergalacticCruiser(world, 40, 40, blueBrush, blueBrush);
-        //enemies.add(squadron);
-        //enemies.add(cruiser);
+        enemies.add(squadron);
+        enemies.add(cruiser);
         planetGenerator = PlanetGenerator.newPlanetGenerator(planetsDensity,
                 viewport, width, height, ship, factoryPool.getPlanetFactory());
     }
