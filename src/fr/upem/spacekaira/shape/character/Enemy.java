@@ -61,23 +61,26 @@ public abstract class Enemy extends AbstractShape implements ShooterEnemy, Dynam
     abstract public void move(Ship ship);
 
     /**
-     * This method compute the speed of B when you want that B rotateAroundDot around A
+     * This method computes the speed of B when you want that B rotateAroundDot
+     * around A
+     *
      * @param A a dot A
      * @param B a dot B
      * @param limit max(distance(A,B))
      * @param angleByCall Angle to give at B at each call (in radian)
      * @return the new Speed of B (~0.017f)
      */
-    protected Vec2 rotateAroundDot(Vec2 A, Vec2 B, float limit, float angleByCall) {
+    protected Vec2 computeRotationSpeed(Vec2 A, Vec2 B, float limit,
+                                        float angleByCall) {
         Vec2 BA = A.sub(B);
         float length = BA.length();
 
-        if(Math.abs(length - limit) > 1) {
+        if (Math.abs(length - limit) > 1) {
             BA.normalize();
-            if(length > limit) {
-                BA = BA.mul(length-0.5f);
-            }else {
-                BA = BA.mul(length+0.1f);
+            if (length > limit) {
+                BA = BA.mul(length - 0.5f);
+            } else {
+                BA = BA.mul(length + 0.1f);
             }
         }
 
@@ -89,20 +92,23 @@ public abstract class Enemy extends AbstractShape implements ShooterEnemy, Dynam
     }
 
     /**
-     * This method compute a speed of B, when you want that B follow A
-     * @param A 	Dot to follow
-     * @param B 	Dot who follow
-     * @param Va	Speed of dot A
-     * @param Vb    Speed of dot B
-     * @param alpha cx that represent the distance between A and B
-     * @return the new Speed of B
+     * This method compute the speed of B, when you want to make B follow A
      *
      * You should do B.getPosition().set(B.getPosition().add(new_Speed_of_B));
+     *
+     * @param A     Dot to follow
+     * @param B     Dot who follows
+     * @param Va    Speed of dot A
+     * @param Vb    Speed of dot B
+     * @param alpha coefficient that represents the distance between A and B
+     * @return the new Speed of B
      */
-    protected Vec2 follow(Vec2 A, Vec2 B, Vec2 Va, Vec2 Vb, float alpha) {
+    protected Vec2 computeFollowingSpeed(Vec2 A, Vec2 B, Vec2 Va, Vec2 Vb,
+                                         float alpha) {
         Vec2 BA = A.sub(B);
-        if(BA.length() == 0) return Vb;
-        return Vb.mul(1 - alpha).add(BA.mul(Math.abs(Va.length()) / Math.abs(BA.length()) * alpha));
+        if (BA.length() == 0) return Vb;
+        return Vb.mul(1 - alpha).add(
+                BA.mul(Math.abs(Va.length()) / Math.abs(BA.length()) * alpha));
     }
 
     @Override

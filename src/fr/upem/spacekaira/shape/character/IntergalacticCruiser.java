@@ -32,7 +32,8 @@ public class IntergalacticCruiser extends Enemy {
                 FixtureType.PLANET;
 
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.set(new Vec2[]{new Vec2(0, 0), new Vec2(0, 2), new Vec2(7, 2), new Vec2(7, 0)},4);
+        polygonShape.set(new Vec2[]{ new Vec2(0, 0), new Vec2(0, 2),
+                new Vec2(7, 2), new Vec2(7, 0) }, 4);
 
         cruiserFix.shape = polygonShape;
         body.createFixture(cruiserFix);
@@ -76,7 +77,11 @@ public class IntergalacticCruiser extends Enemy {
 
     @Override
     public void move(Ship ship) {
-        Vec2 speed = follow(ship.getPosition(), body.getPosition(), ship.getLinearVelocity(), body.getLinearVelocity(), 0.8f);
+        Vec2 speed = computeFollowingSpeed(ship.getPosition(),
+                body.getPosition(),
+                ship.getLinearVelocity(),
+                body.getLinearVelocity(),
+                0.8f);
         body.setLinearVelocity(speed);
         body.setAngularVelocity(2);
     }

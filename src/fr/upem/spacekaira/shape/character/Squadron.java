@@ -19,7 +19,8 @@ public class Squadron extends Enemy {
     private List<Body> m_bodies = new ArrayList<>(nBodies);
     private List<Joint> m_joints = new ArrayList<>(nBodies*2);
 
-    public Squadron(World world, float x, float y, Brush color, Brush bulletColor) {
+    public Squadron(World world, float x, float y, Brush color,
+                    Brush bulletColor) {
         super(color, bulletColor);
 
         /*Main square*/
@@ -48,7 +49,8 @@ public class Squadron extends Enemy {
         {
           /*Triangles*/
             PolygonShape shape = new PolygonShape();
-            shape.set(new Vec2[]{new Vec2(0.0f,0.5f),new Vec2(-0.5f,-0.5f),new Vec2(0.5f,-0.5f) }, 3);
+            shape.set(new Vec2[] { new Vec2(0.0f, 0.5f), new Vec2(-0.5f, -0.5f),
+                    new Vec2(0.5f, -0.5f) }, 3);
 
             BodyDef bd = new BodyDef();
             bd.type = BodyType.DYNAMIC;
@@ -60,7 +62,8 @@ public class Squadron extends Enemy {
             fd.density = 5.0f;
             fd.shape = shape;
             fd.filter.categoryBits = FixtureType.STD_ENEMY;
-            fd.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP | FixtureType.PLANET | FixtureType.STD_ENEMY;
+            fd.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP |
+                    FixtureType.PLANET | FixtureType.STD_ENEMY;
 
             DistanceJointDef jd = new DistanceJointDef();
             Vec2 p1,p2,d;
@@ -85,8 +88,6 @@ public class Squadron extends Enemy {
             /*joint core-triangle*/
                 jd.bodyA = b;
                 jd.bodyB = body;
-                /*jd.localAnchorA.set(0.0f, 0.0f);
-                jd.localAnchorB.set(0.0f,0.0f);*/
                 p1 = jd.bodyA.getWorldPoint(jd.localAnchorA);
                 p2 = jd.bodyB.getWorldPoint(jd.localAnchorB);
                 d = p2.sub(p1);
@@ -99,8 +100,6 @@ public class Squadron extends Enemy {
                 if(i != nBodies-1) {
                     jd.bodyA = m_bodies.get(i);
                     jd.bodyB = m_bodies.get(i+1);
-                    /*jd.localAnchorA.set(0.0f, 0.0f);
-                    jd.localAnchorB.set(0.0f, 0.0f);*/
                     p1 = jd.bodyA.getWorldPoint(jd.localAnchorA);
                     p2 = jd.bodyB.getWorldPoint(jd.localAnchorB);
                     d = p2.sub(p1);
@@ -110,8 +109,6 @@ public class Squadron extends Enemy {
 
                 jd.bodyA = m_bodies.get(0);
                 jd.bodyB = m_bodies.get(nBodies-1);
-                /*jd.localAnchorA.set(0.0f, 0.0f);
-                jd.localAnchorB.set(0.0f, 0.0f);*/
                 p1 = jd.bodyA.getWorldPoint(jd.localAnchorA);
                 p2 = jd.bodyB.getWorldPoint(jd.localAnchorB);
                 d = p2.sub(p1);
@@ -132,7 +129,7 @@ public class Squadron extends Enemy {
 
     @Override
     public void move(Ship ship) {
-        Vec2 speed = follow(ship.getPosition(),
+        Vec2 speed = computeFollowingSpeed(ship.getPosition(),
                 body.getPosition(),
                 ship.getLinearVelocity(),
                 body.getLinearVelocity(),
@@ -159,11 +156,15 @@ public class Squadron extends Enemy {
         }
     }
 
-    /* destroy the triangle and put every triangle at each equal distance between each */
+    /**
+     * destroy the triangle and put every triangle at each equal distance
+     * between each
+     */
     private void destroyTriangle(Body b) {
         int index = m_bodies.indexOf(b);
         DistanceJointDef jd = new DistanceJointDef();
-        float length = (((DistanceJoint)(m_joints.get(0))).getLength() * m_bodies.size()) / (m_bodies.size()-1);
+        // TODO: Create a method to compute length?
+        float length = (((DistanceJoint) (m_joints.get(0))).getLength() * m_bodies.size()) / (m_bodies.size()-1);
         int indexA, indexB;
 
         if(m_bodies.size() > 2) {
@@ -187,7 +188,7 @@ public class Squadron extends Enemy {
         }
         body.getWorld().destroyBody(b);
 
-        m_joints.forEach(j->(((DistanceJoint)(j)).setLength(length)));
+        m_joints.forEach(j -> ((DistanceJoint) j).setLength(length));
     }
 
     private static long lastShootTime = 0;
@@ -201,22 +202,24 @@ public class Squadron extends Enemy {
             shipSquad.normalize();
 
             for (Body b : m_bodies) {
-                lengthMap.put(b, ship.getPosition().sub(b.getPosition()).length());
+                lengthMap.put(b,
+                        ship.getPosition().sub(b.getPosition()).length());
             }
             if (System.currentTimeMillis() - lastShootTime < 1000) return;
 
-            int limit = (m_bodies.size() == 3)?1:3;
-
-            lengthMap.entrySet().stream().sorted((o1, o2) -> Float.compare(o1.getValue(), o2.getValue()))
-                    .limit(3).forEach( e -> {
-
-                    bullets.add(Bullet.createEnemyBullet(
-                            body.getWorld(),
-                            e.getKey().getPosition().add(shipSquad.mul(2)),
-                            ship.getPosition().sub(e.getKey().getPosition()),
-                            e.getKey().getAngle(),
-                            bulletColor));
-                });
+            lengthMap.entrySet()
+                    .stream()
+                    .sorted((o1, o2) ->
+                        Float.compare(o1.getValue(), o2.getValue())
+                    )
+                    .limit(3)
+                    .forEach(e -> {
+                        bullets.add(Bullet.createEnemyBullet(body.getWorld(),
+                                e.getKey().getPosition().add(shipSquad.mul(2)),
+                                ship.getPosition().sub(e.getKey().getPosition()),
+                                e.getKey().getAngle(),
+                                bulletColor));
+                    });
             lastShootTime = System.currentTimeMillis();
         }
     }
