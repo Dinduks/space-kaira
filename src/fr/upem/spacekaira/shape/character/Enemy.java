@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * This abstract class represent a base to construct a Enemy
  */
-public abstract class Enemy extends AbstractShape implements Shooter, DynamicContact {
+public abstract class Enemy extends AbstractShape implements ShooterEnemy, DynamicContact {
     protected final Brush enemyColor;
     protected final Brush bulletColor;
     protected List<Bullet> bullets;
@@ -29,7 +29,7 @@ public abstract class Enemy extends AbstractShape implements Shooter, DynamicCon
     @Override
     public void draw(Graphics2D graphics, Viewport viewport) {
         super.draw(graphics, viewport);
-        bullets.forEach(b->b.draw(graphics, viewport));
+        bullets.forEach(b -> b.draw(graphics, viewport));
     }
 
     @Override

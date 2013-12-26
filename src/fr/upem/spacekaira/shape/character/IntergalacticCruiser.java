@@ -61,8 +61,8 @@ public class IntergalacticCruiser extends Enemy {
     }
 
     @Override
-    public void shoot() {
-        shootUp(); shootDown();
+    public void shoot(Ship ship) {
+        //shootUp(); shootDown();
     }
 
     @Override

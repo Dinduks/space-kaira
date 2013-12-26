@@ -188,7 +188,7 @@ public class Squadron extends Enemy {
     }
 
     @Override
-    public void shoot() {
+    public void shoot(Ship ship) {
 
     }
 }

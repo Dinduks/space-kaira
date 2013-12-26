@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * The player ship
  */
-public class Ship extends AbstractShape implements Shooter, DynamicContact{
+public class Ship extends AbstractShape implements DynamicContact{
     private boolean shield;
     private final Fixture shieldFix;
     private List<Bullet> bullets;
@@ -111,7 +111,7 @@ public class Ship extends AbstractShape implements Shooter, DynamicContact{
     }
 
     private static long lastShootTime = 0;
-    @Override
+
     public void shoot() {
         if (shield) return;
         if (System.currentTimeMillis() - lastShootTime < 100) return;
@@ -125,12 +125,11 @@ public class Ship extends AbstractShape implements Shooter, DynamicContact{
                 bulletColor));
     }
 
-    @Override
+
     public void checkForBulletOutScreen(Viewport viewport) {
         Bullet.checkForBulletsOutScreen(viewport, bullets);
     }
 
-    @Override
     public void checkForDeadBullet() {
         Bullet.checkForDeadBullet(bullets);
     }

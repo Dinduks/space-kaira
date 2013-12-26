@@ -99,6 +99,7 @@ public class TIE extends Enemy {
     public void move(Ship ship) {
         Vec2 speed = rotate(ship.getPosition(), body.getPosition(), 10, 0.017f);
         body.setLinearVelocity(speed.mul(100));
+        body.setAngularVelocity(2);
     }
 
     private void shootLeft() {
@@ -119,9 +120,22 @@ public class TIE extends Enemy {
                 bulletColor));
     }
 
+    /* This function shoot if the ship is more or less in the shoot-windows */
     @Override
-    public void shoot() {
-        //TODO feed the body
+    public void shoot(Ship ship) {
+
+        Vec2 leftCanon = body.getWorldVector(new Vec2(-1, 0));
+        Vec2 rightCanon = body.getWorldVector(new Vec2(1, 0));
+
+        Vec2 shipTie = ship.getPosition().sub(body.getPosition());
+        shipTie.normalize();
+
+        //leftCanon
+        if( leftCanon.sub(shipTie).length() <= 0.05f )
+            shootLeft();
+
+        if( rightCanon.sub(shipTie).length() <= 0.05f )
+            shootRight();
     }
 
     @Override
