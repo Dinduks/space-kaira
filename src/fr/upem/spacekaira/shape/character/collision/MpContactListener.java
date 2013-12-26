@@ -76,15 +76,16 @@ public class MpContactListener implements ContactListener {
     };
 
     private static ContactAction [][] action = {
-                       /* BULLET PLANET STD_ENEMY    SHIP         BOMB, ARMED_BOMB,  MBOMB, ARMED_MBOMB */
-        /* BULLET */    { nil,   rSD,   dSD,         dSD,         nil,  nil,         nil,   nil },
-        /* PLANET */    { lSD,   nil,   nil,         nil,         nil,  nil ,        nil,   nil},
-        /* STD_ENEMY */ { dSD,   nil,   nil,         enemyVsShip, nil,  bombOnEnemy, nil,   mBombOnEnemy },
-        /* SHIP */      { dSD,   nil,   shipVsEnemy, nil,         bomb, nil,         mbomb, nil },
-        /* BOMB */      { nil,   nil,   nil,         bomb,        nil,  nil,         nil,   nil },
-        /* ARMED_BOMB */{ nil,   nil,   bombOnEnemy, nil,         nil,  nil,         nil,   nil },
-        /* MBOMB */     { nil,   nil,   nil,         mbomb,       nil,  nil,         nil,   nil },
-        /* ARMED_MBOMB*/{ nil,   nil,   mBombOnEnemy,nil,         nil,  nil,         nil,   nil }
+                          /* BULLET PLANET STD_ENEMY    SHIP         BOMB, ARMED_BOMB,  MBOMB, ARMED_MBOMB   BULLET_ENEMY */
+        /* BULLET */       { nil,   rSD,   dSD,         nil,         nil,  nil,         nil,   nil,          nil },
+        /* PLANET */       { lSD,   nil,   nil,         nil,         nil,  nil ,        nil,   nil,          nil },
+        /* STD_ENEMY */    { dSD,   nil,   nil,         enemyVsShip, nil,  bombOnEnemy, nil,   mBombOnEnemy, nil },
+        /* SHIP */         { nil,   nil,   shipVsEnemy, nil,         bomb, nil,         mbomb, nil,          shipVsEnemy },
+        /* BOMB */         { nil,   nil,   nil,         bomb,        nil,  nil,         nil,   nil,          nil },
+        /* ARMED_BOMB */   { nil,   nil,   bombOnEnemy, nil,         nil,  nil,         nil,   nil,          nil },
+        /* MBOMB */        { nil,   nil,   nil,         mbomb,       nil,  nil,         nil,   nil,          nil },
+        /* ARMED_MBOMB*/   { nil,   nil,   mBombOnEnemy,nil,         nil,  nil,         nil,   nil,          nil },
+        /* BULLET_ENEMY */ { nil,   nil,   nil,         enemyVsShip, nil,  nil,         nil,   nil,          nil }
     };
 
     @Override

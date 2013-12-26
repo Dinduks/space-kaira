@@ -98,13 +98,14 @@ public class TIE extends Enemy {
     @Override
     // TODO: Besoin de doc
     public void move(Ship ship) {
-        Vec2 speed = rotate(ship.getPosition(), body.getPosition(), 10, 0.017f);
-        body.setLinearVelocity(speed.mul(100));
+        Vec2 speed = rotateAroundDot(ship.getPosition(), body.getPosition(), 10, 0.017f);
+        speed.normalize();
+        body.setLinearVelocity(speed.mul(0.90f*Ship.speed));
         body.setAngularVelocity(2);
     }
 
     private void shootLeft() {
-        bullets.add(new Bullet(
+        bullets.add(Bullet.createEnemyBullet(
                 body.getWorld(),
                 body.getWorldPoint(new Vec2(-1, 2)),
                 body.getWorldVector(new Vec2(-1, 0)),
@@ -113,7 +114,7 @@ public class TIE extends Enemy {
     }
 
     private void shootRight() {
-        bullets.add(new Bullet(
+        bullets.add(Bullet.createEnemyBullet(
                 body.getWorld(),
                 body.getWorldPoint(new Vec2(8, 2)),
                 body.getWorldVector(new Vec2(1, 0)),
@@ -124,7 +125,6 @@ public class TIE extends Enemy {
     /* This function shoot if the ship is more or less in the shoot-windows */
     @Override
     public void shoot(Ship ship) {
-
         Vec2 leftCanon = body.getWorldVector(new Vec2(-1, 0));
         Vec2 rightCanon = body.getWorldVector(new Vec2(1, 0));
 
@@ -132,12 +132,9 @@ public class TIE extends Enemy {
         shipTie.normalize();
 
         //leftCanon
-        if( leftCanon.sub(shipTie).length() <= 0.05f )
-            shootLeft();
-
+        if( leftCanon.sub(shipTie).length() <= 0.05f ) shootLeft();
         //rightCanon
-        if( rightCanon.sub(shipTie).length() <= 0.05f )
-            shootRight();
+        if( rightCanon.sub(shipTie).length() <= 0.05f ) shootRight();
     }
 
     @Override

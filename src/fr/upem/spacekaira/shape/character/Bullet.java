@@ -26,7 +26,7 @@ public class Bullet extends AbstractShape implements DynamicContact{
      * @param velocity velocity vector (will be normalize then mul by a cnst)
      * @param angle the angle a the bullet
      */
-    public Bullet(World world,Vec2 position,Vec2 velocity,float angle,Brush color) {
+    private Bullet(World world,Vec2 position,Vec2 velocity,float angle,Brush color,int categoryBits) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;
         bodyDef.position.set(position);
@@ -46,11 +46,19 @@ public class Bullet extends AbstractShape implements DynamicContact{
         bullet.shape = polygonShape;
         bullet.density = 1.0f;
         bullet.userData = color;
-        bullet.filter.categoryBits = FixtureType.BULLET;
-        bullet.filter.maskBits = FixtureType.PLANET | FixtureType.STD_ENEMY;
+        bullet.filter.categoryBits = categoryBits;
+        bullet.filter.maskBits = FixtureType.PLANET | FixtureType.STD_ENEMY | FixtureType.SHIP;
 
         body.createFixture(bullet);
         body.setUserData(this);
+    }
+
+    public static Bullet createShipBullet(World world,Vec2 position,Vec2 velocity,float angle,Brush color) {
+        return new Bullet(world, position, velocity, angle, color,FixtureType.BULLET);
+    }
+
+    public static Bullet createEnemyBullet(World world,Vec2 position,Vec2 velocity,float angle,Brush color) {
+        return new Bullet(world, position, velocity, angle, color,FixtureType.BULLET_ENEMY);
     }
 
     boolean isInScreen(Viewport viewport) {

@@ -15,6 +15,8 @@ public class FixtureType {
     public static final int ARMED_BOMB = 0x20;
     public static final int MBOMB = 0x40;
     public static final int ARMED_MBOMB = 0x80;
+//    public static final int BULLET_ENEMY = 0x64;
+    public static final int BULLET_ENEMY = 0x100;
 
     public static int typeToIndex(int fixtureType) {
         switch (fixtureType) {
@@ -26,6 +28,7 @@ public class FixtureType {
             case ARMED_BOMB: return 5;
             case MBOMB:      return 6;
             case ARMED_MBOMB:return 7;
+            case BULLET_ENEMY: return 8;
             default:        return -1;
         }
     }

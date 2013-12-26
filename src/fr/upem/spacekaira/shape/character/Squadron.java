@@ -131,7 +131,11 @@ public class Squadron extends Enemy {
 
     @Override
     public void move(Ship ship) {
-        Vec2 speed = follow(ship.getPosition(), body.getPosition(), ship.getLinearVelocity(), body.getLinearVelocity(), 0.1f);
+        Vec2 speed = follow(ship.getPosition(),
+                body.getPosition(),
+                ship.getLinearVelocity(),
+                body.getLinearVelocity(),
+                0.9f);
         body.setLinearVelocity(speed);
     }
 
@@ -159,7 +163,6 @@ public class Squadron extends Enemy {
         int index = m_bodies.indexOf(b);
         DistanceJointDef jd = new DistanceJointDef();
         float length = (((DistanceJoint)(m_joints.get(0))).getLength() * m_bodies.size()) / (m_bodies.size()-1);
-
         int indexA, indexB;
 
         if(m_bodies.size() > 2) {
@@ -206,7 +209,7 @@ public class Squadron extends Enemy {
             lengthMap.entrySet().stream().sorted((o1, o2) -> Float.compare(o1.getValue(), o2.getValue()))
                     .limit(3).forEach( e -> {
 
-                    bullets.add(new Bullet(
+                    bullets.add(Bullet.createEnemyBullet(
                             body.getWorld(),
                             e.getKey().getPosition().add(shipSquad.mul(2)),
                             ship.getPosition().sub(e.getKey().getPosition()),

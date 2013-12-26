@@ -28,6 +28,7 @@ public class Ship extends AbstractShape implements DynamicContact{
     private boolean megaBomb;
     private AbstractArmedBomb armedBomb;
     private List<Enemy> enemies;
+    public static final float speed = 12;
 
     public Ship(World world, List<Enemy> enemies, Brush shipColor,
                 Brush bulletColor) {
@@ -40,7 +41,7 @@ public class Ship extends AbstractShape implements DynamicContact{
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;
         bodyDef.angularDamping = 1.0f;
-        bodyDef.linearDamping = 1.0f;
+        bodyDef.linearDamping = 0.8f;
 
         body = world.createBody(bodyDef);
 
@@ -61,7 +62,7 @@ public class Ship extends AbstractShape implements DynamicContact{
             ship.filter.categoryBits = FixtureType.SHIP;
             ship.filter.maskBits = FixtureType.PLANET |
                     FixtureType.STD_ENEMY |
-                    FixtureType.BULLET |
+                    FixtureType.BULLET_ENEMY |
                     FixtureType.BOMB |
                     FixtureType.MBOMB;
         }
@@ -79,7 +80,8 @@ public class Ship extends AbstractShape implements DynamicContact{
             shield.userData = null; //Use with caution
             shield.filter.categoryBits = FixtureType.SHIP;
             shield.filter.maskBits = FixtureType.PLANET |
-                    FixtureType.STD_ENEMY | FixtureType.BULLET;
+                    FixtureType.STD_ENEMY |
+                    FixtureType.BULLET_ENEMY;
         }
 
         body.createFixture(ship);
@@ -134,7 +136,7 @@ public class Ship extends AbstractShape implements DynamicContact{
         if (System.currentTimeMillis() - lastShootTime < 100) return;
 
         lastShootTime = System.currentTimeMillis();
-        bullets.add(new Bullet(
+        bullets.add(Bullet.createShipBullet(
                 body.getWorld(),
                 body.getPosition(),
                 body.getWorldVector(new Vec2(0, 3)),

@@ -39,7 +39,7 @@ public class IntergalacticCruiser extends Enemy {
     }
 
     private void shootUp() {
-        bullets.add(new Bullet(
+        bullets.add(Bullet.createEnemyBullet(
                 body.getWorld(),
                 body.getWorldPoint(new Vec2(3.5f, 4)),
                 body.getWorldVector(new Vec2(0, 1)),
@@ -48,7 +48,7 @@ public class IntergalacticCruiser extends Enemy {
     }
 
     private void shootDown() {
-        bullets.add(new Bullet(body.getWorld(),
+        bullets.add(Bullet.createEnemyBullet(body.getWorld(),
                 body.getWorldPoint(new Vec2(3.5f, -2)),
                 body.getWorldVector(new Vec2(0, -1)),
                 body.getAngle(),
@@ -69,17 +69,14 @@ public class IntergalacticCruiser extends Enemy {
         shipIc.normalize();
 
         //Up Canon
-        if( upCanon.sub(shipIc).length() <= 0.05f )
-            shootUp();
-
+        if( upCanon.sub(shipIc).length() <= 0.05f ) shootUp();
         //Down Canon
-        if( downCanon.sub(shipIc).length() <= 0.05f )
-            shootDown();
+        if( downCanon.sub(shipIc).length() <= 0.05f ) shootDown();
     }
 
     @Override
     public void move(Ship ship) {
-        Vec2 speed = follow(ship.getPosition(), body.getPosition(), ship.getLinearVelocity(), body.getLinearVelocity(), 0.6f);
+        Vec2 speed = follow(ship.getPosition(), body.getPosition(), ship.getLinearVelocity(), body.getLinearVelocity(), 0.8f);
         body.setLinearVelocity(speed);
         body.setAngularVelocity(2);
     }

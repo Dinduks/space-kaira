@@ -12,7 +12,11 @@ public class BulletFactory {
         this.world = world;
     }
 
-    public Bullet createBullet(Vec2 position,Vec2 velocity,float angle,Brush color) {
-        return new Bullet(world,position,velocity,angle,color);
+    public Bullet createBulletShip(Vec2 position,Vec2 velocity,float angle,Brush color) {
+        return Bullet.createShipBullet(world,position,velocity,angle,color);
+    }
+
+    public Bullet createBulletEnemy(Vec2 position,Vec2 velocity,float angle,Brush color) {
+        return Bullet.createEnemyBullet(world,position,velocity,angle,color);
     }
 }
