@@ -112,11 +112,8 @@ public abstract class Enemy extends AbstractShape implements ShooterEnemy, Dynam
     }
 
     public void moveToward(Vec2 position) {
-        System.err.println(this.getClass());
-        System.err.println(System.currentTimeMillis());
-        Vec2 f = body.getWorldVector(new Vec2(10000.0f, 12000.0f));
-//        Vec2 f = body.getWorldVector(position);
-        Vec2 p = body.getWorldPoint(position);//.add(new Vec2(1000.0f, 4000.0f)));
+        Vec2 f = position;
+        Vec2 p = body.getWorldCenter();
         body.applyForce(f, p);
     }
 }

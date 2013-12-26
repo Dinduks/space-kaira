@@ -34,7 +34,11 @@ public class ArmedMegaBomb extends AbstractArmedBomb {
     public boolean explode(List<Enemy> enemies) {
         List<Enemy> closeEnemies = getCloseEnemies(enemies);
         closeEnemies.forEach(enemy -> {
-            enemy.moveToward(getPosition());
+            Vec2 dir = body.getWorldCenter().sub(enemy.getPosition());
+            dir.normalize();
+            dir.mulLocal(10000);
+            enemy.moveToward(dir);
+
         });
 
 //        circleShape.setRadius((radius = radius + 0.5f));
@@ -59,7 +63,7 @@ public class ArmedMegaBomb extends AbstractArmedBomb {
                 .stream()
                 .filter(e ->
                         Util.distanceBetweenVectors(
-                                e.getPosition(), getPosition()) >= 15
+                                e.getPosition(), getPosition()) < 50
                 )
                 .collect(Collectors.toList());
     }
