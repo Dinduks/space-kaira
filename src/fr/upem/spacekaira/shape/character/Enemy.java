@@ -68,6 +68,7 @@ public abstract class Enemy extends AbstractShape implements ShooterEnemy, Dynam
      * @param angleByCall Angle to give at B at each call (in radian)
      * @return the new Speed of B (~0.017f)
      */
+    // TODO: Si elle calcule la vitesse, elle doit pas être nommée "rotate"
     protected Vec2 rotate(Vec2 A, Vec2 B, float limit, float angleByCall) {
         Vec2 BA = A.sub(B);
         float length = BA.length();
@@ -108,5 +109,14 @@ public abstract class Enemy extends AbstractShape implements ShooterEnemy, Dynam
     @Override
     public void checkForDeadBullet() {
         Bullet.checkForDeadBullet(bullets);
+    }
+
+    public void moveToward(Vec2 position) {
+        System.err.println(this.getClass());
+        System.err.println(System.currentTimeMillis());
+        Vec2 f = body.getWorldVector(new Vec2(10000.0f, 12000.0f));
+//        Vec2 f = body.getWorldVector(position);
+        Vec2 p = body.getWorldPoint(position);//.add(new Vec2(1000.0f, 4000.0f)));
+        body.applyForce(f, p);
     }
 }

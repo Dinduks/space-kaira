@@ -96,6 +96,7 @@ public class TIE extends Enemy {
     }
 
     @Override
+    // TODO: Besoin de doc
     public void move(Ship ship) {
         Vec2 speed = rotate(ship.getPosition(), body.getPosition(), 10, 0.017f);
         body.setLinearVelocity(speed.mul(100));

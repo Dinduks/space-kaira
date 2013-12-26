@@ -60,7 +60,7 @@ public class Map {
 
     public void initMap() {
         //TODO config class pour la l'init
-        ship = factoryPool.getShipFactory().createShip(false);
+        ship = factoryPool.getShipFactory().createShip(enemies, false);
         enemies.add(factoryPool.getEnemyFactory().createEnemy(10, 10));
         enemies.add(factoryPool.getEnemyFactory().createEnemy(20, 20));
         Brush blueBrush = new Brush(Color.BLUE, false);

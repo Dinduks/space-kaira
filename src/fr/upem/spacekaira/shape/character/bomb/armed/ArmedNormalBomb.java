@@ -1,11 +1,13 @@
 package fr.upem.spacekaira.shape.character.bomb.armed;
 
 import fr.upem.spacekaira.shape.Brush;
+import fr.upem.spacekaira.shape.character.Enemy;
 import fr.upem.spacekaira.shape.character.FixtureType;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
-import static fr.upem.spacekaira.shape.character.bomb.BombType.MEGA_BOMB;
+import java.util.List;
+
 import static fr.upem.spacekaira.shape.character.bomb.BombType.NORMAL_BOMB;
 
 /**
@@ -26,7 +28,7 @@ public class ArmedNormalBomb extends AbstractArmedBomb {
     }
 
     @Override
-    public boolean explode() {
+    public boolean explode(List<Enemy> enemies) {
         if (radius >= 5.0f) return false;
         circleShape.setRadius((radius = radius + 0.5f));
         armedBombFixtureDef.shape = circleShape;

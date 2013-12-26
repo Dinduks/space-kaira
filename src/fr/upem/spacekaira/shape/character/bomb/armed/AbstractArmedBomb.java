@@ -3,16 +3,20 @@ package fr.upem.spacekaira.shape.character.bomb.armed;
 import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.DynamicContact;
+import fr.upem.spacekaira.shape.character.Enemy;
 import fr.upem.spacekaira.shape.character.FixtureType;
 import fr.upem.spacekaira.shape.character.bomb.BombType;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
 
+import java.util.List;
+
 abstract public class AbstractArmedBomb
         extends AbstractShape implements DynamicContact {
     protected FixtureDef armedBombFixtureDef = new FixtureDef();
     protected Brush brushAfterExploding;
+    final private Vec2 position;
     private BombType bombType;
     protected CircleShape circleShape = new CircleShape();
     private final long dropTime = System.currentTimeMillis();
@@ -29,6 +33,7 @@ abstract public class AbstractArmedBomb
      */
     public AbstractArmedBomb(World world, Vec2 position, Brush initialBrush,
                      Brush brushAfterExploding, BombType bombType) {
+        this.position = position;
         this.bombType = bombType;
         this.brushAfterExploding = brushAfterExploding;
 
@@ -53,8 +58,9 @@ abstract public class AbstractArmedBomb
 
     /**
      * @return true if exploded, false if still exploding
+     * @param enemies
      */
-    abstract public boolean explode();
+    abstract public boolean explode(List<Enemy> enemies);
 
     @Override
     public void computeTimeStepData() {

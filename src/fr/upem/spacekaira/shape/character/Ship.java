@@ -27,8 +27,11 @@ public class Ship extends AbstractShape implements DynamicContact{
     private boolean hasBomb;
     private boolean megaBomb;
     private AbstractArmedBomb armedBomb;
+    private List<Enemy> enemies;
 
-    public Ship(World world, Brush shipColor, Brush bulletColor) {
+    public Ship(World world, List<Enemy> enemies, Brush shipColor,
+                Brush bulletColor) {
+        this.enemies = enemies;
         this.bulletColor = bulletColor;
 
         //Bullet list
@@ -163,8 +166,11 @@ public class Ship extends AbstractShape implements DynamicContact{
 
     private void handleTheArmedBomb(Graphics2D graphics, Viewport viewport) {
         if (System.currentTimeMillis() - armedBomb.getDropTime() >= 1000) {
-            if (armedBomb.explode()) armedBomb.draw(graphics, viewport);
-            else                     armedBomb = null;
+            if (armedBomb.explode(enemies)) {
+                armedBomb.draw(graphics, viewport);
+            } else {
+                armedBomb = null;
+            }
         } else {
             armedBomb.draw(graphics, viewport);
         }
