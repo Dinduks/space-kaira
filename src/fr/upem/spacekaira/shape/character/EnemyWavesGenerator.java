@@ -92,7 +92,7 @@ public class EnemyWavesGenerator {
      * Tell to the user that there is no more enemy to generate
      * @return true is there is no more enemy, false otherwise
      */
-    public boolean noMoreEnemy() {
+    public boolean noMoreEnemies() {
         return wavesQueue.size() == 0 && currentWave.size() == 0;
     }
 }

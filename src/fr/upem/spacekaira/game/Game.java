@@ -54,7 +54,9 @@ public class Game {
 
         long startTime = System.currentTimeMillis();
 
-        while (Util.anyTimeLeft(startTime, config.getGameDuration()) && !map.getShip().isDead()) {
+        String gameOverMessage = "GAME OVER";
+        while (Util.anyTimeLeft(startTime, config.getGameDuration()) &&
+                !map.getShip().isDead()) {
             syn.start();
             handleKeyboardEvents(context, map.getShip());
             world.step(REFRESH_TIME, 6, 8);
@@ -62,9 +64,13 @@ public class Game {
             map.draw(context, viewport, startTime, config.getGameDuration());
             viewport.setCenter(map.getShip().getPosition());
             syn.waitToSynchronize();
+            if (map.noMoreEnemies()) {
+                gameOverMessage = "YOU WON!";
+                break;
+            }
         }
 
-        drawGameOver(context);
+        drawGameOver(context, gameOverMessage);
         waitForPlayerDecision(context);
     }
 
@@ -145,14 +151,14 @@ public class Game {
         }
     }
 
-    public static void drawGameOver(ApplicationContext context) {
+    public static void drawGameOver(ApplicationContext context, String text) {
         context.render((graphics) -> {
             Font font;
             graphics.setPaint(new Color(255, 0, 0));
 
             font = new Font("arial", Font.BOLD, 60);
             graphics.setFont(font);
-            graphics.drawString("GAME OVER", 200, 200);
+            graphics.drawString(text, 200, 200);
 
             font = new Font("arial", Font.BOLD, 20);
             graphics.setFont(font);

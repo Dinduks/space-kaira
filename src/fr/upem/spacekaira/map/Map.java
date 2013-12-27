@@ -99,6 +99,10 @@ public class Map {
         spawnABombIfNecessary();
     }
 
+    public boolean noMoreEnemies() {
+        return wavesGenerator.noMoreEnemies();
+    }
+
     private long lastTimeWasABombSpawned = 0;
     private void spawnABombIfNecessary() {
         long currentTime = System.currentTimeMillis();
