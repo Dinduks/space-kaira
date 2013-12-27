@@ -67,8 +67,12 @@ public class Map {
 
     private void initMap() {
         //TODO config class pour la l'init
+        /**
+         * This collection is shared between the enemy waves generators and the
+         * ship that passes it to exploding bombs.
+         */
+        List<Enemy> enemies = new LinkedList<>();
 
-        List<Enemy> enemies = Collections.EMPTY_LIST;
         ship = factoryPool.getShipFactory().createShip(enemies, false);
         planetGenerator = PlanetGenerator.newPlanetGenerator(planetsDensity,
                 viewport, width, height, ship, factoryPool.getPlanetFactory());
@@ -76,8 +80,11 @@ public class Map {
                 factoryPool.getEnemyFactory(),
                 viewport,
                 ship,
-                Arrays.asList(new EnemyWavesGenerator.EnemyWave(5),new EnemyWavesGenerator.EnemyWave(3)));
-        enemies = wavesGenerator.getEnemy();
+                Arrays.asList(
+                        new EnemyWavesGenerator.EnemyWave(5),
+                        new EnemyWavesGenerator.EnemyWave(3)
+                ),
+                enemies);
     }
 
     public Ship getShip() {

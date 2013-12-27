@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class EnemyWavesGenerator {
     /**
-     * This class represent a Wave of Enemy
+     * This class represents a wave of enemies
      */
     public static class EnemyWave {
         private int numberOfEnemy;
@@ -25,29 +25,14 @@ public class EnemyWavesGenerator {
         }
     }
 
-    /**
-     * Queue to store enemy waves (number of enemy by wave)
-     */
+    /* Queue to store enemy waves (number of enemy by wave) */
     private Queue<EnemyWave> wavesQueue;
-    /**
-     *  List to store current enemy
-     */
+    /*  List that stores the current enemies */
     private List<Enemy> currentWave;
-    /**
-     * EnemyFactory to create rand enemy
-     */
     private EnemyFactory enemyFactory;
-    /**
-     * Represent the Max between height and width
-     */
+    /* Represent the Max between height and width */
     private int maxLength;
-    /**
-        ViewPort
-     */
     private Viewport viewport;
-    /**
-     * The ship
-     */
     private Ship ship;
 
     /**
@@ -56,13 +41,16 @@ public class EnemyWavesGenerator {
      * @param viewport an instance of the ViewPort class
      * @param ship the player ship
      * @param enemyWaveList A list who represent all wave of enemy during the game
+     * @param enemies
      */
-    public EnemyWavesGenerator(EnemyFactory enemyFactory,Viewport viewport,Ship ship, List<EnemyWave> enemyWaveList) {
+    public EnemyWavesGenerator(EnemyFactory enemyFactory, Viewport viewport,
+                               Ship ship, List<EnemyWave> enemyWaveList,
+                               List<Enemy> enemies) {
         Objects.requireNonNull(enemyFactory);
         Objects.requireNonNull(viewport);
         Objects.requireNonNull(ship);
         this.wavesQueue = new ArrayDeque<>(enemyWaveList);
-        this.currentWave = new ArrayList<>();
+        this.currentWave = enemies;
         this.enemyFactory = enemyFactory;
         this.viewport = viewport;
         this.maxLength = Math.max(viewport.getScreenHeight(),viewport.getScreenWidth());
@@ -74,7 +62,7 @@ public class EnemyWavesGenerator {
      * @return a list who contains the current enemy
      */
     public List<Enemy> getEnemy() {
-        if ( wavesQueue.size() != 0 && currentWave.size() == 0 )
+        if (wavesQueue.size() != 0 && currentWave.size() == 0)
             generateNextWave();
         return currentWave;
     }
