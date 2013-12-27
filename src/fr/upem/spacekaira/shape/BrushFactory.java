@@ -22,15 +22,12 @@ public class BrushFactory {
         return res;
     }
 
-    private static Random rand;
-    private static Color[] colors;
-    static {
-        colors = new Color[]{Color.BLUE,Color.CYAN,Color.DARK_GRAY,Color.YELLOW,Color.RED,Color.WHITE};
-        rand = new Random();
-    }
+    private static Random rand = new Random();
+    private static Color[] colors = new Color[] { Color.BLUE, Color.CYAN,
+            Color.YELLOW, Color.RED, Color.WHITE };
 
     private Color getRandColor() {
-        return colors[rand.nextInt(colors.length-1)];
+        return colors[rand.nextInt(colors.length - 1)];
     }
 
     public Brush getRandBrush(boolean isOpaque) {
