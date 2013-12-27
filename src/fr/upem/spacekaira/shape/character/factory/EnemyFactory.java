@@ -13,7 +13,7 @@ public class EnemyFactory {
     private World world;
     private BrushFactory bF;
     private Random rand;
-    public enum EnemyType {TIE, SQUADRON, CRUISER,BRUTE }
+    public enum EnemyType {TIE, SQUADRON, CRUISER, BRUTE, ROTTRIANGLE }
 
     public EnemyFactory(World world,BrushFactory brushFactory) {
         this.world = world;
@@ -35,6 +35,7 @@ public class EnemyFactory {
             case SQUADRON: return new Squadron(world,x,y,enemyColor,bulletColor);
             case CRUISER: return new IntergalacticCruiser(world,x,y,enemyColor,bulletColor);
             case BRUTE: return new Brute(world,x,y,enemyColor,bulletColor);
+            case ROTTRIANGLE: return new RotatingTriangle(world,x,y,enemyColor,bulletColor);
         }
         assert false;
         return null;

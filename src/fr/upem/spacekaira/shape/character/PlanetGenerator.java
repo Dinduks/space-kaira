@@ -175,14 +175,22 @@ public class PlanetGenerator {
         return planets;
     }
 
-    /* Generate a Vec2 with int value from 0 to bound (exclude) */
-    // TODO: Add javadoc
+    /**
+     * Generate a Vec2 with int value from 0 to bound (exclude)
+     * @param boundX max value of each Vec2.x
+     * @param boundY max value of each Vec2.y
+     * @return  a new Vec2
+     */
     private Vec2 generateRandVec2(int boundX, int boundY) {
         return new Vec2(rand.nextInt(boundX), rand.nextInt(boundY));
     }
 
-    /* Generate a list(without duplicates values) of Vec2 with int value from 0 to bound (exclude) */
-    // TODO: Add javadoc
+    /**
+     * Generate a list(without duplicates values) of Vec2 with int value from 0 to bound (exclude)
+     * @param boundX max value of each Vec2.x
+     * @param boundY max value of each Vec2.y
+     * @return a list with a size equal to the density, to generate a zone
+     */
     private List<Vec2> generateRandVec2List(int boundX,int boundY) {
         List<Vec2> vec2s = new ArrayList<>(density);
         while (vec2s.size() != density) {
