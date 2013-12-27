@@ -8,14 +8,12 @@ import java.awt.*;
 
 public class PlanetFactory {
     private World world;
-    private BrushFactory bF;
 
-    public PlanetFactory(World world,BrushFactory brushFactory) {
+    public PlanetFactory(World world) {
         this.world = world;
-        this.bF = brushFactory;
     }
 
     public Planet createPlanet(float x, float y) {
-        return new Planet(world,x,y,4,bF.createBrush(Color.BLUE,true));
+        return new Planet(world, x, y, 4, BrushFactory.get(Color.BLUE));
     }
 }

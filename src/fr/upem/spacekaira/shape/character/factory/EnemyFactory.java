@@ -11,13 +11,11 @@ import java.util.Random;
 
 public class EnemyFactory {
     private World world;
-    private BrushFactory bF;
     private Random rand;
     public enum EnemyType {TIE, SQUADRON, CRUISER, BRUTE, ROTTRIANGLE }
 
-    public EnemyFactory(World world,BrushFactory brushFactory) {
+    public EnemyFactory(World world) {
         this.world = world;
-        this.bF = brushFactory;
         this.rand = new Random();
     }
 
@@ -27,8 +25,8 @@ public class EnemyFactory {
 
     public Enemy createEnemy(float x, float y, EnemyType type) {
         Objects.requireNonNull(type);
-        Brush enemyColor = bF.getRandBrush(false);
-        Brush bulletColor = bF.createBrush(Color.RED,true);
+        Brush enemyColor = BrushFactory.getRandomBrush(false);
+        Brush bulletColor = BrushFactory.get(Color.RED);
 
         switch (type) {
             case TIE: return new TIE(world,x,y,enemyColor,bulletColor);

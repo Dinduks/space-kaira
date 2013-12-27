@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 import static fr.upem.spacekaira.shape.character.bomb.BombType.MEGA_BOMB;
 
 /**
- * Represents a bomb that has been dropped
+ * Represents a mega bomb that has been dropped
+ * The bomb disappears 10 seconds after it has been thrown
  */
 public class ArmedMegaBomb extends AbstractArmedBomb {
     /**
@@ -35,6 +36,10 @@ public class ArmedMegaBomb extends AbstractArmedBomb {
             enemiesToDestroy = getCloseEnemies(enemies);
             return true;
         } else {
+            if (System.currentTimeMillis() - getDropTime() >= 10000) {
+                return false;
+            }
+
             enemiesToDestroy.forEach(enemy -> {
                 if (roundedPosEqual(getPosition(), enemy.getPosition())) {
                     enemiesToDestroy.remove(enemy);

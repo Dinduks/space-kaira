@@ -166,7 +166,7 @@ public class Ship extends AbstractShape implements DynamicContact{
     @Override
     public void draw(Graphics2D graphics, Viewport viewport) {
         if (armedBomb != null) handleTheArmedBomb(graphics, viewport);
-        shieldFix.setUserData((shield) ? new Brush(Color.BLUE, false) : null);
+        shieldFix.setUserData((shield) ? BrushFactory.get(Color.BLUE, false) : null);
         super.draw(graphics, viewport);
         bullets.forEach(b -> b.draw(graphics, viewport));
         if (Viewport.isZero(body.getLinearVelocity().x) ||

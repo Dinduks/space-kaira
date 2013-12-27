@@ -6,31 +6,40 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * This class provide a Brush factory to create easily Brush
+ * This factory allows easily creating brushes
+ *
+ * It caches the brushes in order to create them only once
  */
 public class BrushFactory {
-    private static Map<Integer,Brush> brushMap;
-    static {brushMap = new HashMap<>();}
+    private static Map<Integer, Brush> brushMap = new HashMap<>();
+    private static Random random = new Random();
+    private static Color[] colors = new Color[] {
+            Color.BLUE, Color.CYAN, Color.YELLOW, Color.RED, Color.WHITE };
 
-    /*create the asked Brush if there is not in the Map*/
-    public Brush createBrush(Color color, boolean isOpaque) {
-        Brush res = null;
-        int hashCode = Brush.hashCode(color,isOpaque);
+    private BrushFactory() {};
+
+    /**
+     * Returns a brush of the specified color
+     */
+    public static Brush get(Color color, boolean isOpaque) {
+        Brush res;
+        int hashCode = Brush.hashCode(color, isOpaque);
         if((res = brushMap.get(hashCode)) == null) {
-            brushMap.put(hashCode,res = new Brush(color,isOpaque));
+            brushMap.put(hashCode, res = new Brush(color, isOpaque));
         }
+
         return res;
     }
 
-    private static Random rand = new Random();
-    private static Color[] colors = new Color[] { Color.BLUE, Color.CYAN,
-            Color.YELLOW, Color.RED, Color.WHITE };
-
-    private Color getRandColor() {
-        return colors[rand.nextInt(colors.length - 1)];
+    public static Brush get(Color color) {
+        return get(color, true);
     }
 
-    public Brush getRandBrush(boolean isOpaque) {
-        return createBrush(getRandColor(),isOpaque);
+    public static Brush getRandomBrush(boolean isOpaque) {
+        return get(getRandomColor(), isOpaque);
+    }
+
+    private static Color getRandomColor() {
+        return colors[random.nextInt(colors.length - 1)];
     }
 }
