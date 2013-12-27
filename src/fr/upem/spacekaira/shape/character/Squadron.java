@@ -40,10 +40,10 @@ public class Squadron extends Enemy {
             fixtureDef.userData = enemyColor;
             fixtureDef.shape = ps;
             fixtureDef.filter.categoryBits = FixtureType.STD_ENEMY;
-            fixtureDef.filter.maskBits = FixtureType.BULLET |
-                    FixtureType.SHIP |
-                    FixtureType.PLANET |
-                    FixtureType.STD_ENEMY;
+            fixtureDef.filter.maskBits = FixtureType.BULLET
+                    | FixtureType.SHIP
+                    | FixtureType.PLANET
+                    | FixtureType.STD_ENEMY;
             body.createFixture(fixtureDef);
         }
         {
@@ -62,8 +62,10 @@ public class Squadron extends Enemy {
             fd.density = 5.0f;
             fd.shape = shape;
             fd.filter.categoryBits = FixtureType.STD_ENEMY;
-            fd.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP |
-                    FixtureType.PLANET | FixtureType.STD_ENEMY;
+            fd.filter.maskBits = FixtureType.BULLET
+                    | FixtureType.SHIP
+                    | FixtureType.PLANET
+                    | FixtureType.STD_ENEMY;
 
             DistanceJointDef jd = new DistanceJointDef();
             Vec2 p1,p2,d;
@@ -207,6 +209,7 @@ public class Squadron extends Enemy {
             }
             if (System.currentTimeMillis() - lastShootTime < 1000) return;
 
+            /* take all triangle to make shoot just 3 closer triangle */
             lengthMap.entrySet()
                     .stream()
                     .sorted((o1, o2) ->

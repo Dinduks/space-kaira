@@ -95,6 +95,7 @@ public abstract class Enemy extends AbstractShape implements ShooterEnemy, Dynam
      * This method compute the speed of B, when you want to make B follow A
      *
      * You should do B.getPosition().set(B.getPosition().add(new_Speed_of_B));
+     * or a stuff like that
      *
      * @param A     Dot to follow
      * @param B     Dot who follows

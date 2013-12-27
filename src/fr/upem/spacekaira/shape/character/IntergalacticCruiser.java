@@ -27,9 +27,9 @@ public class IntergalacticCruiser extends Enemy {
         cruiserFix.density = 1.0f;
         cruiserFix.userData = enemyColor;
         cruiserFix.filter.categoryBits = FixtureType.STD_ENEMY;
-        cruiserFix.filter.maskBits = FixtureType.BULLET |
-                FixtureType.SHIP |
-                FixtureType.PLANET;
+        cruiserFix.filter.maskBits = FixtureType.BULLET
+                | FixtureType.SHIP
+                | FixtureType.PLANET;
 
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.set(new Vec2[]{ new Vec2(0, 0), new Vec2(0, 2),
@@ -69,10 +69,8 @@ public class IntergalacticCruiser extends Enemy {
         Vec2 shipIc = ship.getPosition().sub(body.getPosition());
         shipIc.normalize();
 
-        //Up Canon
-        if( upCanon.sub(shipIc).length() <= 0.05f ) shootUp();
-        //Down Canon
-        if( downCanon.sub(shipIc).length() <= 0.05f ) shootDown();
+        if (upCanon.sub(shipIc).length() <= 0.05f) shootUp();
+        else if (downCanon.sub(shipIc).length() <= 0.05f) shootDown();
     }
 
     @Override

@@ -29,9 +29,10 @@ public class TIE extends Enemy {
         edgeFix.density = 1.0f;
         edgeFix.userData = enemyColor;
         edgeFix.filter.categoryBits = FixtureType.STD_ENEMY;
-        edgeFix.filter.maskBits = FixtureType.BULLET |
-                FixtureType.SHIP |
-                FixtureType.ARMED_BOMB | FixtureType.PLANET;
+        edgeFix.filter.maskBits = FixtureType.BULLET
+                | FixtureType.SHIP
+                | FixtureType.ARMED_BOMB
+                | FixtureType.PLANET;
 
         //left-side-down
        {
@@ -128,16 +129,13 @@ public class TIE extends Enemy {
     /* This function shoot if the ship is more or less in the shoot-windows */
     @Override
     public void shoot(Ship ship) {
-        Vec2 leftCanon = body.getWorldVector(new Vec2(-1, 0));
         Vec2 rightCanon = body.getWorldVector(new Vec2(1, 0));
-
+        Vec2 leftCanon = body.getWorldVector(new Vec2(-1, 0));
         Vec2 shipTie = ship.getPosition().sub(body.getPosition());
         shipTie.normalize();
 
-        //leftCanon
         if( leftCanon.sub(shipTie).length() <= 0.05f ) shootLeft();
-        //rightCanon
-        if( rightCanon.sub(shipTie).length() <= 0.05f ) shootRight();
+        else if( rightCanon.sub(shipTie).length() <= 0.05f ) shootRight();
     }
 
     @Override

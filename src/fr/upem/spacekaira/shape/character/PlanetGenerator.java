@@ -137,7 +137,6 @@ public class PlanetGenerator {
      * @return A set of planets
      */
     public Set<Planet> getPlanetSet() {
-        //TODO mettre en cache le resultat ~[9]
         List<List<Planet>> lists = getPlanetsToDraw();
         return new AbstractSet<Planet>() {
         @Override

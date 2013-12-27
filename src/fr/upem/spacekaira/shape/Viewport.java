@@ -157,9 +157,7 @@ public class Viewport {
         return new Vec2(x, y);
     }
 
-    public int getScreenHeight() {
-        return screenHeight;
-    }
+    public int getScreenHeight() { return screenHeight; }
 
     public int getScreenWidth() {
         return screenWidth;
