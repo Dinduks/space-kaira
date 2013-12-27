@@ -6,7 +6,6 @@ import fr.umlv.zen3.KeyboardKey;
 import fr.upem.spacekaira.Main;
 import fr.upem.spacekaira.config.Configuration;
 import fr.upem.spacekaira.map.Map;
-import fr.upem.spacekaira.shape.DrawHelpers;
 import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.character.Ship;
 import fr.upem.spacekaira.shape.character.collision.ContactListener;
@@ -15,6 +14,7 @@ import fr.upem.spacekaira.util.Util;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import java.awt.*;
 import java.util.HashSet;
 
 /**
@@ -64,7 +64,7 @@ public class Game {
             syn.waitToSynchronize();
         }
 
-        DrawHelpers.drawGameOver(context);
+        drawGameOver(context);
         waitForPlayerDecision(context);
     }
 
@@ -143,5 +143,20 @@ public class Game {
             default:
                 break;
         }
+    }
+
+    public static void drawGameOver(ApplicationContext context) {
+        context.render((graphics) -> {
+            Font font;
+            graphics.setPaint(new Color(255, 0, 0));
+
+            font = new Font("arial", Font.BOLD, 60);
+            graphics.setFont(font);
+            graphics.drawString("GAME OVER", 200, 200);
+
+            font = new Font("arial", Font.BOLD, 20);
+            graphics.setFont(font);
+            graphics.drawString("Press Q to quit or R to restart.", 200, 250);
+        });
     }
 }

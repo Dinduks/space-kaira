@@ -17,10 +17,9 @@ public class ShipFactory {
         this.brushFactory = brushFactory;
     }
 
-    // TODO: Do I really need to pass enemies here?!
     public Ship createShip(List<Enemy> enemies, boolean hardcore) {
         return new Ship(world, enemies,
-                brushFactory.createBrush(Color.BLUE,true),
-                brushFactory.createBrush(Color.GREEN,true));
+                brushFactory.createBrush(Color.BLUE, true),
+                brushFactory.createBrush(Color.GREEN, true));
     }
 }

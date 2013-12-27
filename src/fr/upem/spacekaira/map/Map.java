@@ -60,7 +60,6 @@ public class Map {
         this.viewport = viewport;
         this.factoryPool = new FactoryPool(world);
 
-
         hudXPosition = width - 80;
         hudYPosition = 50;
     }

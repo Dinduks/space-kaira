@@ -1,6 +1,5 @@
 package fr.upem.spacekaira.shape.character.factory;
 
-import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.BrushFactory;
 import fr.upem.spacekaira.shape.character.Planet;
 import org.jbox2d.dynamics.World;

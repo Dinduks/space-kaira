@@ -4,6 +4,8 @@ import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.character.factory.EnemyFactory;
 import org.jbox2d.common.Rot;
 import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.World;
+
 import java.util.*;
 
 /**
@@ -81,7 +83,7 @@ public class EnemyWavesGenerator {
 
         for(int i=0,n=enemyWave.getNumberOfEnemy(); i<n; i++) {
             Rot.mulTrans(rot,start,rotate);
-            currentWave.add(enemyFactory.createEnemy(rotate.x,rotate.y));
+            currentWave.add(enemyFactory.createEnemy(rotate.x, rotate.y));
             start = new Vec2(rotate);
         }
     }

@@ -16,8 +16,7 @@ public class EnemyFactory {
     private World world;
     private BrushFactory bF;
     private Random rand;
-    public enum EnemyType {TIE, SQUADRON, CRUISER; }
-
+    public enum EnemyType {TIE, SQUADRON, CRUISER }
 
     public EnemyFactory(World world,BrushFactory brushFactory) {
         this.world = world;
