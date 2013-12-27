@@ -10,9 +10,8 @@ import java.awt.*;
 
 public class ArmedMegaBombFactory {
     public static ArmedMegaBomb create(World world, Vec2 position) {
-        BrushFactory brushFactory = new BrushFactory();
-        Brush initialBrush = brushFactory.createBrush(Color.RED, true);
-        Brush brushAfterExploding = brushFactory.createBrush(Color.RED, false);
+        Brush initialBrush = BrushFactory.get(Color.RED);
+        Brush brushAfterExploding = BrushFactory.get(Color.RED);
 
         return new ArmedMegaBomb(world, position, initialBrush,
                 brushAfterExploding);

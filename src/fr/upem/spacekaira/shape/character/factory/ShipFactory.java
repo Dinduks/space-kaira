@@ -10,17 +10,13 @@ import java.util.List;
 
 public class ShipFactory {
     private World world;
-    private BrushFactory brushFactory;
 
-    public ShipFactory(World world, BrushFactory brushFactory) {
+    public ShipFactory(World world) {
         this.world = world;
-        this.brushFactory = brushFactory;
     }
 
     public Ship createShip(List<Enemy> enemies, boolean hardcore) {
-        return new Ship(world, enemies,
-                brushFactory.createBrush(Color.BLUE, true),
-                brushFactory.createBrush(Color.GREEN, true),
-                !hardcore);
+        return new Ship(world, enemies, BrushFactory.get(Color.BLUE),
+                BrushFactory.get(Color.GREEN), !hardcore);
     }
 }

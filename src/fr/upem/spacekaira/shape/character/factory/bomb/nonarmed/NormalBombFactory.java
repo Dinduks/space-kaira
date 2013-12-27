@@ -11,7 +11,7 @@ import java.awt.*;
 public class NormalBombFactory {
     public static NormalBomb create(World world, Vec2 position) {
         Color color = Color.LIGHT_GRAY;
-        Brush brush = (new BrushFactory()).createBrush(color, true);
+        Brush brush = BrushFactory.get(color);
         return new NormalBomb(world, position, brush);
     }
 }

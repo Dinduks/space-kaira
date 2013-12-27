@@ -11,9 +11,8 @@ import java.awt.*;
 // TODO: Rename to ArmedNormal…
 public class ArmedNormalBombFactory {
     public static ArmedNormalBomb create(World world, Vec2 position) {
-        BrushFactory brushFactory = new BrushFactory();
-        Brush initialBrush = brushFactory.createBrush(Color.RED, true);
-        Brush brushAfterExploding = brushFactory.createBrush(Color.RED, false);
+        Brush initialBrush = BrushFactory.get(Color.RED);
+        Brush brushAfterExploding = BrushFactory.get(Color.RED, false);
 
         return new ArmedNormalBomb(world, position, initialBrush,
                 brushAfterExploding);

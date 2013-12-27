@@ -11,11 +11,10 @@ import java.util.Random;
 public class Brush {
     private final Color color;
     private final boolean isOpaque;
-    /*Constant Brush who mark that a fixture should die at next time step*/
-    public static final Brush DESTROY_BRUSH;
-    static {DESTROY_BRUSH = new Brush(Color.YELLOW,false);}
+    /* Brush that says that a fixture should die in the next step */
+    public static final Brush DESTROY_BRUSH = new Brush(Color.PINK, false);
 
-    public Brush(Color color, boolean isOpaque) {
+    Brush(Color color, boolean isOpaque) {
         this.color = color;
         this.isOpaque = isOpaque;
     }
@@ -34,7 +33,9 @@ public class Brush {
         Brush brush = (Brush) o;
 
         if (isOpaque != brush.isOpaque) return false;
-        if (color != null ? !color.equals(brush.color) : brush.color != null) return false;
+        if (color != null ? !color.equals(brush.color) : brush.color != null) {
+            return false;
+        }
 
         return true;
     }
