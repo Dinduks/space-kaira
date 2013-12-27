@@ -41,7 +41,7 @@ public class Brute extends  Enemy {
 
     @Override
     public void move(Ship ship) {
-        Vec2 f = ship.getPosition().sub(body.getPosition()).mul(1000);
+        Vec2 f = ship.getPosition().sub(body.getPosition()).mul(100);
         body.setLinearVelocity(f);
     }
 
