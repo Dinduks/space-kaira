@@ -42,7 +42,7 @@ public abstract class AbstractBomb extends AbstractShape implements DynamicConta
 
         FixtureDef bombFixtureDef = new FixtureDef();
         bombFixtureDef.shape = circleShape;
-        bombFixtureDef.density = 1.0f;
+        bombFixtureDef.density = 0.0f;
         bombFixtureDef.userData = color;
         bombFixtureDef.filter.categoryBits = BombType.getFixtureType(bombType);
 
