@@ -20,6 +20,7 @@ public class ShipFactory {
     public Ship createShip(List<Enemy> enemies, boolean hardcore) {
         return new Ship(world, enemies,
                 brushFactory.createBrush(Color.BLUE, true),
-                brushFactory.createBrush(Color.GREEN, true));
+                brushFactory.createBrush(Color.GREEN, true),
+                !hardcore);
     }
 }

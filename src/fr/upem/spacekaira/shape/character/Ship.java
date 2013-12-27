@@ -30,11 +30,14 @@ public class Ship extends AbstractShape implements DynamicContact{
     private AbstractArmedBomb armedBomb;
     private List<Enemy> enemies;
     public static final float speed = 12;
+    private boolean autoShield;
 
     public Ship(World world, List<Enemy> enemies, Brush shipColor,
-                Brush bulletColor) {
+                Brush bulletColor, boolean autoShield) {
         this.enemies = enemies;
         this.bulletColor = bulletColor;
+        this.autoShield = autoShield;
+        this.shield = true;
 
         //Bullet list
         bullets = new LinkedList<>();
@@ -79,8 +82,9 @@ public class Ship extends AbstractShape implements DynamicContact{
             shield.shape = circleShape;
             shield.density = 0;
             shield.userData = null; //Use with caution
-            shield.filter.categoryBits = shieldFilterOn.categoryBits;
-            shield.filter.maskBits = shieldFilterOn.maskBits;
+            Filter shieldFilter = (autoShield)?shieldFilterOn:shieldFilterOff;
+            shield.filter.categoryBits = shieldFilter.categoryBits;
+            shield.filter.maskBits = shieldFilter.maskBits;
         }
         shipFix = body.createFixture(ship);
         shieldFix = body.createFixture(shield);
@@ -114,14 +118,8 @@ public class Ship extends AbstractShape implements DynamicContact{
                 FixtureType.BULLET_ENEMY | FixtureType.PLANET;
     }};
 
-
     public void toggleShield() {
-        /*if(shield())
-            shieldFix.setFilterData(shieldFilterOff);
-        else
-            shieldFix.setFilterData(shieldFilterOn);*/
-
-        shield = !shield;
+        setShield(!shield);
     }
 
     public boolean shield() {
@@ -191,7 +189,17 @@ public class Ship extends AbstractShape implements DynamicContact{
     }
 
     public void enableShield() {
-        shield = true;
+       setShield(true);
+    }
+
+    private void setShield(boolean shield) {
+        if (!autoShield) {
+            if (shield)
+                shieldFix.setFilterData(shieldFilterOn);
+            else
+                shieldFix.setFilterData(shieldFilterOff);
+        }
+        this.shield = shield;
     }
 
     // TODO: Refactor this shit
