@@ -14,6 +14,11 @@ public class Main {
         final int WIDTH = 800;
         final int HEIGHT = 600;
 
+        if (args.length < 1) {
+            System.err.println("Please specify a level file.");
+            return;
+        }
+
         File configurationFile = new File(args[0]);
         Configuration configuration =
                 ConfigurationBuilder.buildFrom(configurationFile);
