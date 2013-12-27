@@ -25,7 +25,7 @@ public class BrushFactory {
     private static Random rand;
     private static Color[] colors;
     static {
-        colors = new Color[]{Color.BLACK,Color.BLUE,Color.CYAN,Color.DARK_GRAY,Color.YELLOW,Color.RED,Color.WHITE};
+        colors = new Color[]{Color.BLUE,Color.CYAN,Color.DARK_GRAY,Color.YELLOW,Color.RED,Color.WHITE};
         rand = new Random();
     }
 

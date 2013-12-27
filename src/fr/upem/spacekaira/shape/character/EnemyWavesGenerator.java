@@ -4,8 +4,6 @@ import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.character.factory.EnemyFactory;
 import org.jbox2d.common.Rot;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.World;
-
 import java.util.*;
 
 /**
@@ -13,9 +11,24 @@ import java.util.*;
  */
 public class EnemyWavesGenerator {
     /**
+     * This class represent a Wave of Enemy
+     */
+    public static class EnemyWave {
+        private int numberOfEnemy;
+
+        public EnemyWave(int numberOfEnemy) {
+            this.numberOfEnemy = numberOfEnemy;
+        }
+
+        public int getNumberOfEnemy() {
+            return numberOfEnemy;
+        }
+    }
+
+    /**
      * Queue to store enemy waves (number of enemy by wave)
      */
-    private Queue<Integer> wavesQueue;
+    private Queue<EnemyWave> wavesQueue;
     /**
      *  List to store current enemy
      */
@@ -32,37 +45,38 @@ public class EnemyWavesGenerator {
         ViewPort
      */
     private Viewport viewport;
+    /**
+     * The ship
+     */
+    private Ship ship;
 
     /**
      *  Main constructor to instantiate an EnemyWavesGenerator
      * @param enemyFactory an instance of the class EnemyFactory
      * @param viewport an instance of the ViewPort class
-     * @param waves Table who contains number of enemy by wave wave[0] == number of enemy in the first wave, etc
-     * @param size number of wave
+     * @param ship the player ship
+     * @param enemyWaveList A list who represent all wave of enemy during the game
      */
-    public EnemyWavesGenerator(EnemyFactory enemyFactory,Viewport viewport, int[] waves, int size) {
-        if(size < waves.length)
-            throw new IllegalArgumentException();
+    public EnemyWavesGenerator(EnemyFactory enemyFactory,Viewport viewport,Ship ship, List<EnemyWave> enemyWaveList) {
         Objects.requireNonNull(enemyFactory);
         Objects.requireNonNull(viewport);
-        this.wavesQueue = new ArrayDeque<>();
-        for (int i=0;i<size;i++) {
-            this.wavesQueue.add(waves[i]);
-        }
+        Objects.requireNonNull(ship);
+        this.wavesQueue = new ArrayDeque<>(enemyWaveList);
         this.currentWave = new ArrayList<>();
         this.enemyFactory = enemyFactory;
         this.viewport = viewport;
         this.maxLength = Math.max(viewport.getScreenHeight(),viewport.getScreenWidth());
+        this.ship = ship;
     }
 
     /**
      * Get enemy who are on the map
-     * @return an unmodifiable list of enemy
+     * @return a list who contains the current enemy
      */
     public List<Enemy> getEnemy() {
-        if (currentWave.size() == 0)
+        if ( wavesQueue.size() != 0 && currentWave.size() == 0 )
             generateNextWave();
-        return Collections.unmodifiableList(currentWave);
+        return currentWave;
     }
 
     /**
@@ -70,16 +84,25 @@ public class EnemyWavesGenerator {
      * @warring this method feed the current enemy list {@see currentWave}
      */
     private void generateNextWave() {
-        Integer numberOfEnemy;
-        if ((numberOfEnemy = wavesQueue.poll()) == null || currentWave.size() != 0) return;
+        EnemyWave enemyWave = wavesQueue.poll();
+        if (enemyWave == null || currentWave.size() != 0) return;
         float height = maxLength/viewport.getCameraScale();
-        Vec2 start = new Vec2(0,height+(height/8));
+        Vec2 start = new Vec2(0,height+(height/8)).add(ship.getPosition());
         Vec2 rotate = new Vec2();
-        Rot rot = new Rot(2.28f/numberOfEnemy); /* 2.PI / number */
+        Rot rot = new Rot(6.28f/enemyWave.getNumberOfEnemy()); /* 2.PI / number */
 
-        for(int i=0;i<numberOfEnemy;i++) {
+        for(int i=0,n=enemyWave.getNumberOfEnemy(); i<n; i++) {
             Rot.mulTrans(rot,start,rotate);
             currentWave.add(enemyFactory.createEnemy(rotate.x,rotate.y));
+            start = new Vec2(rotate);
         }
+    }
+
+    /**
+     * Tell to the user that there is no more enemy to generate
+     * @return true is there is no more enemy, false otherwise
+     */
+    public boolean noMoreEnemy() {
+        return wavesQueue.size() == 0 && currentWave.size() == 0;
     }
 }

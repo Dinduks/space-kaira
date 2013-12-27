@@ -47,9 +47,8 @@ public class Game {
         Viewport viewport = new Viewport(width, height);
         viewport.setCamera(0, 0, CAMERA_SCALE);
 
-        //Init Map
-        Map map = new Map(world, viewport, height, width, config);
-        map.initMap();
+        //Map
+        Map map = Map.createMap(world, viewport, height, width, config);
 
         Synchronizer syn = new Synchronizer((long)(REFRESH_TIME * 1000));
 

@@ -25,7 +25,7 @@ public class Map {
     private final int width;
 
     private Ship ship;
-    private List<Enemy> enemies;
+    private EnemyWavesGenerator wavesGenerator;
     private PlanetGenerator planetGenerator;
 
     private World world;
@@ -42,35 +42,42 @@ public class Map {
 
     private Random random = new Random();
 
-    public Map(World world, Viewport viewport, final int height,
+    public static Map createMap(World world, Viewport viewport, final int height,
+                            final int width, Configuration config) {
+        Map map = new Map(world,viewport,height,width,config);
+        map.initMap();
+        return map;
+    }
+
+    private Map(World world, Viewport viewport, final int height,
                final int width, Configuration config) {
         this.world = world;
         this.planetsDensity = config.getPlanetsDensity();
         this.bombsFrequency = config.getBombsFrequency();
         this.megaBombsPerCent = config.getMegaBombsPerCent();
-        enemies = new LinkedList<>();
         this.height = height;
         this.width = width;
         this.viewport = viewport;
         this.factoryPool = new FactoryPool(world);
 
+
         hudXPosition = width - 80;
         hudYPosition = 50;
     }
 
-    public void initMap() {
+    private void initMap() {
         //TODO config class pour la l'init
+
+        List<Enemy> enemies = Collections.EMPTY_LIST;
         ship = factoryPool.getShipFactory().createShip(enemies, false);
-        enemies.add(factoryPool.getEnemyFactory().createEnemy(-10, -10));
-        enemies.add(factoryPool.getEnemyFactory().createEnemy(20, 20));
-        Brush blueBrush = new Brush(Color.BLUE, false);
-        Squadron squadron = new Squadron(world, -20, 10, blueBrush, blueBrush);
-        IntergalacticCruiser cruiser =
-                new IntergalacticCruiser(world, 40, 40, blueBrush, blueBrush);
-        enemies.add(squadron);
-        enemies.add(cruiser);
         planetGenerator = PlanetGenerator.newPlanetGenerator(planetsDensity,
                 viewport, width, height, ship, factoryPool.getPlanetFactory());
+        wavesGenerator = new EnemyWavesGenerator(
+                factoryPool.getEnemyFactory(),
+                viewport,
+                ship,
+                Arrays.asList(new EnemyWavesGenerator.EnemyWave(5),new EnemyWavesGenerator.EnemyWave(3)));
+        enemies = wavesGenerator.getEnemy();
     }
 
     public Ship getShip() {
@@ -82,7 +89,7 @@ public class Map {
         ship.computeTimeStepData();
         cleanDeadElements();
         moveEnemy();
-        enemies.forEach(e -> e.shoot(ship));
+        wavesGenerator.getEnemy().forEach(e -> e.shoot(ship));
         spawnABombIfNecessary();
     }
 
@@ -103,7 +110,7 @@ public class Map {
     }
 
     private void cleanDeadElements() {
-        Iterator<Enemy> enemyIt = enemies.iterator();
+        Iterator<Enemy> enemyIt = wavesGenerator.getEnemy().iterator();
         while (enemyIt.hasNext()) {
             Enemy e = enemyIt.next();
             e.computeTimeStepData();
@@ -125,11 +132,11 @@ public class Map {
 
     private void checkBulletOutScreen() {
         ship.checkForBulletOutScreen(viewport);
-        enemies.forEach(e -> e.checkForBulletOutScreen(viewport));
+        wavesGenerator.getEnemy().forEach(e -> e.checkForBulletOutScreen(viewport));
     }
 
     private void moveEnemy() {
-        enemies.forEach(e->e.move(ship));
+        wavesGenerator.getEnemy().forEach(e -> e.move(ship));
     }
 
     public void draw(ApplicationContext context,
@@ -146,7 +153,7 @@ public class Map {
             bombs.forEach(b -> b.draw(graphics, viewport));
             ship.draw(graphics, viewport);
             planets.forEach(p -> p.draw(graphics, viewport));
-            enemies.forEach(e -> e.draw(graphics, viewport));
+            wavesGenerator.getEnemy().forEach(e -> e.draw(graphics, viewport));
             toggleShieldIfNearAPlanet(planets);
             if (ship.hasBomb()) updateBombInfo(graphics);
 
