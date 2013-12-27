@@ -31,7 +31,7 @@ public class TIE extends Enemy {
         edgeFix.filter.categoryBits = FixtureType.STD_ENEMY;
         edgeFix.filter.maskBits = FixtureType.BULLET |
                 FixtureType.SHIP |
-                FixtureType.ARMED_BOMB;
+                FixtureType.ARMED_BOMB | FixtureType.PLANET;
 
         //left-side-down
        {

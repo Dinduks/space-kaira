@@ -77,7 +77,7 @@ public class EnemyWavesGenerator {
         EnemyWave enemyWave = wavesQueue.poll();
         if (enemyWave == null || currentWave.size() != 0) return;
         float height = maxLength/viewport.getCameraScale();
-        Vec2 start = new Vec2(0,height+(height/8)).add(ship.getPosition());
+        Vec2 start = new Vec2(0,height).add(ship.getPosition());
         Vec2 rotate = new Vec2();
         Rot rot = new Rot(6.28f/enemyWave.getNumberOfEnemy()); /* 2.PI / number */
 

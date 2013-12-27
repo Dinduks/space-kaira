@@ -15,7 +15,7 @@ import java.util.*;
 import java.util.List;
 
 public class Squadron extends Enemy {
-    private int nBodies = 8;
+    private int nBodies = 16;
     private List<Body> m_bodies = new ArrayList<>(nBodies);
     private List<Joint> m_joints = new ArrayList<>(nBodies*2);
 
@@ -133,7 +133,7 @@ public class Squadron extends Enemy {
                 body.getPosition(),
                 ship.getLinearVelocity(),
                 body.getLinearVelocity(),
-                0.9f);
+                0.3f);
         body.setLinearVelocity(speed);
     }
 
@@ -191,7 +191,7 @@ public class Squadron extends Enemy {
         m_joints.forEach(j -> ((DistanceJoint) j).setLength(length));
     }
 
-    private static long lastShootTime = 0;
+    private long lastShootTime = 0;
     @Override
     public void shoot(Ship ship) {
 

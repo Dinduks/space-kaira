@@ -28,7 +28,11 @@ public class Planet extends AbstractShape {
         planet.shape = circleShape;
         planet.userData = color;
         planet.filter.categoryBits = FixtureType.PLANET;
-        planet.filter.maskBits = FixtureType.BULLET | FixtureType.SHIP | FixtureType.STD_ENEMY;
+        planet.filter.maskBits = FixtureType.BULLET
+                                | FixtureType.SHIP
+                                | FixtureType.STD_ENEMY
+                                | FixtureType.SHIELD
+                                | FixtureType.BULLET_ENEMY;
 
         body.createFixture(planet);
 

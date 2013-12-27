@@ -22,6 +22,7 @@ import java.util.List;
 public class Ship extends AbstractShape implements DynamicContact{
     private boolean shield;
     private final Fixture shieldFix;
+    private final Fixture shipFix;
     private List<Bullet> bullets;
     private final Brush bulletColor;
     private boolean hasBomb;
@@ -78,13 +79,10 @@ public class Ship extends AbstractShape implements DynamicContact{
             shield.shape = circleShape;
             shield.density = 0;
             shield.userData = null; //Use with caution
-            shield.filter.categoryBits = FixtureType.SHIP;
-            shield.filter.maskBits = FixtureType.PLANET |
-                    FixtureType.STD_ENEMY |
-                    FixtureType.BULLET_ENEMY;
+            shield.filter.categoryBits = shieldFilterOn.categoryBits;
+            shield.filter.maskBits = shieldFilterOn.maskBits;
         }
-
-        body.createFixture(ship);
+        shipFix = body.createFixture(ship);
         shieldFix = body.createFixture(shield);
 
         body.setUserData(this);
@@ -104,7 +102,25 @@ public class Ship extends AbstractShape implements DynamicContact{
         body.applyTorque(10.0f);
     }
 
+    private Filter shieldFilterOff = new Filter() {{
+        categoryBits = 0;
+        maskBits = 0;
+    }};
+
+    private Filter shieldFilterOn = new Filter() {{
+        categoryBits = FixtureType.SHIELD;
+        maskBits = FixtureType.PLANET |
+                FixtureType.STD_ENEMY |
+                FixtureType.BULLET_ENEMY | FixtureType.PLANET;
+    }};
+
+
     public void toggleShield() {
+        /*if(shield())
+            shieldFix.setFilterData(shieldFilterOff);
+        else
+            shieldFix.setFilterData(shieldFilterOn);*/
+
         shield = !shield;
     }
 
@@ -227,6 +243,6 @@ public class Ship extends AbstractShape implements DynamicContact{
 
     @Override
     public boolean isDead() {
-        return false;
+        return shipFix.getUserData() == Brush.DESTROY_BRUSH;
     }
 }

@@ -54,7 +54,7 @@ public class Game {
 
         long startTime = System.currentTimeMillis();
 
-        while (Util.anyTimeLeft(startTime, config.getGameDuration())) {
+        while (Util.anyTimeLeft(startTime, config.getGameDuration()) && !map.getShip().isDead()) {
             syn.start();
             handleKeyboardEvents(context, map.getShip());
             world.step(REFRESH_TIME, 6, 8);

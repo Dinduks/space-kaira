@@ -47,7 +47,7 @@ public class Bullet extends AbstractShape implements DynamicContact{
         bullet.density = 0.0000000000000000000000001f; // 0 doesn't "work"
         bullet.userData = color;
         bullet.filter.categoryBits = categoryBits;
-        bullet.filter.maskBits = FixtureType.PLANET | FixtureType.STD_ENEMY | FixtureType.SHIP;
+        bullet.filter.maskBits = FixtureType.PLANET | FixtureType.STD_ENEMY | FixtureType.SHIP | FixtureType.SHIELD;
 
         body.createFixture(bullet);
         body.setUserData(this);

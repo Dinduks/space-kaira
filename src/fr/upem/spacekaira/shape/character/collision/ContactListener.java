@@ -32,15 +32,15 @@ public class ContactListener implements org.jbox2d.callbacks.ContactListener {
     private static ContactAction nil = (f1,f2) -> {};
 
     private static ContactAction shipVsEnemy = (f1, f2) -> {
-        if (f1.getBody().getUserData() instanceof Ship) {
-            if (((Ship) f1.getBody().getUserData()).shield()) {
-                f2.setUserData(Brush.DESTROY_BRUSH);
-            }
+        if(((Ship)(f1.getBody().getUserData())).shield()) {
+            f2.setUserData(Brush.DESTROY_BRUSH);
         } else {
-            if (((Ship) f2.getBody().getUserData()).shield()) {
-                f1.setUserData(Brush.DESTROY_BRUSH);
-            }
+            f1.setUserData(Brush.DESTROY_BRUSH);
         }
+    };
+
+    private static ContactAction enemyVsShip = (f1,f2) -> {
+        shipVsEnemy.accept(f2,f1);
     };
 
     private static ContactAction bomb = (f1, f2) -> {
@@ -70,17 +70,26 @@ public class ContactListener implements org.jbox2d.callbacks.ContactListener {
         }
     };
 
+    private static ContactAction shieldBulletEnemy = (f1,f2) -> {
+        ((Ship)f1.getBody().getUserData()).enableShield();
+        f2.setUserData(Brush.DESTROY_BRUSH);
+    };
+
+    private static ContactAction bulletEnemyShield = (f1,f2) ->
+            shieldBulletEnemy.accept(f2,f1);
+
     private static ContactAction[][] action = {
-                          /* BULLET PLANET STD_ENEMY    SHIP         BOMB, ARMED_BOMB,  MBOMB, ARMED_MBOMB   BULLET_ENEMY */
-        /* BULLET */       { nil,   rSD,   dSD,         nil,         nil,  nil,         nil,   nil,          nil },
-        /* PLANET */       { lSD,   nil,   nil,         nil,         nil,  nil ,        nil,   nil,          nil },
-        /* STD_ENEMY */    { dSD,   nil,   nil,         shipVsEnemy, nil,  bombOnEnemy, nil,   nil,          nil },
-        /* SHIP */         { nil,   nil,   shipVsEnemy, nil,         bomb, nil,         mbomb, nil,          shipVsEnemy },
-        /* BOMB */         { nil,   nil,   nil,         bomb,        nil,  nil,         nil,   nil,          nil },
-        /* ARMED_BOMB */   { nil,   nil,   bombOnEnemy, nil,         nil,  nil,         nil,   nil,          nil },
-        /* MBOMB */        { nil,   nil,   nil,         mbomb,       nil,  nil,         nil,   nil,          nil },
-        /* ARMED_MBOMB */  { nil,   nil,   nil,         nil,         nil,  nil,         nil,   nil,          nil },
-        /* BULLET_ENEMY */ { nil,   nil,   nil,         shipVsEnemy, nil,  nil,         nil,   nil,          nil }
+                          /* BULLET PLANET STD_ENEMY    SHIP         BOMB, ARMED_BOMB,  MBOMB, ARMED_MBOMB   BULLET_ENEMY  SHIELD*/
+        /* BULLET */       { nil,   rSD,   dSD,         nil,         nil,  nil,         nil,   nil,          rSD,          nil },
+        /* PLANET */       { lSD,   nil,   nil,         nil,         nil,  nil ,        nil,   nil,          lSD,          nil },
+        /* STD_ENEMY */    { dSD,   nil,   nil,         enemyVsShip, nil,  bombOnEnemy, nil,   nil,          nil,          nil },
+        /* SHIP */         { nil,   nil,   shipVsEnemy, nil,         bomb, nil,         mbomb, nil,          shipVsEnemy,  nil },
+        /* BOMB */         { nil,   nil,   nil,         bomb,        nil,  nil,         nil,   nil,          nil,          nil },
+        /* ARMED_BOMB */   { nil,   nil,   bombOnEnemy, nil,         nil,  nil,         nil,   nil,          nil,          nil },
+        /* MBOMB */        { nil,   nil,   nil,         mbomb,       nil,  nil,         nil,   nil,          nil,          nil },
+        /* ARMED_MBOMB */  { nil,   nil,   nil,         nil,         nil,  nil,         nil,   nil,          nil,          nil },
+        /* BULLET_ENEMY */ { nil,   rSD,   nil,         enemyVsShip, nil,  nil,         nil,   nil,          nil,          bulletEnemyShield },
+        /* SHIELD */       { nil,   rSD,   nil,         nil,         nil,  nil,         nil,   nil, shieldBulletEnemy,     nil }
     };
 
     @Override
