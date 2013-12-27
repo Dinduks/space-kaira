@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<project name="Space Kaïra" default="jar" basedir=".">
+  <property name="srcDir"   location="./src"/>
+  <property name="testDir"  location="./test"/>
+  <property name="buildDir" location="./classes"/>
+  <property name="docDir"   location="./docs/doc"/>
+  <property name="libDir"   location="./lib"/>
+  <property name="jar"      location="master-pilot.jar"/>
+
+  <path id="master-classpath">
+    <fileset dir="${libDir}"/>
+  </path>
+
+  <target name="compile">
+    <mkdir dir="${buildDir}"/>
+    <javac includeantruntime="false" srcdir="${srcDir}" destdir="${buildDir}">
+      <classpath refid="master-classpath"/>
+    </javac>
+  </target>
+
+  <target name="jar" depends="compile">
+    <pathconvert property="manifest-classpath" pathsep=" ">
+      <path refid="master-classpath"/>
+      <mapper>
+        <chainedmapper>
+          <flattenmapper/>
+          <globmapper from="*.jar" to="lib/*.jar"/>
+        </chainedmapper>
+      </mapper>
+    </pathconvert>
+
+    <jar destfile="${jar}" basedir="${buildDir}">
+      <manifest>
+        <attribute name="Main-Class" value="fr.upem.spacekaira.Main"/>
+        <attribute name="Class-Path" value="${manifest-classpath}"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="clean">
+    <delete dir="${buildDir}"/>
+    <mkdir  dir="${buildDir}"/>
+    <touch  file="${buildDir}/.gitkeep"/>
+    <delete dir="${docDir}"/>
+    <mkdir  dir="${docDir}"/>
+  </target>
+
+  <target name="javadoc">
+    <javadoc destdir="${docDir}" nodeprecatedlist="yes">
+      <classpath refid="master-classpath"/>
+      <fileset dir="${srcDir}" defaultexcludes="yes">
+        <include name="**"/>
+        <exclude name="**/Main.java"/>
+      </fileset>
+    </javadoc>
+    <echo>The Java Doc was generated to the ${doc} directory.</echo>
+  </target>
+
+  <target name="test" depends="compile">
+    <javac includeantruntime="false" srcdir="${testDir}" destdir="${buildDir}">
+      <classpath refid="master-classpath"/>
+    </javac>
+
+    <junit printsummary="yes" showoutput="yes">
+      <test name="fr.upem.spacekaira.util.UtilTest"/>
+      <formatter type="plain" usefile="false"/>
+      <classpath refid="master-classpath"/>
+      <classpath>
+        <pathelement location="${buildDir}"/>
+      </classpath>
+    </junit>
+  </target>
+</project>
