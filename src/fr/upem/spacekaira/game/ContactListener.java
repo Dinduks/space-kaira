@@ -65,6 +65,7 @@ public class ContactListener implements org.jbox2d.callbacks.ContactListener {
 
     private static ContactAction bombEnemy = (f1,f2) -> {
         f1.setUserData(Brush.DESTROY_BRUSH);
+        f2.setUserData(Brush.DESTROY_BRUSH);
     };
 
     private static ContactAction enemyBomb = (f1, f2) -> {
@@ -89,24 +90,24 @@ public class ContactListener implements org.jbox2d.callbacks.ContactListener {
         float angle = (float)Math.acos(Vec2.cross(planetShip,shieldSpeed));
         shieldSpeed.negateLocal();
         Rot.mulToOut(new Rot(angle*2),shieldSpeed,shieldSpeed);
-        f2.getBody().setLinearVelocity(shieldSpeed.mul(75));
+        f2.getBody().setLinearVelocity(shieldSpeed.mul(40));
     };
 
     private static ContactAction shieldPlanet = (f1, f2) ->
             planetShield.accept(f2, f1);
 
     private static ContactAction[][] action = {
-                          /* BULLET PLANET STD_ENEMY    SHIP         BOMB, ARMED_BOMB,  MBOMB, ARMED_MBOMB   BULLET_ENEMY  SHIELD*/
-        /* BULLET */       { nil,   rSD,   dSD,         nil,         nil,  nil,         nil,   nil,          rSD,          nil },
-        /* PLANET */       { lSD,   nil,   nil,         nil,         nil,  nil ,        nil,   nil,          lSD,          planetShield },
-        /* STD_ENEMY */    { dSD,   nil,   nil,         enemyVsShip, nil,  enemyBomb, nil,   nil,          nil,          nil },
-        /* SHIP */         { nil,   nil,   shipVsEnemy, nil,         shipBomb, nil,         shipMbomb, nil,          shipVsEnemy,  nil },
-        /* BOMB */         { nil,   nil,   nil,         bombShip,    nil,  nil,         nil,   nil,          nil,          nil },
-        /* ARMED_BOMB */   { nil,   nil,   bombEnemy, nil,         nil,  nil,         nil,   nil,          nil,          nil },
-        /* MBOMB */        { nil,   nil,   nil,         mbombShip,       nil,  nil,         nil,   nil,          nil,          nil },
-        /* ARMED_MBOMB */  { nil,   nil,   nil,         nil,         nil,  nil,         nil,   nil,          nil,          nil },
-        /* BULLET_ENEMY */ { nil,   rSD,   nil,         enemyVsShip, nil,  nil,         nil,   nil,          nil,          bulletEnemyShield },
-        /* SHIELD */       { nil,   shieldPlanet,   nil,         nil,         nil,  nil,         nil,   nil, shieldBulletEnemy,     nil }
+                          /* BULLET PLANET        STD_ENEMY    SHIP         BOMB,     ARMED_BOMB, MBOMB,     ARMED_MBOMB BULLET_ENEMY       SHIELD*/
+        /* BULLET */       { nil,   rSD,          dSD,         nil,         nil,      nil,        nil,       nil,        rSD,               nil },
+        /* PLANET */       { lSD,   nil,          nil,         nil,         nil,      nil ,       nil,       nil,        lSD,               planetShield },
+        /* STD_ENEMY */    { dSD,   nil,          nil,         enemyVsShip, nil,      enemyBomb,  nil,       nil,        nil,               nil },
+        /* SHIP */         { nil,   nil,          shipVsEnemy, nil,         shipBomb, nil,        shipMbomb, nil,        shipVsEnemy,       nil },
+        /* BOMB */         { nil,   nil,          nil,         bombShip,    nil,      nil,        nil,       nil,        nil,               nil },
+        /* ARMED_BOMB */   { nil,   nil,          bombEnemy,   nil,         nil,      nil,        nil,       nil,        nil,               nil },
+        /* MBOMB */        { nil,   nil,          nil,         mbombShip,   nil,      nil,        nil,       nil,        nil,               nil },
+        /* ARMED_MBOMB */  { nil,   nil,          nil,         nil,         nil,      nil,        nil,       nil,        nil,               nil },
+        /* BULLET_ENEMY */ { nil,   rSD,          nil,         enemyVsShip, nil,      nil,        nil,       nil,        nil,               bulletEnemyShield },
+        /* SHIELD */       { nil,   shieldPlanet, nil,         nil,         nil,      nil,        nil,       nil,        shieldBulletEnemy, nil }
     };
 
     @Override
@@ -134,7 +135,9 @@ public class ContactListener implements org.jbox2d.callbacks.ContactListener {
     }
 
     private void debug(Contact contact) {
-        System.out.println(contact.getFixtureA().getBody().getUserData().getClass().getName() + " & " +
-                contact.getFixtureB().getBody().getUserData().getClass().getName() + "\n");
+        try {
+            System.out.println(contact.getFixtureA().getBody().getUserData().getClass().getName() + " & " +
+                    contact.getFixtureB().getBody().getUserData().getClass().getName() + "\n");
+        } catch (Exception e) {}
     }
 }

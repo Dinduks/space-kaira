@@ -29,7 +29,7 @@ public class ArmedNormalBomb extends AbstractArmedBomb {
 
     @Override
     public boolean explode(List<Enemy> enemies) {
-        if (radius >= 5.0f) return false;
+        if (radius >= 10.0f) return false;
         circleShape.setRadius((radius = radius + 0.5f));
         armedBombFixtureDef.shape = circleShape;
         armedBombFixtureDef.userData = brushAfterExploding;

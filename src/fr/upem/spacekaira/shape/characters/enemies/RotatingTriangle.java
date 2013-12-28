@@ -28,6 +28,7 @@ public class RotatingTriangle extends Enemy {
         triangleFix.filter.maskBits = FixtureType.BULLET
                 | FixtureType.SHIP
                 | FixtureType.ARMED_BOMB
+                | FixtureType.ARMED_MBOMB
                 | FixtureType.PLANET
                 | FixtureType.STD_ENEMY;
 

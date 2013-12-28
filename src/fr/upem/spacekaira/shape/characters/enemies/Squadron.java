@@ -44,6 +44,8 @@ public class Squadron extends Enemy {
             fixtureDef.shape = ps;
             fixtureDef.filter.categoryBits = FixtureType.STD_ENEMY;
             fixtureDef.filter.maskBits = FixtureType.BULLET
+                    | FixtureType.ARMED_BOMB
+                    | FixtureType.ARMED_MBOMB
                     | FixtureType.SHIP
                     | FixtureType.PLANET
                     | FixtureType.STD_ENEMY;

@@ -30,7 +30,9 @@ public class Brute extends Enemy {
         fd.filter.categoryBits = FixtureType.STD_ENEMY;
         fd.filter.maskBits = FixtureType.BULLET |
                 FixtureType.SHIP |
-                FixtureType.ARMED_BOMB | FixtureType.PLANET;
+                FixtureType.ARMED_BOMB |
+                FixtureType.ARMED_MBOMB |
+                FixtureType.PLANET;
 
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(1);

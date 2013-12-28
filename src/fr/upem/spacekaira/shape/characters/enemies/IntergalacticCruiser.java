@@ -30,6 +30,8 @@ public class IntergalacticCruiser extends Enemy {
         cruiserFix.userData = enemyColor;
         cruiserFix.filter.categoryBits = FixtureType.STD_ENEMY;
         cruiserFix.filter.maskBits = FixtureType.BULLET
+                | FixtureType.ARMED_BOMB
+                | FixtureType.ARMED_MBOMB
                 | FixtureType.SHIP
                 | FixtureType.PLANET
                 | FixtureType.STD_ENEMY;

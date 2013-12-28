@@ -71,7 +71,7 @@ public class ArmedMegaBomb extends AbstractArmedBomb {
                 .filter(e -> {
                     float d = Util.distanceBetweenVectors(e.getPosition(),
                             getPosition());
-                    return d <= 15;
+                    return d <= 20;
                 })
                 .collect(Collectors.toList()));
     }
