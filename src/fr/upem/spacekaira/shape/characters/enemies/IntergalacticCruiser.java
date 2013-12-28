@@ -12,9 +12,9 @@ import org.jbox2d.dynamics.World;
 
 public class IntergalacticCruiser extends Enemy {
 
-    public IntergalacticCruiser(World world, float x, float y, Brush color,
+    public IntergalacticCruiser(World world, float x, float y, Brush brush,
                                 Brush bulletColor) {
-        super(color, bulletColor);
+        super(brush, bulletColor);
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;

@@ -9,8 +9,9 @@ import org.jbox2d.dynamics.*;
 
 public class RotatingTriangle extends Enemy {
 
-    public RotatingTriangle(World world, float x, float y, Brush color, Brush bulletColor) {
-        super(color, bulletColor);
+    public RotatingTriangle(World world, float x, float y, Brush brush,
+                            Brush bulletColor) {
+        super(brush, bulletColor);
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;

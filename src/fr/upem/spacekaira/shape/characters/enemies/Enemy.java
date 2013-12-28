@@ -23,9 +23,9 @@ public abstract class Enemy extends AbstractShape implements ShooterEnemy, Dynam
     protected final Brush bulletColor;
     protected List<Bullet> bullets;
 
-    public Enemy(Brush color, Brush bulletColor) {
+    public Enemy(Brush brush, Brush bulletColor) {
         this.bullets = new LinkedList<>();
-        this.enemyColor = color;
+        this.enemyColor = brush;
         this.bulletColor = bulletColor;
     }
 

@@ -14,9 +14,8 @@ import org.jbox2d.dynamics.World;
  * The space ship Enemy
  */
 public class TIE extends Enemy {
-
-    public TIE(World world, float x, float y, Brush color, Brush bulletColor) {
-        super(color, bulletColor);
+    public TIE(World world, float x, float y, Brush brush, Brush bulletColor) {
+        super(brush, bulletColor);
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;

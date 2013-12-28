@@ -22,11 +22,11 @@ public class Squadron extends Enemy {
     private List<Body> m_bodies = new ArrayList<>(nBodies);
     private List<Joint> m_joints = new ArrayList<>(nBodies*2);
 
-    public Squadron(World world, float x, float y, Brush color,
+    public Squadron(World world, float x, float y, Brush brush,
                     Brush bulletColor) {
-        super(color, bulletColor);
+        super(brush, bulletColor);
 
-        /*Main square*/
+        /* Main square */
         {
             BodyDef bd = new BodyDef();
             bd.type = BodyType.DYNAMIC;

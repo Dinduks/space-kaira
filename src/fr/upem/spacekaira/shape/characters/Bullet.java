@@ -20,13 +20,17 @@ import java.util.List;
  */
 public class Bullet extends AbstractShape implements DynamicContact{
     /**
-     * Build a new bullet with a fixed velocity
-     * @param world the current world
-     * @param position start position of the bullet
-     * @param velocity velocity vector (will be normalize then mul by a cnst)
-     * @param angle the angle a the bullet
+     * Builds a new bullet with a fixed velocity
+     *
+     * @param world        The current world
+     * @param position     Position of the bullet
+     * @param velocity     Velocity vector (will be normalized then mul by a const)
+     * @param angle        The angle a the bullet
+     * @param brush        The brush of the bullet
+     * @param categoryBits The collision category bits
      */
-    private Bullet(World world,Vec2 position,Vec2 velocity,float angle,Brush color,int categoryBits) {
+    private Bullet(World world, Vec2 position, Vec2 velocity, float angle,
+                   Brush brush, int categoryBits) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;
         bodyDef.position.set(position);
@@ -45,7 +49,7 @@ public class Bullet extends AbstractShape implements DynamicContact{
         FixtureDef bullet = new FixtureDef();
         bullet.shape = polygonShape;
         bullet.density = 0.0000000000000000000000001f; // 0 doesn't "work"
-        bullet.userData = color;
+        bullet.userData = brush;
         bullet.filter.categoryBits = categoryBits;
         bullet.filter.maskBits = FixtureType.PLANET |
                 FixtureType.ENEMY |
@@ -56,19 +60,26 @@ public class Bullet extends AbstractShape implements DynamicContact{
         body.setUserData(this);
     }
 
-    public static Bullet createShipBullet(World world,Vec2 position,Vec2 velocity,float angle,Brush color) {
-        return new Bullet(world, position, velocity, angle, color,FixtureType.BULLET);
+    public static Bullet createShipBullet(World world, Vec2 position,
+                                          Vec2 velocity, float angle,
+                                          Brush brush) {
+        return new Bullet(world, position, velocity, angle, brush,
+                FixtureType.BULLET);
     }
 
-    public static Bullet createEnemyBullet(World world,Vec2 position,Vec2 velocity,float angle,Brush color) {
-        return new Bullet(world, position, velocity, angle, color,FixtureType.BULLET_ENEMY);
+    public static Bullet createEnemyBullet(World world, Vec2 position,
+                                           Vec2 velocity, float angle,
+                                           Brush brush) {
+        return new Bullet(world, position, velocity, angle, brush,
+                FixtureType.BULLET_ENEMY);
     }
 
     boolean isInScreen(Viewport viewport) {
         return  viewport.isInScreen(body.getPosition());
     }
 
-    public static void checkForBulletsOutScreen(Viewport viewport, List<Bullet> bullets) {
+    public static void checkForBulletsOutScreen(Viewport viewport,
+                                                List<Bullet> bullets) {
         Iterator<Bullet> it = bullets.iterator();
 
         while(it.hasNext()) {
