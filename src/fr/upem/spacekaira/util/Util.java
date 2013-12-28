@@ -2,6 +2,10 @@ package fr.upem.spacekaira.util;
 
 import org.jbox2d.common.Vec2;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class Util {
     /**
      * @param startTime Start time in milliseconds
@@ -42,5 +46,35 @@ public class Util {
         float x = v1.x - v2.x;
         float y = v1.y - v2.y;
         return (float) Math.sqrt(x * x + y * y);
+    }
+
+    /**
+     * Builds a single iterator from the iterators of all passed lists
+     * @param lists A list of lists whose iterators will be "merged"
+     * @return An iterator that allows to iterator over all the lists
+     */
+     public static <E> Iterator<E> asIterator(List<List<E>> lists) {
+         List<Iterator<E>> iterators = new ArrayList<>(lists.size());
+         for(List<E> list : lists) {
+             if(list != null)
+                iterators.add(list.iterator());
+         }
+
+         return new Iterator<E> () {
+            int current=0;
+             public boolean hasNext() {
+                 while ( current < iterators.size() && !iterators.get(current).hasNext() )
+                     current++;
+
+                 return current < iterators.size();
+             }
+
+             public E next() {
+                 while ( current < iterators.size() && !iterators.get(current).hasNext() )
+                     current++;
+
+                 return iterators.get(current).next();
+             }
+         };
     }
 }
