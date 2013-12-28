@@ -57,7 +57,7 @@ public class RotatingTriangle extends Enemy {
     }
 
     private void shoot1() {
-        addBulletToShootLocal(body.getWorldPoint(new Vec2(-1.2f, -1.03f)),new Vec2(-1, -0.86f), body.getAngle() + 2.1f);
+        addBulletToShootLocal(new Vec2(-1.2f, -1.03f),new Vec2(-1, -0.86f), body.getAngle() + 2.1f);
     }
 
     private void shoot2() {
@@ -78,9 +78,12 @@ public class RotatingTriangle extends Enemy {
         Vec2 shipRT = ship.getPosition().sub(body.getPosition());
         shipRT.normalize();
         if (System.currentTimeMillis() - lastShootTime < 1000) return;
-        if (canon1.sub(shipRT).length() <= 1f) shoot1();
-        else if (canon2.sub(shipRT).length() <= 1f) shoot2();
-        else if (canon3.sub(shipRT).length() <= 1f) shoot3();
+        if (canon1.sub(shipRT).length() <= 1f || canon2.sub(shipRT).length() <= 1f ||
+                canon3.sub(shipRT).length() <= 1f) {
+            shoot1();
+            shoot2();
+            shoot3();
+        }
         lastShootTime = System.currentTimeMillis();
     }
 }
