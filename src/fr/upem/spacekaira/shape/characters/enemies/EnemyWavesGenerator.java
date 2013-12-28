@@ -12,20 +12,6 @@ import java.util.*;
  * This class creates all the enemies during the game, generating enemy waves
  */
 public class EnemyWavesGenerator {
-    /**
-     * This class represents a wave of enemies
-     */
-    public static class EnemyWave {
-        private int numberOfEnemy;
-
-        public EnemyWave(int numberOfEnemies) {
-            this.numberOfEnemy = numberOfEnemies;
-        }
-
-        public int getNumberOfEnemies() {
-            return numberOfEnemy;
-        }
-    }
 
     /* Queue to store enemy waves (number of enemy by wave) */
     private Queue<EnemyWave> wavesQueue;
@@ -81,9 +67,10 @@ public class EnemyWavesGenerator {
         Vec2 rotate = new Vec2();
         Rot rot = new Rot(6.28f/enemyWave.getNumberOfEnemies()); /* 2.PI / number */
 
-        for(int i=0,n=enemyWave.getNumberOfEnemies(); i<n; i++) {
+        for (EnemyType enemyType : enemyWave) {
             Rot.mulTrans(rot, start, rotate);
-            currentWave.add(enemyFactory.createEnemy(rotate.x, rotate.y));
+            Enemy enemy = enemyFactory.createEnemy(rotate.x, rotate.y, enemyType);
+            currentWave.add(enemy);
             start = new Vec2(rotate);
         }
     }

@@ -2,7 +2,6 @@ package fr.upem.spacekaira.shape.characters.enemies;
 
 import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.Viewport;
-import fr.upem.spacekaira.shape.characters.Bullet;
 import fr.upem.spacekaira.shape.characters.FixtureType;
 import fr.upem.spacekaira.shape.characters.Ship;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -16,9 +15,10 @@ import org.jbox2d.dynamics.joints.Joint;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+import java.util.function.BiFunction;
 
 public class Squadron extends Enemy {
-    private int nBodies = 16;
+    private int nBodies = 14;
     private List<Body> m_bodies = new ArrayList<>(nBodies);
     private List<Joint> m_joints = new ArrayList<>(nBodies*2);
 
@@ -139,7 +139,7 @@ public class Squadron extends Enemy {
                 ship.getLinearVelocity(),
                 body.getLinearVelocity(),
                 0.3f);
-        body.setLinearVelocity(speed);
+        body.setLinearVelocity(speed.mul(0.95f));
     }
 
     @Override
@@ -166,10 +166,15 @@ public class Squadron extends Enemy {
      * between each
      */
     private void destroyTriangle(Body b) {
+        /**
+         * Compute the new length between all body
+         */
+        BiFunction<List<Joint>,List<Body>,Float> computeLength = (jointList,bodyList) ->
+            ((DistanceJoint) jointList.get(0)).getLength() * bodyList.size() / (bodyList.size()-1);
+
         int index = m_bodies.indexOf(b);
         DistanceJointDef jd = new DistanceJointDef();
-        // TODO: Create a method to compute length?
-        float length = (((DistanceJoint) (m_joints.get(0))).getLength() * m_bodies.size()) / (m_bodies.size()-1);
+        float length = computeLength.apply(m_joints,m_bodies);
         int indexA, indexB;
 
         if(m_bodies.size() > 2) {
@@ -219,14 +224,19 @@ public class Squadron extends Enemy {
                         Float.compare(o1.getValue(), o2.getValue())
                     )
                     .limit(3)
-                    .forEach(e -> {
-                        bullets.add(Bullet.createEnemyBullet(body.getWorld(),
+                    .forEach(e ->
+                        addBulletToShootWorld(
                                 e.getKey().getPosition().add(shipSquad.mul(2)),
                                 ship.getPosition().sub(e.getKey().getPosition()),
-                                e.getKey().getAngle(),
-                                bulletColor));
-                    });
+                                e.getKey().getAngle())
+                    );
             lastShootTime = System.currentTimeMillis();
         }
+    }
+
+    @Override
+    public void destroy() {
+        m_bodies.forEach(b->b.getWorld().destroyBody(b));
+        super.destroy();
     }
 }

@@ -30,7 +30,6 @@ public class Ship extends AbstractShape implements DynamicContact{
     private boolean megaBomb;
     private AbstractArmedBomb armedBomb;
     private List<Enemy> enemies;
-    public static final float speed = 12;
     private boolean autoShield;
 
     public Ship(World world, List<Enemy> enemies, Brush shipColor,
@@ -94,17 +93,17 @@ public class Ship extends AbstractShape implements DynamicContact{
     }
 
     public void up() {
-        Vec2 f = body.getWorldVector(new Vec2(0.0f, 120.0f));
-        Vec2 p = body.getWorldPoint(body.getLocalCenter().add(new Vec2(0.0f, 4.0f)));
+        Vec2 f = body.getWorldVector(new Vec2(0.0f, 500.0f));
+        Vec2 p = body.getPosition();
         body.applyForce(f, p);
     }
 
     public void left() {
-        body.applyTorque(-10.0f);
+        body.applyTorque(-30.0f);
     }
 
     public void right() {
-        body.applyTorque(10.0f);
+        body.applyTorque(30.0f);
     }
 
     private Filter shieldFilterOff = new Filter() {{
@@ -227,7 +226,6 @@ public class Ship extends AbstractShape implements DynamicContact{
     }
 
     private void drawMotors(Graphics2D graphics, Viewport viewport) {
-        //TODO a faire en dynamique avec une chaine de petites boules et suivant la vitesse
         Vec2 leftMotor = new Vec2(-0.5f, -3.3f);
         Vec2 rightMotor = new Vec2(0.5f, -3.3f);
 

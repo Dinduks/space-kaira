@@ -2,7 +2,7 @@ package fr.upem.spacekaira;
 
 import fr.umlv.zen3.Application;
 import fr.upem.spacekaira.config.Configuration;
-import fr.upem.spacekaira.config.ConfigurationBuilder;
+import fr.upem.spacekaira.config.ConfigurationLoader;
 import fr.upem.spacekaira.config.ConfigurationParsingException;
 import fr.upem.spacekaira.game.Game;
 
@@ -21,7 +21,7 @@ public class Main {
 
         File configurationFile = new File(args[0]);
         Configuration configuration =
-                ConfigurationBuilder.buildFrom(configurationFile);
+                ConfigurationLoader.loadFrom(configurationFile);
 
         Game game = new Game(WIDTH, HEIGHT, configuration);
         startTheGame(game);

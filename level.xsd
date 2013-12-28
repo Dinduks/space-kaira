@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="configuration" type="configuration"/>
+
+  <xs:complexType name="configuration">
+    <xs:sequence>
+      <xs:element name="gameDuration" type="xs:int"/>
+      <xs:element name="planetsDensity" type="xs:int"/>
+      <xs:element name="bombsFrequency" type="xs:int"/>
+      <xs:element name="megaBombsPerCent" type="xs:int"/>
+      <xs:element name="enemyWaves" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="enemyWave" type="enemyWave" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="enemyWave">
+    <xs:sequence>
+      <xs:element name="enemy" type="enemyType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="enemyType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CRUISER"/>
+      <xs:enumeration value="BRUTE"/>
+      <xs:enumeration value="SQUADRON"/>
+      <xs:enumeration value="TIE"/>
+      <xs:enumeration value="ROTATINGTRIANGLE"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+

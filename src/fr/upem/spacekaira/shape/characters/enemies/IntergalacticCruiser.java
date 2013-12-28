@@ -1,7 +1,6 @@
 package fr.upem.spacekaira.shape.characters.enemies;
 
 import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.characters.Bullet;
 import fr.upem.spacekaira.shape.characters.FixtureType;
 import fr.upem.spacekaira.shape.characters.Ship;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -32,7 +31,8 @@ public class IntergalacticCruiser extends Enemy {
         cruiserFix.filter.categoryBits = FixtureType.STD_ENEMY;
         cruiserFix.filter.maskBits = FixtureType.BULLET
                 | FixtureType.SHIP
-                | FixtureType.PLANET;
+                | FixtureType.PLANET
+                | FixtureType.STD_ENEMY;
 
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.set(new Vec2[]{ new Vec2(0, 0), new Vec2(0, 2),
@@ -43,20 +43,11 @@ public class IntergalacticCruiser extends Enemy {
     }
 
     private void shootUp() {
-        bullets.add(Bullet.createEnemyBullet(
-                body.getWorld(),
-                body.getWorldPoint(new Vec2(3.5f, 4)),
-                body.getWorldVector(new Vec2(0, 1)),
-                body.getAngle(),
-                bulletColor));
+        addBulletToShootLocal(new Vec2(3.5f, 4), new Vec2(0, 1), body.getAngle());
     }
 
     private void shootDown() {
-        bullets.add(Bullet.createEnemyBullet(body.getWorld(),
-                body.getWorldPoint(new Vec2(3.5f, -2)),
-                body.getWorldVector(new Vec2(0, -1)),
-                body.getAngle(),
-                bulletColor));
+        addBulletToShootLocal(new Vec2(3.5f, -2),new Vec2(0, -1),body.getAngle());
     }
 
     @Override
@@ -83,7 +74,7 @@ public class IntergalacticCruiser extends Enemy {
                 ship.getLinearVelocity(),
                 body.getLinearVelocity(),
                 0.5f);
-        body.setLinearVelocity(speed);
+        body.setLinearVelocity(speed.mul(0.99f));
         body.setAngularVelocity(2);
     }
 }

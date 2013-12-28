@@ -1,54 +1,47 @@
 package fr.upem.spacekaira.config;
 
+import fr.upem.spacekaira.shape.characters.enemies.EnemyWave;
+
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents the configuration of the game
  */
 @XmlRootElement
 public class Configuration {
-    private int gameDuration;
-    private int planetsDensity;
-    private int bombsFrequency;
-    private int megaBombsPerCent;
+    @XmlElement private int gameDuration;
+    @XmlElement private int planetsDensity;
+    @XmlElement private int bombsFrequency;
+    @XmlElement private int megaBombsPerCent;
+    @XmlElementWrapper(name = "enemyWaves")
+    @XmlElement(name = "enemyWave")
+    private List<EnemyWave> enemyWaves;
 
-    public Configuration() {
+    private Configuration() {
+        enemyWaves = new ArrayList<>();
     }
 
     public int getGameDuration() {
         return gameDuration;
     }
 
-    @XmlElement
-    private void setGameDuration(int gameDuration) {
-        this.gameDuration = gameDuration;
-    }
-
     public int getPlanetsDensity() {
         return planetsDensity;
-    }
-
-    @XmlElement
-    private void setPlanetsDensity(int planetsDensity) {
-        this.planetsDensity = planetsDensity;
     }
 
     public int getBombsFrequency() {
         return bombsFrequency;
     }
 
-    @XmlElement
-    private void setBombsFrequency(int bombsFrequency) {
-        this.bombsFrequency = bombsFrequency;
-    }
-
     public int getMegaBombsPerCent() {
         return megaBombsPerCent;
     }
 
-    @XmlElement
-    private void setMegaBombsPerCent(int megaBombsPerCent) {
-        this.megaBombsPerCent = megaBombsPerCent;
+    public List<EnemyWave> getEnemyWaves() {
+        return enemyWaves;
     }
 }

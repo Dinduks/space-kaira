@@ -1,7 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <configuration>
   <gameDuration>120</gameDuration>
-  <planetsDensity>2</planetsDensity> // How many planets per screen?
-  <bombsFrequency>60</bombsFrequency> // How many bombs per minute?
-  <megaBombsPerCent>100</megaBombsPerCent> // Percentage on mega bombs
+  <planetsDensity>2</planetsDensity> <!--How many planets per screen?-->
+  <bombsFrequency>30</bombsFrequency> <!--// How many bombs per minute?-->
+  <megaBombsPerCent>40</megaBombsPerCent> <!--// Percentage of mega bombs-->
+
+  <enemyWaves>
+    <enemyWave>
+      <enemy>TIE</enemy>
+      <enemy>BRUTE</enemy>
+    </enemyWave>
+    <enemyWave>
+      <enemy>BRUTE</enemy>
+      <enemy>SQUADRON</enemy>
+      <enemy>ROTATINGTRIANGLE</enemy>
+    </enemyWave>
+  </enemyWaves>
 </configuration>
