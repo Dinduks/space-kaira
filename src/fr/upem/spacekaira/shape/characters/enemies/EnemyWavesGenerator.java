@@ -69,7 +69,7 @@ public class EnemyWavesGenerator {
 
         for (EnemyType enemyType : enemyWave) {
             Rot.mulTrans(rot, start, rotate);
-            Enemy enemy = enemyFactory.createEnemy(rotate.x, rotate.y, enemyType);
+            Enemy enemy = enemyFactory.create(rotate.x, rotate.y, enemyType);
             currentWave.add(enemy);
             start = new Vec2(rotate);
         }

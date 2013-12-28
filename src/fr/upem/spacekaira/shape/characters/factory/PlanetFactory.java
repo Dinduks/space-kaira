@@ -13,7 +13,7 @@ public class PlanetFactory {
         this.world = world;
     }
 
-    public Planet createPlanet(float x, float y) {
+    public Planet create(float x, float y) {
         return new Planet(world, x, y, 4, BrushFactory.get(Color.BLUE));
     }
 }

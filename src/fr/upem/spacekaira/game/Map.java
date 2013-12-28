@@ -7,11 +7,11 @@ import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.characters.*;
 import fr.upem.spacekaira.shape.characters.bomb.nonarmed.AbstractBomb;
 import fr.upem.spacekaira.shape.characters.enemies.Enemy;
-import fr.upem.spacekaira.shape.characters.enemies.EnemyWave;
 import fr.upem.spacekaira.shape.characters.enemies.EnemyWavesGenerator;
+import fr.upem.spacekaira.shape.characters.factory.EnemyFactory;
+import fr.upem.spacekaira.shape.characters.factory.PlanetFactory;
 import fr.upem.spacekaira.shape.characters.factory.bomb.nonarmed.MegaBombFactory;
 import fr.upem.spacekaira.shape.characters.factory.bomb.nonarmed.NormalBombFactory;
-import fr.upem.spacekaira.shape.characters.factory.FactoryPool;
 import fr.upem.spacekaira.util.Util;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
@@ -40,7 +40,9 @@ public class Map {
     private int hudXPosition;
     private int hudYPosition;
 
-    private FactoryPool factoryPool;
+    private final PlanetFactory planetFactory;
+    private final EnemyFactory enemyFactory;
+
     private List<AbstractBomb> bombs = new ArrayList<>();
 
     public static Map createMap(World world, Viewport viewport,
@@ -59,7 +61,8 @@ public class Map {
         this.height = height;
         this.width = width;
         this.viewport = viewport;
-        this.factoryPool = new FactoryPool(world);
+        this.planetFactory = new PlanetFactory(world);
+        this.enemyFactory = new EnemyFactory(world);
 
         hudXPosition = width - 80;
         hudYPosition = 50;
@@ -75,11 +78,11 @@ public class Map {
 
         ship = new Ship(world, enemies, BrushFactory.get(Color.BLUE),
                 BrushFactory.get(Color.GREEN), !config.isHardcore());
-        planetGenerator = PlanetGenerator.newPlanetGenerator(config.getPlanetsDensity(),
-                viewport, width, height, ship, factoryPool.getPlanetFactory());
+        planetGenerator = PlanetGenerator.create(config.getPlanetsDensity(),
+                viewport, width, height, ship, planetFactory);
 
-        wavesGenerator = new EnemyWavesGenerator(factoryPool.getEnemyFactory(),
-                viewport, ship, config.getEnemyWaves(), enemies);
+        wavesGenerator = new EnemyWavesGenerator(enemyFactory, viewport,
+                ship, config.getEnemyWaves(), enemies);
     }
 
     public Ship getShip() {

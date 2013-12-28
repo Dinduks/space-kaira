@@ -37,22 +37,23 @@ public class PlanetGenerator {
     private final Viewport viewport;
     private final int density;
     private final Random rand;
-    private final PlanetFactory pF;
+    private final PlanetFactory planetFactory;
 
     private Map<Integer,List<Planet>> visitedZone;
 
     /* a factory method to create a planet generator */
-    public static PlanetGenerator newPlanetGenerator(int density,
-                                                     Viewport viewport,
-                                                     int WIDTH,
-                                                     int HEIGHT,
-                                                     Ship ship,
-                                                     PlanetFactory planetFactory) {
-        PlanetGenerator pg = new PlanetGenerator(density, viewport,WIDTH,HEIGHT,ship,planetFactory);
+    public static PlanetGenerator create(int density,
+                                         Viewport viewport,
+                                         int WIDTH,
+                                         int HEIGHT,
+                                         Ship ship,
+                                         PlanetFactory planetFactory) {
+        PlanetGenerator pg = new PlanetGenerator(density, viewport, WIDTH,
+                HEIGHT, ship, planetFactory);
         pg.execute();
         return pg;
     }
-    /* Main private constructor */
+
     private PlanetGenerator(int density,
                             Viewport viewport,
                             int WIDTH,
@@ -66,7 +67,7 @@ public class PlanetGenerator {
         this.ship = ship;
         this.visitedZone = new HashMap<>();
         this.rand = new Random();
-        this.pF = planetFactory;
+        this.planetFactory = planetFactory;
     }
 
     /* generate an hash code with the ship position */
@@ -170,7 +171,7 @@ public class PlanetGenerator {
         for(Vec2 v : vec2s) {
             Vec2 ve = new Vec2((v.x * i + i/2) + zIndex.x*(WIDTH/cameraScale) - (WIDTH/cameraScale)/2,
                     (v.y * j + j/2 ) + zIndex.y*(HEIGHT/cameraScale) - (HEIGHT/cameraScale)/2);
-            planets.add(pF.createPlanet(ve.x,ve.y));
+            planets.add(planetFactory.create(ve.x, ve.y));
         }
         return planets;
     }

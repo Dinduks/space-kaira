@@ -18,7 +18,7 @@ public class EnemyFactory {
         this.rand = new Random();
     }
 
-    public Enemy createEnemy(float x, float y, EnemyType type) {
+    public Enemy create(float x, float y, EnemyType type) {
         Objects.requireNonNull(type);
         Brush enemyColor = BrushFactory.getRandomBrush(false);
         Brush bulletColor = BrushFactory.get(Color.RED);
