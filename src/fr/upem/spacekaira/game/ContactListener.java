@@ -6,6 +6,9 @@ import fr.upem.spacekaira.shape.characters.FixtureType;
 import fr.upem.spacekaira.shape.characters.Ship;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.collision.Manifold;
+import org.jbox2d.collision.shapes.CircleShape;
+import org.jbox2d.common.Rot;
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.contacts.Contact;
 
@@ -77,10 +80,26 @@ public class ContactListener implements org.jbox2d.callbacks.ContactListener {
     private static ContactAction bulletEnemyShield = (f1,f2) ->
             shieldBulletEnemy.accept(f2,f1);
 
+    private static ContactAction planetShield = (f1, f2) -> {
+        CircleShape planet = (CircleShape)f1.getShape();
+        CircleShape shield = (CircleShape)f2.getShape();
+        Vec2 planetShip = f1.getBody().getWorldPoint(planet.m_p).sub(f2.getBody().getWorldPoint(shield.m_p));
+        Vec2 shieldSpeed = f2.getBody().getLinearVelocity();
+        planetShip.normalize();
+        shieldSpeed.normalize();
+        float angle = (float)Math.acos(Vec2.cross(planetShip,shieldSpeed));
+        shieldSpeed.negateLocal();
+        Rot.mulToOut(new Rot(angle*2),shieldSpeed,shieldSpeed);
+        f2.getBody().setLinearVelocity(shieldSpeed.mul(75));
+    };
+
+    private static ContactAction shieldPlanet = (f1, f2) ->
+            planetShield.accept(f2, f1);
+
     private static ContactAction[][] action = {
                           /* BULLET PLANET STD_ENEMY    SHIP         BOMB, ARMED_BOMB,  MBOMB, ARMED_MBOMB   BULLET_ENEMY  SHIELD*/
         /* BULLET */       { nil,   rSD,   dSD,         nil,         nil,  nil,         nil,   nil,          rSD,          nil },
-        /* PLANET */       { lSD,   nil,   nil,         nil,         nil,  nil ,        nil,   nil,          lSD,          nil },
+        /* PLANET */       { lSD,   nil,   nil,         nil,         nil,  nil ,        nil,   nil,          lSD,          planetShield },
         /* STD_ENEMY */    { dSD,   nil,   nil,         enemyVsShip, nil,  enemyBomb, nil,   nil,          nil,          nil },
         /* SHIP */         { nil,   nil,   shipVsEnemy, nil,         shipBomb, nil,         shipMbomb, nil,          shipVsEnemy,  nil },
         /* BOMB */         { nil,   nil,   nil,         bombShip,    nil,  nil,         nil,   nil,          nil,          nil },
@@ -88,7 +107,7 @@ public class ContactListener implements org.jbox2d.callbacks.ContactListener {
         /* MBOMB */        { nil,   nil,   nil,         mbombShip,       nil,  nil,         nil,   nil,          nil,          nil },
         /* ARMED_MBOMB */  { nil,   nil,   nil,         nil,         nil,  nil,         nil,   nil,          nil,          nil },
         /* BULLET_ENEMY */ { nil,   rSD,   nil,         enemyVsShip, nil,  nil,         nil,   nil,          nil,          bulletEnemyShield },
-        /* SHIELD */       { nil,   rSD,   nil,         nil,         nil,  nil,         nil,   nil, shieldBulletEnemy,     nil }
+        /* SHIELD */       { nil,   shieldPlanet,   nil,         nil,         nil,  nil,         nil,   nil, shieldBulletEnemy,     nil }
     };
 
     @Override
