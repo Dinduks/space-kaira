@@ -1,7 +1,6 @@
 package fr.upem.spacekaira.game;
 
 import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.characters.enemies.Enemy;
 import fr.upem.spacekaira.shape.characters.FixtureType;
 import fr.upem.spacekaira.shape.characters.Ship;
 import org.jbox2d.callbacks.ContactImpulse;

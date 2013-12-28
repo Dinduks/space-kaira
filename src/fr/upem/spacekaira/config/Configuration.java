@@ -1,10 +1,9 @@
 package fr.upem.spacekaira.config;
 
-import fr.upem.spacekaira.shape.characters.enemies.EnemyWavesGenerator;
+import fr.upem.spacekaira.shape.characters.enemies.EnemyWave;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ public class Configuration {
     @XmlElement private int megaBombsPerCent;
     @XmlElementWrapper(name = "enemyWaves")
     @XmlElement(name = "enemyWave")
-    private List<EnemyWavesGenerator.EnemyWave> enemyWaves;
+    private List<EnemyWave> enemyWaves;
 
     private Configuration() {
         enemyWaves = new ArrayList<>();
@@ -42,7 +41,7 @@ public class Configuration {
         return megaBombsPerCent;
     }
 
-    public List<EnemyWavesGenerator.EnemyWave> getEnemyWaves() {
+    public List<EnemyWave> getEnemyWaves() {
         return enemyWaves;
     }
 }

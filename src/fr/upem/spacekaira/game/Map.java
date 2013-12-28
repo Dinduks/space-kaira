@@ -6,7 +6,7 @@ import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.characters.*;
 import fr.upem.spacekaira.shape.characters.bomb.nonarmed.AbstractBomb;
 import fr.upem.spacekaira.shape.characters.enemies.Enemy;
-import fr.upem.spacekaira.shape.characters.enemies.EnemyType;
+import fr.upem.spacekaira.shape.characters.enemies.EnemyWave;
 import fr.upem.spacekaira.shape.characters.enemies.EnemyWavesGenerator;
 import fr.upem.spacekaira.shape.characters.factory.bomb.nonarmed.MegaBombFactory;
 import fr.upem.spacekaira.shape.characters.factory.bomb.nonarmed.NormalBombFactory;
@@ -52,14 +52,9 @@ public class Map {
         return map;
     }
 
-    List<EnemyWavesGenerator.EnemyWave> waves;
+    List<EnemyWave> waves;
     private Map(World world, Viewport viewport, final int height,
                final int width, Configuration config) {
-        config.getEnemyWaves().forEach(e -> {
-            System.out.println("==");
-            System.out.println(e.getEnemies());
-        });
-
         this.world = world;
         this.planetsDensity = config.getPlanetsDensity();
         this.bombsFrequency = config.getBombsFrequency();
@@ -76,7 +71,6 @@ public class Map {
     }
 
     private void initMap() {
-        //TODO config class pour la l'init
         /**
          * This collection is shared between the enemy waves generators and the
          * ship that passes it to exploding bombs.
@@ -87,12 +81,8 @@ public class Map {
         planetGenerator = PlanetGenerator.newPlanetGenerator(planetsDensity,
                 viewport, width, height, ship, factoryPool.getPlanetFactory());
 
-        wavesGenerator = new EnemyWavesGenerator(
-                factoryPool.getEnemyFactory(),
-                viewport,
-                ship,
-                waves,
-                enemies);
+        wavesGenerator = new EnemyWavesGenerator(factoryPool.getEnemyFactory(),
+                viewport, ship, waves, enemies);
     }
 
     public Ship getShip() {

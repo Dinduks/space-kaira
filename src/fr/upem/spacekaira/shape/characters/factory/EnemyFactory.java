@@ -18,10 +18,6 @@ public class EnemyFactory {
         this.rand = new Random();
     }
 
-    public Enemy createEnemy(float x, float y) {
-       return createEnemy(x,y,EnemyType.values()[rand.nextInt(EnemyType.values().length)]);
-    }
-
     public Enemy createEnemy(float x, float y, EnemyType type) {
         Objects.requireNonNull(type);
         Brush enemyColor = BrushFactory.getRandomBrush(false);
