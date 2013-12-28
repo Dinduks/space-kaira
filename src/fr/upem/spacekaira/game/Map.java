@@ -110,7 +110,7 @@ public class Map {
             return;
 
         lastTimeWasABombSpawned = currentTime;
-        Vec2 position = viewport.getRandomPosition(ship);
+        Vec2 position = viewport.getRandomPositionForBomb(ship);
         if (random.nextInt(100) >= megaBombsRatio) {
             bombs.add(NormalBombFactory.create(world, position));
         } else {

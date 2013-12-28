@@ -136,23 +136,22 @@ public class Viewport {
 
     /**
      * Returns a random position in the current view port. The position will be
-     * at least 1f away from the ship.
+     * at least 10f away from the ship.
      * @param ship
      * @return A position on the current view port
      */
-    public Vec2 getRandomPosition(Ship ship) {
+    public Vec2 getRandomPositionForBomb(Ship ship) {
         Random random = new Random();
-
-        int halfScreenWidth = screenWidth / 2 / (int) getCameraScale();
-        int halfScreenHeight = screenHeight / 2 / (int) getCameraScale();
-        float randomXPosition = (float) (random.nextInt(halfScreenWidth - 1)) + 1;
-        float randomYPosition = (float) (random.nextInt(halfScreenHeight) - 1) + 1;
+        int halfScreenWidth = (int) ((screenWidth * 0.8) / 2 / getCameraScale());
+        int halfScreenHeight = (int) ((screenHeight * 0.8) / 2 / getCameraScale());
+        float randomXPosition = (float) (random.nextInt(halfScreenWidth - 10)) + 10;
+        float randomYPosition = (float) (random.nextInt(halfScreenHeight) - 10) + 10;
 
         float negOrPos;
         negOrPos = random.nextBoolean() ? 1 : -1;
-        float x = (ship.getPosition().x + randomXPosition) * negOrPos;
+        float x = (ship.getPosition().x) + randomXPosition * negOrPos;
         negOrPos = random.nextBoolean() ? 1 : -1;
-        float y = (ship.getPosition().y + randomYPosition) * negOrPos;
+        float y = (ship.getPosition().y) + randomYPosition * negOrPos;
 
         return new Vec2(x, y);
     }
