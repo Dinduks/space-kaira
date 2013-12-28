@@ -2,7 +2,6 @@ package fr.upem.spacekaira.map;
 
 import fr.umlv.zen3.ApplicationContext;
 import fr.upem.spacekaira.config.Configuration;
-import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.character.*;
 import fr.upem.spacekaira.shape.character.bomb.nonarmed.AbstractBomb;
@@ -42,9 +41,10 @@ public class Map {
 
     private Random random = new Random();
 
-    public static Map createMap(World world, Viewport viewport, final int height,
-                            final int width, Configuration config) {
-        Map map = new Map(world,viewport,height,width,config);
+    public static Map createMap(World world, Viewport viewport,
+                                final int height, final int width,
+                                Configuration config) {
+        Map map = new Map(world, viewport, height, width, config);
         map.initMap();
         return map;
     }
@@ -94,8 +94,8 @@ public class Map {
         checkBulletOutScreen();
         ship.computeTimeStepData();
         cleanDeadElements();
-        moveEnemy();
-        wavesGenerator.getEnemy().forEach(e -> e.shoot(ship));
+        moveEnemies();
+        wavesGenerator.getEnemies().forEach(e -> e.shoot(ship));
         spawnABombIfNecessary();
     }
 
@@ -120,7 +120,7 @@ public class Map {
     }
 
     private void cleanDeadElements() {
-        Iterator<Enemy> enemyIt = wavesGenerator.getEnemy().iterator();
+        Iterator<Enemy> enemyIt = wavesGenerator.getEnemies().iterator();
         while (enemyIt.hasNext()) {
             Enemy e = enemyIt.next();
             e.computeTimeStepData();
@@ -142,11 +142,11 @@ public class Map {
 
     private void checkBulletOutScreen() {
         ship.checkForBulletOutScreen(viewport);
-        wavesGenerator.getEnemy().forEach(e -> e.checkForBulletOutScreen(viewport));
+        wavesGenerator.getEnemies().forEach(e -> e.checkForBulletOutScreen(viewport));
     }
 
-    private void moveEnemy() {
-        wavesGenerator.getEnemy().forEach(e -> e.move(ship));
+    private void moveEnemies() {
+        wavesGenerator.getEnemies().forEach(e -> e.move(ship));
     }
 
     public void draw(ApplicationContext context,
@@ -163,7 +163,7 @@ public class Map {
             bombs.forEach(b -> b.draw(graphics, viewport));
             ship.draw(graphics, viewport);
             planets.forEach(p -> p.draw(graphics, viewport));
-            wavesGenerator.getEnemy().forEach(e -> e.draw(graphics, viewport));
+            wavesGenerator.getEnemies().forEach(e -> e.draw(graphics, viewport));
             toggleShieldIfNearAPlanet(planets);
             if (ship.hasBomb()) updateBombInfo(graphics);
 

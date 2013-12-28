@@ -40,18 +40,20 @@ public class ArmedMegaBomb extends AbstractArmedBomb {
                 return false;
             }
 
-            enemiesToDestroy.forEach(enemy -> {
+            Iterator<Enemy> iterator = enemiesToDestroy.iterator();
+            while (iterator.hasNext()) {
+                Enemy enemy = iterator.next();
                 if (roundedPosEqual(getPosition(), enemy.getPosition())) {
-                    enemiesToDestroy.remove(enemy);
+                    iterator.remove();
                     enemies.remove(enemy);
-                    return;
+                    continue;
                 }
 
                 Vec2 dir = body.getWorldCenter().sub(enemy.getPosition());
                 dir.normalize();
                 dir.mulLocal(10000);
                 enemy.moveToward(dir);
-            });
+            }
 
             return !enemiesToDestroy.isEmpty();
         }

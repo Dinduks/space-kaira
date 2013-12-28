@@ -63,7 +63,7 @@ public class EnemyWavesGenerator {
      * Get enemy who are on the map
      * @return a list who contains the current enemy
      */
-    public List<Enemy> getEnemy() {
+    public List<Enemy> getEnemies() {
         if (wavesQueue.size() != 0 && currentWave.size() == 0)
             generateNextWave();
         return currentWave;
