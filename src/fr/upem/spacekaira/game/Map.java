@@ -31,32 +31,28 @@ public class Map {
     private PlanetGenerator planetGenerator;
 
     private World world;
-    private int planetsDensity;
     private Viewport viewport;
-    private FactoryPool factoryPool;
 
-    private List<AbstractBomb> bombs = new ArrayList<>();
-    private int bombsFrequency;
+    private final int bombsFrequency;
     private final int megaBombsRatio;
 
     private int hudXPosition;
     private int hudYPosition;
 
-    private Random random = new Random();
+    private FactoryPool factoryPool;
+    private List<AbstractBomb> bombs = new ArrayList<>();
 
     public static Map createMap(World world, Viewport viewport,
                                 final int height, final int width,
                                 Configuration config) {
         Map map = new Map(world, viewport, height, width, config);
-        map.initMap();
+        map.initMap(config);
         return map;
     }
 
-    List<EnemyWave> waves;
     private Map(World world, Viewport viewport, final int height,
                final int width, Configuration config) {
         this.world = world;
-        this.planetsDensity = config.getPlanetsDensity();
         this.bombsFrequency = config.getBombsFrequency();
         this.megaBombsRatio = config.getMegaBombsRatio();
         this.height = height;
@@ -67,22 +63,21 @@ public class Map {
         hudXPosition = width - 80;
         hudYPosition = 50;
 
-        waves = config.getEnemyWaves();
     }
 
-    private void initMap() {
+    private void initMap(Configuration config) {
         /**
          * This collection is shared between the enemy waves generators and the
          * ship that passes it to exploding bombs.
          */
         List<Enemy> enemies = new LinkedList<>();
 
-        ship = factoryPool.getShipFactory().createShip(enemies, false);
-        planetGenerator = PlanetGenerator.newPlanetGenerator(planetsDensity,
+        ship = factoryPool.getShipFactory().createShip(enemies, config.isHardcore());
+        planetGenerator = PlanetGenerator.newPlanetGenerator(config.getPlanetsDensity(),
                 viewport, width, height, ship, factoryPool.getPlanetFactory());
 
         wavesGenerator = new EnemyWavesGenerator(factoryPool.getEnemyFactory(),
-                viewport, ship, waves, enemies);
+                viewport, ship, config.getEnemyWaves(), enemies);
     }
 
     public Ship getShip() {
@@ -111,6 +106,7 @@ public class Map {
 
         lastTimeWasABombSpawned = currentTime;
         Vec2 position = viewport.getRandomPositionForBomb(ship);
+        Random random = new Random();
         if (random.nextInt(100) >= megaBombsRatio) {
             bombs.add(NormalBombFactory.create(world, position));
         } else {

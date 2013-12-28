@@ -20,6 +20,7 @@ public class Configuration {
     @XmlElementWrapper(name = "enemyWaves")
     @XmlElement(name = "enemyWave")
     private List<EnemyWave> enemyWaves;
+    private boolean hardcore;
 
     private Configuration() {
         enemyWaves = new ArrayList<>();
@@ -43,5 +44,13 @@ public class Configuration {
 
     public List<EnemyWave> getEnemyWaves() {
         return enemyWaves;
+    }
+
+    public void setHardcore(boolean hardcore) {
+        this.hardcore = hardcore;
+    }
+
+    public boolean isHardcore() {
+        return hardcore;
     }
 }

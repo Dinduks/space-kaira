@@ -14,16 +14,19 @@ public class Main {
         final int WIDTH = 800;
         final int HEIGHT = 600;
 
-        if (args.length < 1) {
+        if (args.length == 0) {
             System.err.println("Please specify a level file.");
             return;
         }
 
         File configurationFile = new File(args[0]);
-        Configuration configuration =
-                ConfigurationLoader.loadFrom(configurationFile);
+        Configuration config = ConfigurationLoader.loadFrom(configurationFile);
 
-        Game game = new Game(WIDTH, HEIGHT, configuration);
+        if (args.length > 1 && args[1].equals("hardcore")) {
+            config.setHardcore(true);
+        }
+
+        Game game = new Game(WIDTH, HEIGHT, config);
         startTheGame(game);
     }
 
