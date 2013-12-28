@@ -2,6 +2,7 @@ package fr.upem.spacekaira.game;
 
 import fr.umlv.zen3.ApplicationContext;
 import fr.upem.spacekaira.config.Configuration;
+import fr.upem.spacekaira.shape.BrushFactory;
 import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.characters.*;
 import fr.upem.spacekaira.shape.characters.bomb.nonarmed.AbstractBomb;
@@ -72,7 +73,8 @@ public class Map {
          */
         List<Enemy> enemies = new LinkedList<>();
 
-        ship = factoryPool.getShipFactory().createShip(enemies, config.isHardcore());
+        ship = new Ship(world, enemies, BrushFactory.get(Color.BLUE),
+                BrushFactory.get(Color.GREEN), !config.isHardcore());
         planetGenerator = PlanetGenerator.newPlanetGenerator(config.getPlanetsDensity(),
                 viewport, width, height, ship, factoryPool.getPlanetFactory());
 

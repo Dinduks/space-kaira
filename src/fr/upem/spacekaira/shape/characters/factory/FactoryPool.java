@@ -5,12 +5,10 @@ import org.jbox2d.dynamics.World;
 public class FactoryPool {
     private EnemyFactory enemyFactory;
     private PlanetFactory planetFactory;
-    private ShipFactory shipFactory;
 
     public FactoryPool(World world) {
         this.enemyFactory = new EnemyFactory(world);
         this.planetFactory = new PlanetFactory(world);
-        this.shipFactory = new ShipFactory(world);
     }
 
     public EnemyFactory getEnemyFactory() {
@@ -19,9 +17,5 @@ public class FactoryPool {
 
     public PlanetFactory getPlanetFactory() {
         return planetFactory;
-    }
-
-    public ShipFactory getShipFactory() {
-        return shipFactory;
     }
 }
