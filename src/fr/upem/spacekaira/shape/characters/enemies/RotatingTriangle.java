@@ -1,7 +1,6 @@
 package fr.upem.spacekaira.shape.characters.enemies;
 
 import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.characters.Bullet;
 import fr.upem.spacekaira.shape.characters.FixtureType;
 import fr.upem.spacekaira.shape.characters.Ship;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -57,15 +56,15 @@ public class RotatingTriangle extends Enemy {
     }
 
     private void shoot1() {
-        addBulletToShoot(new Vec2(-1.2f,-1.03f),new Vec2(-1,-0.86f),body.getAngle()+2.1f);
+        addBulletToShootLocal(body.getWorldPoint(new Vec2(-1.2f, -1.03f)),new Vec2(-1, -0.86f), body.getAngle() + 2.1f);
     }
 
     private void shoot2() {
-        addBulletToShoot(new Vec2(1.2f, -1.03f),new Vec2(1, -0.86f),body.getAngle()-2.1f);
+        addBulletToShootLocal(new Vec2(1.2f, -1.03f), new Vec2(1, -0.86f), body.getAngle() - 2.1f);
     }
 
     private void shoot3() {
-        addBulletToShoot(new Vec2(0.0f, 1.03f),new Vec2(0, 0.86f),body.getAngle());
+        addBulletToShootLocal(new Vec2(0.0f, 1.03f), new Vec2(0, 0.86f), body.getAngle());
     }
 
     private long lastShootTime = 0;
@@ -79,8 +78,8 @@ public class RotatingTriangle extends Enemy {
         shipRT.normalize();
         if (System.currentTimeMillis() - lastShootTime < 1000) return;
         if (canon1.sub(shipRT).length() <= 1f) shoot1();
-        if (canon2.sub(shipRT).length() <= 1f) shoot2();
-        if (canon3.sub(shipRT).length() <= 1f) shoot3();
+        else if (canon2.sub(shipRT).length() <= 1f) shoot2();
+        else if (canon3.sub(shipRT).length() <= 1f) shoot3();
         lastShootTime = System.currentTimeMillis();
     }
 }

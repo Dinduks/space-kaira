@@ -224,12 +224,12 @@ public class Squadron extends Enemy {
                         Float.compare(o1.getValue(), o2.getValue())
                     )
                     .limit(3)
-                    .forEach(e -> {
-                        addBulletToShoot(
-                            e.getKey().getPosition().add(shipSquad.mul(2)),
-                            ship.getPosition().sub(e.getKey().getPosition()),
-                            e.getKey().getAngle());
-                    });
+                    .forEach(e ->
+                        addBulletToShootWorld(
+                                e.getKey().getPosition().add(shipSquad.mul(2)),
+                                ship.getPosition().sub(e.getKey().getPosition()),
+                                e.getKey().getAngle())
+                    );
             lastShootTime = System.currentTimeMillis();
         }
     }

@@ -1,7 +1,6 @@
 package fr.upem.spacekaira.shape.characters.enemies;
 
 import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.characters.Bullet;
 import fr.upem.spacekaira.shape.characters.FixtureType;
 import fr.upem.spacekaira.shape.characters.Ship;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -35,7 +34,8 @@ public class TIE extends Enemy {
         edgeFix.filter.maskBits = FixtureType.BULLET
                 | FixtureType.SHIP
                 | FixtureType.ARMED_BOMB
-                | FixtureType.PLANET;
+                | FixtureType.PLANET
+                | FixtureType.STD_ENEMY;
 
         //left-side-down
        {
@@ -111,11 +111,11 @@ public class TIE extends Enemy {
     }
 
     private void shootLeft() {
-        addBulletToShoot(new Vec2(-4.5f, 2),new Vec2(-1, 0), body.getAngle() + 1.57f);
+        addBulletToShootLocal(new Vec2(-4.5f, 2), new Vec2(-1, 0), body.getAngle() + 1.57f);
     }
 
     private void shootRight() {
-        addBulletToShoot(new Vec2(4.5f, 2),new Vec2(1, 0),body.getAngle() - 1.57f);
+        addBulletToShootLocal(new Vec2(4.5f, 2), new Vec2(1, 0), body.getAngle() - 1.57f);
     }
 
     /* This function shoot if the ship is more or less in the shoot-windows */
