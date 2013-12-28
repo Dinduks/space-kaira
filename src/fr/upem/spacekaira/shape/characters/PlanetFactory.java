@@ -1,4 +1,4 @@
-package fr.upem.spacekaira.shape.characters.factory;
+package fr.upem.spacekaira.shape.characters;
 
 import fr.upem.spacekaira.shape.BrushFactory;
 import fr.upem.spacekaira.shape.characters.Planet;

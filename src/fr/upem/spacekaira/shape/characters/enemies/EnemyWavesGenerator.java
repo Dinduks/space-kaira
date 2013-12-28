@@ -2,7 +2,6 @@ package fr.upem.spacekaira.shape.characters.enemies;
 
 import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.characters.Ship;
-import fr.upem.spacekaira.shape.characters.factory.EnemyFactory;
 import org.jbox2d.common.Rot;
 import org.jbox2d.common.Vec2;
 

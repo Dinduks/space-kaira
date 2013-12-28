@@ -1,7 +1,6 @@
 package fr.upem.spacekaira.shape.characters;
 
 import fr.upem.spacekaira.shape.Viewport;
-import fr.upem.spacekaira.shape.characters.factory.PlanetFactory;
 import fr.upem.spacekaira.util.Util;
 import org.jbox2d.common.Vec2;
 import java.util.*;
