@@ -6,6 +6,8 @@ import fr.upem.spacekaira.shape.characters.factory.EnemyFactory;
 import org.jbox2d.common.Rot;
 import org.jbox2d.common.Vec2;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.*;
 
 /**
@@ -15,15 +17,23 @@ public class EnemyWavesGenerator {
     /**
      * This class represents a wave of enemies
      */
+    @XmlRootElement
     public static class EnemyWave {
-        private int numberOfEnemy;
+        @XmlElement(name="enemy")
+        private List<EnemyType> enemies = new LinkedList<>();
 
-        public EnemyWave(int numberOfEnemies) {
-            this.numberOfEnemy = numberOfEnemies;
+        private EnemyWave() {}
+
+        public EnemyWave(List<EnemyType> enemies) {
+            this.enemies.addAll(enemies);
         }
 
-        public int getNumberOfEnemies() {
-            return numberOfEnemy;
+        public int getNumberOfEnemies(){
+            return enemies.size();
+        }
+
+        public List<EnemyType> getEnemies() {
+            return enemies;
         }
     }
 

@@ -2,17 +2,23 @@ package fr.upem.spacekaira.config;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 
 public class ConfigurationBuilder {
-    public static Configuration buildFrom(File file) throws ConfigurationParsingException {
+    public static Configuration buildFrom(File file)
+            throws ConfigurationParsingException {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(Configuration.class);
 
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             Configuration configuration =
                     (Configuration) jaxbUnmarshaller.unmarshal(file);
+
+            Marshaller marshaller = jaxbContext.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            marshaller.marshal(configuration, new File("/tmp/jaxb"));
 
             return configuration;
         } catch (JAXBException e) {
