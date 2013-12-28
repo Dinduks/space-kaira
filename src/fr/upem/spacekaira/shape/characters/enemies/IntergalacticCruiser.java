@@ -43,20 +43,11 @@ public class IntergalacticCruiser extends Enemy {
     }
 
     private void shootUp() {
-        bullets.add(Bullet.createEnemyBullet(
-                body.getWorld(),
-                body.getWorldPoint(new Vec2(3.5f, 4)),
-                body.getWorldVector(new Vec2(0, 1)),
-                body.getAngle(),
-                bulletColor));
+        addBulletToShoot(new Vec2(3.5f, 4), new Vec2(0, 1), body.getAngle());
     }
 
     private void shootDown() {
-        bullets.add(Bullet.createEnemyBullet(body.getWorld(),
-                body.getWorldPoint(new Vec2(3.5f, -2)),
-                body.getWorldVector(new Vec2(0, -1)),
-                body.getAngle(),
-                bulletColor));
+        addBulletToShoot(new Vec2(3.5f, -2), new Vec2(0, -1), body.getAngle());
     }
 
     @Override

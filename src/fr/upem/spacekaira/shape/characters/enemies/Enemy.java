@@ -58,6 +58,15 @@ public abstract class Enemy extends AbstractShape implements ShooterEnemy, Dynam
         }
     }
 
+    protected void addBulletToShoot(Vec2 position, Vec2 velocity,float angle) {
+        bullets.add(Bullet.createEnemyBullet(body.getWorld(),
+                body.getWorldPoint(position),
+                body.getWorldVector(velocity),
+                angle,
+                bulletColor)
+        );
+    }
+
     /**
      * Compute enemy movement
      */

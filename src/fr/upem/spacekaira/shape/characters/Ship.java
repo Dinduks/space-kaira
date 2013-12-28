@@ -226,7 +226,6 @@ public class Ship extends AbstractShape implements DynamicContact{
     }
 
     private void drawMotors(Graphics2D graphics, Viewport viewport) {
-        //TODO a faire en dynamique avec une chaine de petites boules et suivant la vitesse
         Vec2 leftMotor = new Vec2(-0.5f, -3.3f);
         Vec2 rightMotor = new Vec2(0.5f, -3.3f);
 

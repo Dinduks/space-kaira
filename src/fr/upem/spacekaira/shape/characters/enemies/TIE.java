@@ -40,8 +40,8 @@ public class TIE extends Enemy {
         //left-side-down
        {
             PolygonShape polygonShape = new PolygonShape();
-           Vec2[] vertices = { new Vec2(0, 2), new Vec2(0, 2.1f),
-                   new Vec2(2, 4.1f), new Vec2(2, 4) };
+           Vec2[] vertices = { new Vec2(-3.5f, 2), new Vec2(-3.5f, 2.1f),
+                   new Vec2(-1.5f, 4.1f), new Vec2(-1.5f, 4) };
            polygonShape.set(vertices, 4);
             edgeFix.shape = polygonShape;
             body.createFixture(edgeFix);
@@ -50,8 +50,8 @@ public class TIE extends Enemy {
         //left-side-up
        {
             PolygonShape polygonShape = new PolygonShape();
-           Vec2[] vertices = { new Vec2(0, 2), new Vec2(0, 2.1f),
-                   new Vec2(2, 0.1f), new Vec2(2, 0) };
+           Vec2[] vertices = { new Vec2(-3.5f, 2), new Vec2(-3.5f, 2.1f),
+                   new Vec2(-1.5f, 0.1f), new Vec2(-1.5f, 0) };
            polygonShape.set(vertices, 4);
             edgeFix.shape = polygonShape;
             body.createFixture(edgeFix);
@@ -60,8 +60,8 @@ public class TIE extends Enemy {
         //right-side-down
        {
            PolygonShape polygonShape = new PolygonShape();
-           Vec2[] vertices = { new Vec2(7, 2), new Vec2(7, 2.1f),
-                   new Vec2(5, 4.1f), new Vec2(5, 4) };
+           Vec2[] vertices = { new Vec2(3.5f, 2), new Vec2(3.5f, 2.1f),
+                   new Vec2(1.5f, 4.1f), new Vec2(1.5f, 4) };
            polygonShape.set(vertices, 4);
            edgeFix.shape = polygonShape;
            body.createFixture(edgeFix);
@@ -70,8 +70,8 @@ public class TIE extends Enemy {
         //right-side-up
         {
             PolygonShape polygonShape = new PolygonShape();
-            Vec2[] vertices = { new Vec2(7, 2), new Vec2(7, 2.1f),
-                    new Vec2(5, 0.1f), new Vec2(5, 0) };
+            Vec2[] vertices = { new Vec2(3.5f, 2), new Vec2(3.5f, 2.1f),
+                    new Vec2(1.5f, 0.1f), new Vec2(1.5f, 0) };
             polygonShape.set(vertices, 4);
             edgeFix.shape = polygonShape;
             body.createFixture(edgeFix);
@@ -81,8 +81,8 @@ public class TIE extends Enemy {
         //middle
         {
             PolygonShape polygonShape = new PolygonShape();
-            Vec2[] vertices = { new Vec2(2, 2), new Vec2(2, 2.1f),
-                    new Vec2(5, 2.1f), new Vec2(5, 2) };
+            Vec2[] vertices = { new Vec2(-1.5f, 2), new Vec2(-1.5f, 2.1f),
+                    new Vec2(1.5f, 2.1f), new Vec2(1.5f, 2) };
             polygonShape.set(vertices, 4);
             edgeFix.shape = polygonShape;
             body.createFixture(edgeFix);
@@ -92,9 +92,9 @@ public class TIE extends Enemy {
         //inner polygon
         {
             PolygonShape polygonShape = new PolygonShape();
-            Vec2[] vertices = { new Vec2(0, 2), new Vec2(1.5f, 2.75f),
-                    new Vec2(5.5f, 2.75f), new Vec2(7, 2),
-                    new Vec2(5.5f, 1.25f), new Vec2(1.5f, 1.25f) };
+            Vec2[] vertices = { new Vec2(-3.5f, 2), new Vec2(-2, 2.75f),
+                    new Vec2(2, 2.75f), new Vec2(3.5f, 2),
+                    new Vec2(2, 1.25f), new Vec2(-2, 1.25f) };
             polygonShape.set(vertices, 6);
             edgeFix.shape = polygonShape;
             body.createFixture(edgeFix);
@@ -102,7 +102,6 @@ public class TIE extends Enemy {
     }
 
     @Override
-    // TODO: Besoin de doc
     public void move(Ship ship) {
         Vec2 speed = computeRotationSpeed(ship.getPosition(),
                 body.getPosition(), 10, 0.017f);
@@ -112,21 +111,11 @@ public class TIE extends Enemy {
     }
 
     private void shootLeft() {
-        bullets.add(Bullet.createEnemyBullet(
-                body.getWorld(),
-                body.getWorldPoint(new Vec2(-1, 2)),
-                body.getWorldVector(new Vec2(-1, 0)),
-                body.getAngle() + 1.57f,
-                bulletColor));
+        addBulletToShoot(new Vec2(-4.5f, 2),new Vec2(-1, 0), body.getAngle() + 1.57f);
     }
 
     private void shootRight() {
-        bullets.add(Bullet.createEnemyBullet(
-                body.getWorld(),
-                body.getWorldPoint(new Vec2(8, 2)),
-                body.getWorldVector(new Vec2(1, 0)),
-                body.getAngle() - 1.57f,
-                bulletColor));
+        addBulletToShoot(new Vec2(4.5f, 2),new Vec2(1, 0),body.getAngle() - 1.57f);
     }
 
     /* This function shoot if the ship is more or less in the shoot-windows */

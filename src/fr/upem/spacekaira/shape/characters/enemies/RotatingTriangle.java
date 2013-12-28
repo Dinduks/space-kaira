@@ -56,15 +56,6 @@ public class RotatingTriangle extends Enemy {
         return body.getUserData() == Brush.DESTROY_BRUSH;
     }
 
-
-    private void addBulletToShoot(Vec2 position, Vec2 velocity,float angle) {
-        bullets.add(Bullet.createEnemyBullet(body.getWorld(),
-                body.getWorldPoint(position),
-                body.getWorldVector(velocity),
-                angle,
-                bulletColor));
-    }
-
     private void shoot1() {
         addBulletToShoot(new Vec2(-1.2f,-1.03f),new Vec2(-1,-0.86f),body.getAngle()+2.1f);
     }
