@@ -27,7 +27,7 @@ public class Brute extends Enemy {
         FixtureDef fd = new FixtureDef();
         fd.density = 1.0f;
         fd.userData = enemyColor;
-        fd.filter.categoryBits = FixtureType.STD_ENEMY;
+        fd.filter.categoryBits = FixtureType.ENEMY;
         fd.filter.maskBits = FixtureType.BULLET |
                 FixtureType.SHIP |
                 FixtureType.ARMED_BOMB |

@@ -42,13 +42,13 @@ public class Squadron extends Enemy {
             fixtureDef.density = 5.0f;
             fixtureDef.userData = enemyColor;
             fixtureDef.shape = ps;
-            fixtureDef.filter.categoryBits = FixtureType.STD_ENEMY;
+            fixtureDef.filter.categoryBits = FixtureType.ENEMY;
             fixtureDef.filter.maskBits = FixtureType.BULLET
                     | FixtureType.ARMED_BOMB
                     | FixtureType.ARMED_MBOMB
                     | FixtureType.SHIP
                     | FixtureType.PLANET
-                    | FixtureType.STD_ENEMY;
+                    | FixtureType.ENEMY;
             body.createFixture(fixtureDef);
         }
         {
@@ -66,11 +66,11 @@ public class Squadron extends Enemy {
             fd.userData = enemyColor;
             fd.density = 5.0f;
             fd.shape = shape;
-            fd.filter.categoryBits = FixtureType.STD_ENEMY;
+            fd.filter.categoryBits = FixtureType.ENEMY;
             fd.filter.maskBits = FixtureType.BULLET
                     | FixtureType.SHIP
                     | FixtureType.PLANET
-                    | FixtureType.STD_ENEMY;
+                    | FixtureType.ENEMY;
 
             DistanceJointDef jd = new DistanceJointDef();
             Vec2 p1,p2,d;

@@ -97,10 +97,10 @@ public class ContactListener implements org.jbox2d.callbacks.ContactListener {
             planetShield.accept(f2, f1);
 
     private static ContactAction[][] action = {
-                          /* BULLET PLANET        STD_ENEMY    SHIP         BOMB,     ARMED_BOMB, MBOMB,     ARMED_MBOMB BULLET_ENEMY       SHIELD*/
+                          /* BULLET PLANET        ENEMY        SHIP         BOMB,     ARMED_BOMB, MBOMB,     ARMED_MBOMB BULLET_ENEMY       SHIELD*/
         /* BULLET */       { nil,   rSD,          dSD,         nil,         nil,      nil,        nil,       nil,        rSD,               nil },
         /* PLANET */       { lSD,   nil,          nil,         nil,         nil,      nil ,       nil,       nil,        lSD,               planetShield },
-        /* STD_ENEMY */    { dSD,   nil,          nil,         enemyVsShip, nil,      enemyBomb,  nil,       nil,        nil,               nil },
+        /* ENEMY */        { dSD,   nil,          nil,         enemyVsShip, nil,      enemyBomb,  nil,       nil,        nil,               nil },
         /* SHIP */         { nil,   nil,          shipVsEnemy, nil,         shipBomb, nil,        shipMbomb, nil,        shipVsEnemy,       nil },
         /* BOMB */         { nil,   nil,          nil,         bombShip,    nil,      nil,        nil,       nil,        nil,               nil },
         /* ARMED_BOMB */   { nil,   nil,          bombEnemy,   nil,         nil,      nil,        nil,       nil,        nil,               nil },

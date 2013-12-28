@@ -26,7 +26,7 @@ public class Planet extends AbstractShape {
         planet.filter.categoryBits = FixtureType.PLANET;
         planet.filter.maskBits = FixtureType.BULLET
                                 | FixtureType.SHIP
-                                | FixtureType.STD_ENEMY
+                                | FixtureType.ENEMY
                                 | FixtureType.SHIELD
                                 | FixtureType.BULLET_ENEMY;
 

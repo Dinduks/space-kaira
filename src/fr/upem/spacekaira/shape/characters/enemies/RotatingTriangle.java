@@ -24,13 +24,13 @@ public class RotatingTriangle extends Enemy {
         FixtureDef triangleFix = new FixtureDef();
         triangleFix.density = 1.0f;
         triangleFix.userData = enemyColor;
-        triangleFix.filter.categoryBits = FixtureType.STD_ENEMY;
+        triangleFix.filter.categoryBits = FixtureType.ENEMY;
         triangleFix.filter.maskBits = FixtureType.BULLET
                 | FixtureType.SHIP
                 | FixtureType.ARMED_BOMB
                 | FixtureType.ARMED_MBOMB
                 | FixtureType.PLANET
-                | FixtureType.STD_ENEMY;
+                | FixtureType.ENEMY;
 
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.set(new Vec2[]{ new Vec2(-1, -0.86f), new Vec2(1, -0.86f),

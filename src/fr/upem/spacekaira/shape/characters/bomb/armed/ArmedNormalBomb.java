@@ -33,7 +33,7 @@ public class ArmedNormalBomb extends AbstractArmedBomb {
         circleShape.setRadius((radius = radius + 0.5f));
         armedBombFixtureDef.shape = circleShape;
         armedBombFixtureDef.userData = brushAfterExploding;
-        armedBombFixtureDef.filter.maskBits = FixtureType.STD_ENEMY;
+        armedBombFixtureDef.filter.maskBits = FixtureType.ENEMY;
         body.destroyFixture(fixture);
         body.createFixture(armedBombFixtureDef);
 

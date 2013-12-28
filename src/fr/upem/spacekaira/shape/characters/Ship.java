@@ -65,7 +65,7 @@ public class Ship extends AbstractShape implements DynamicContact{
             ship.userData = shipColor;
             ship.filter.categoryBits = FixtureType.SHIP;
             ship.filter.maskBits = FixtureType.PLANET |
-                    FixtureType.STD_ENEMY |
+                    FixtureType.ENEMY |
                     FixtureType.BULLET_ENEMY |
                     FixtureType.BOMB |
                     FixtureType.MBOMB;
@@ -114,7 +114,7 @@ public class Ship extends AbstractShape implements DynamicContact{
     private Filter shieldFilterOn = new Filter() {{
         categoryBits = FixtureType.SHIELD;
         maskBits = FixtureType.PLANET |
-                FixtureType.STD_ENEMY |
+                FixtureType.ENEMY |
                 FixtureType.BULLET_ENEMY | FixtureType.PLANET;
     }};
 

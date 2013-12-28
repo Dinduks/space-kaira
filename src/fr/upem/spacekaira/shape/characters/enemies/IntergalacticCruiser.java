@@ -28,13 +28,13 @@ public class IntergalacticCruiser extends Enemy {
         FixtureDef cruiserFix = new FixtureDef();
         cruiserFix.density = 1.0f;
         cruiserFix.userData = enemyColor;
-        cruiserFix.filter.categoryBits = FixtureType.STD_ENEMY;
+        cruiserFix.filter.categoryBits = FixtureType.ENEMY;
         cruiserFix.filter.maskBits = FixtureType.BULLET
                 | FixtureType.ARMED_BOMB
                 | FixtureType.ARMED_MBOMB
                 | FixtureType.SHIP
                 | FixtureType.PLANET
-                | FixtureType.STD_ENEMY;
+                | FixtureType.ENEMY;
 
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.set(new Vec2[]{ new Vec2(0, 0), new Vec2(0, 2),

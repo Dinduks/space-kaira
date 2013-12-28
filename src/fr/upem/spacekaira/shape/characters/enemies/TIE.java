@@ -30,13 +30,13 @@ public class TIE extends Enemy {
         FixtureDef edgeFix = new FixtureDef();
         edgeFix.density = 1.0f;
         edgeFix.userData = enemyColor;
-        edgeFix.filter.categoryBits = FixtureType.STD_ENEMY;
+        edgeFix.filter.categoryBits = FixtureType.ENEMY;
         edgeFix.filter.maskBits = FixtureType.BULLET
                 | FixtureType.SHIP
                 | FixtureType.ARMED_BOMB
                 | FixtureType.ARMED_MBOMB
                 | FixtureType.PLANET
-                | FixtureType.STD_ENEMY;
+                | FixtureType.ENEMY;
 
         //left-side-down
        {
