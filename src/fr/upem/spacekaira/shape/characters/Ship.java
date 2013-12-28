@@ -5,9 +5,9 @@ import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.characters.bomb.armed.AbstractArmedBomb;
+import fr.upem.spacekaira.shape.characters.bomb.armed.ArmedMegaBomb;
+import fr.upem.spacekaira.shape.characters.bomb.armed.ArmedNormalBomb;
 import fr.upem.spacekaira.shape.characters.enemies.Enemy;
-import fr.upem.spacekaira.shape.characters.factory.bomb.armed.ArmedMegaBombFactory;
-import fr.upem.spacekaira.shape.characters.factory.bomb.armed.ArmedNormalBombFactory;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
@@ -131,11 +131,9 @@ public class Ship extends AbstractShape implements DynamicContact{
 
         hasBomb = false;
         if (!megaBomb) {
-            armedBomb = ArmedNormalBombFactory.create(body.getWorld(),
-                    getPosition());
+            armedBomb = ArmedNormalBomb.create(body.getWorld(), getPosition());
         } else {
-            armedBomb = ArmedMegaBombFactory.create(body.getWorld(),
-                    getPosition());
+            armedBomb = ArmedMegaBomb.create(body.getWorld(), getPosition());
         }
     }
 

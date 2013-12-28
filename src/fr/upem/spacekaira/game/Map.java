@@ -6,12 +6,12 @@ import fr.upem.spacekaira.shape.BrushFactory;
 import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.characters.*;
 import fr.upem.spacekaira.shape.characters.bomb.nonarmed.AbstractBomb;
+import fr.upem.spacekaira.shape.characters.bomb.nonarmed.MegaBomb;
+import fr.upem.spacekaira.shape.characters.bomb.nonarmed.NormalBomb;
 import fr.upem.spacekaira.shape.characters.enemies.Enemy;
 import fr.upem.spacekaira.shape.characters.enemies.EnemyWavesGenerator;
 import fr.upem.spacekaira.shape.characters.factory.EnemyFactory;
 import fr.upem.spacekaira.shape.characters.factory.PlanetFactory;
-import fr.upem.spacekaira.shape.characters.factory.bomb.nonarmed.MegaBombFactory;
-import fr.upem.spacekaira.shape.characters.factory.bomb.nonarmed.NormalBombFactory;
 import fr.upem.spacekaira.util.Util;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
@@ -113,9 +113,9 @@ public class Map {
         Vec2 position = viewport.getRandomPositionForBomb(ship);
         Random random = new Random();
         if (random.nextInt(100) >= megaBombsRatio) {
-            bombs.add(NormalBombFactory.create(world, position));
+            bombs.add(NormalBomb.create(world, position));
         } else {
-            bombs.add(MegaBombFactory.create(world, position));
+            bombs.add(MegaBomb.create(world, position));
         }
     }
 

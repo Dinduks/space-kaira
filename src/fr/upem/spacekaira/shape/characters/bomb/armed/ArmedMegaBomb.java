@@ -1,12 +1,15 @@
 package fr.upem.spacekaira.shape.characters.bomb.armed;
 
 import fr.upem.spacekaira.shape.Brush;
+import fr.upem.spacekaira.shape.BrushFactory;
 import fr.upem.spacekaira.shape.characters.enemies.Enemy;
 import fr.upem.spacekaira.util.Util;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static fr.upem.spacekaira.shape.characters.bomb.BombType.MEGA_BOMB;
@@ -16,20 +19,36 @@ import static fr.upem.spacekaira.shape.characters.bomb.BombType.MEGA_BOMB;
  * The bomb disappears 10 seconds after it has been thrown
  */
 public class ArmedMegaBomb extends AbstractArmedBomb {
+    private List<Enemy> enemiesToDestroy = new ArrayList<>();
+
     /**
-     * Build A new armed bomb
+     * Builds A new armed mega bomb
      *
      * @param world               The current world
      * @param position            The position of the armed bomb
-     * @param initialBrush
-     * @param brushAfterExploding
+     * @param initialBrush        Its brush when its dropped
+     * @param brushAfterExploding Its brush when it starts exploding
      */
     public ArmedMegaBomb(World world, Vec2 position, Brush initialBrush,
                          Brush brushAfterExploding) {
         super(world, position, initialBrush, brushAfterExploding, MEGA_BOMB);
     }
 
-    private List<Enemy> enemiesToDestroy = new ArrayList<>();
+    /**
+     * Creates a ready-to-use armed mega bomb
+     *
+     * @param world    The current world
+     * @param position The position where should the bomb be dropped
+     * @return         The created mega bomb
+     */
+    public static ArmedMegaBomb create(World world, Vec2 position) {
+        Brush initialBrush = BrushFactory.get(Color.RED);
+        Brush brushAfterExploding = BrushFactory.get(Color.RED);
+
+        return new ArmedMegaBomb(world, position, initialBrush,
+                brushAfterExploding);
+    }
+
     @Override
     public boolean explode(List<Enemy> enemies) {
         if (enemiesToDestroy.isEmpty()) {
@@ -79,9 +98,9 @@ public class ArmedMegaBomb extends AbstractArmedBomb {
     /**
      * Takes two vectors, round their positions and check if they're equal
      *
-     * @param position1
-     * @param position2
-     * @return
+     * @param position1 The first position
+     * @param position2 The second position
+     * @return          true if the rounded positions are equal, false otherwise
      */
     private boolean roundedPosEqual(Vec2 position1, Vec2 position2) {
         return (Math.ceil(position1.x) == Math.ceil(position2.x) &&
