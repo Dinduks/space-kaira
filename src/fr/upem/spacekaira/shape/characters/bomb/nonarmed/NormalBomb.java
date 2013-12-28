@@ -14,14 +14,14 @@ import static fr.upem.spacekaira.shape.characters.bomb.BombType.NORMAL_BOMB;
  */
 public class NormalBomb extends AbstractBomb {
     /**
-     * Builds a new bomb
+     * Builds a new non-armed bomb
      *
      * @param world    The current world
      * @param position The position of the bomb
-     * @param color
+     * @param brush    The brush of the bomb
      */
-    public NormalBomb(World world, Vec2 position, Brush color) {
-        super(world, position, color, NORMAL_BOMB);
+    public NormalBomb(World world, Vec2 position, Brush brush) {
+        super(world, position, brush, NORMAL_BOMB);
     }
 
     /**

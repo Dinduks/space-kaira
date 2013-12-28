@@ -8,10 +8,10 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
 /**
- * Represent a simple planet on the screen
+ * Represents a planet on the screen
  */
 public class Planet extends AbstractShape {
-    public Planet(World world, float x, float y, float radius, Brush color) {
+    public Planet(World world, float x, float y, float radius, Brush brush) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(x,y);
 
@@ -22,7 +22,7 @@ public class Planet extends AbstractShape {
 
         FixtureDef planet = new FixtureDef();
         planet.shape = circleShape;
-        planet.userData = color;
+        planet.userData = brush;
         planet.filter.categoryBits = FixtureType.PLANET;
         planet.filter.maskBits = FixtureType.BULLET
                                 | FixtureType.SHIP

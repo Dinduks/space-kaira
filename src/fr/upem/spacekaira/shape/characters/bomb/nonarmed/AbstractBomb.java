@@ -16,19 +16,16 @@ import org.jbox2d.dynamics.World;
  * Represents a bomb
  */
 public abstract class AbstractBomb extends AbstractShape implements DynamicContact {
-    private BombType bombType;
-
     /**
-     * Builds a new bomb
-     * @param world The current world
+     * Builds a new non-armed bomb
+     *
+     * @param world    The current world
      * @param position The position of the bomb
-     * @param color
-     * @param bombType
+     * @param brush    The brush of the bomb
+     * @param bombType The type of the bomb
      */
-    public AbstractBomb(World world, Vec2 position, Brush color,
+    public AbstractBomb(World world, Vec2 position, Brush brush,
                         BombType bombType) {
-        this.bombType = bombType;
-
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;
         bodyDef.position.set(position);
@@ -41,7 +38,7 @@ public abstract class AbstractBomb extends AbstractShape implements DynamicConta
         FixtureDef bombFixtureDef = new FixtureDef();
         bombFixtureDef.shape = circleShape;
         bombFixtureDef.density = 0.0f;
-        bombFixtureDef.userData = color;
+        bombFixtureDef.userData = brush;
         bombFixtureDef.filter.categoryBits = BombType.getFixtureType(bombType);
 
         bombFixtureDef.filter.maskBits = FixtureType.SHIP;

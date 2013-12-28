@@ -12,8 +12,9 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
 public class Brute extends Enemy {
-    public Brute(World world, float x, float y, Brush color, Brush bulletColor) {
-        super(color, bulletColor);
+    public Brute(World world, float x, float y, Brush brush,
+                 Brush bulletBrush) {
+        super(brush, bulletBrush);
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;
