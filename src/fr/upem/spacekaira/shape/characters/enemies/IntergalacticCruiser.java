@@ -83,7 +83,7 @@ public class IntergalacticCruiser extends Enemy {
                 ship.getLinearVelocity(),
                 body.getLinearVelocity(),
                 0.5f);
-        body.setLinearVelocity(speed);
+        body.setLinearVelocity(speed.mul(0.99f));
         body.setAngularVelocity(2);
     }
 }

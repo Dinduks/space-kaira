@@ -139,7 +139,7 @@ public class Squadron extends Enemy {
                 ship.getLinearVelocity(),
                 body.getLinearVelocity(),
                 0.3f);
-        body.setLinearVelocity(speed);
+        body.setLinearVelocity(speed.mul(0.95f));
     }
 
     @Override

@@ -6,10 +6,7 @@ import fr.upem.spacekaira.shape.characters.FixtureType;
 import fr.upem.spacekaira.shape.characters.Ship;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.dynamics.FixtureDef;
-import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.*;
 
 public class RotatingTriangle extends Enemy {
 
@@ -32,7 +29,8 @@ public class RotatingTriangle extends Enemy {
         triangleFix.filter.maskBits = FixtureType.BULLET
                 | FixtureType.SHIP
                 | FixtureType.ARMED_BOMB
-                | FixtureType.PLANET;
+                | FixtureType.PLANET
+                | FixtureType.STD_ENEMY;
 
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.set(new Vec2[]{ new Vec2(-1, -0.86f), new Vec2(1, -0.86f),
@@ -49,7 +47,7 @@ public class RotatingTriangle extends Enemy {
                 ship.getLinearVelocity(),
                 body.getLinearVelocity(),
                 0.3f);
-        body.setLinearVelocity(speed);
+        body.setLinearVelocity(speed.mul(0.97f));
         body.setAngularVelocity(2);
     }
 
@@ -79,20 +77,19 @@ public class RotatingTriangle extends Enemy {
         addBulletToShoot(new Vec2(0.0f, 1.03f),new Vec2(0, 0.86f),body.getAngle());
     }
 
+    private long lastShootTime = 0;
     @Override
     public void shoot(Ship ship) {
-        Vec2 canon1 = body.getWorldVector(new Vec2(-1, -0.86f));
-        canon1.normalize();
-        Vec2 canon2 = body.getWorldVector(new Vec2(1, -0.86f));
-        canon2.normalize();
-        Vec2 canon3 = body.getWorldVector(new Vec2(0, 0.86f));
-        canon3.normalize();
+        Vec2 canon1 = body.getWorldVector(new Vec2(-1, -0.86f){{normalize();}});
+        Vec2 canon2 = body.getWorldVector(new Vec2(1, -0.86f){{normalize();}});
+        Vec2 canon3 = body.getWorldVector(new Vec2(0, 0.86f){{normalize();}});
 
         Vec2 shipRT = ship.getPosition().sub(body.getPosition());
         shipRT.normalize();
-
-        if (canon1.sub(shipRT).length() <= 0.05f) shoot1();
-        if (canon2.sub(shipRT).length() <= 0.05f) shoot2();
-        if (canon3.sub(shipRT).length() <= 0.05f) shoot3();
+        if (System.currentTimeMillis() - lastShootTime < 1000) return;
+        if (canon1.sub(shipRT).length() <= 1f) shoot1();
+        if (canon2.sub(shipRT).length() <= 1f) shoot2();
+        if (canon3.sub(shipRT).length() <= 1f) shoot3();
+        lastShootTime = System.currentTimeMillis();
     }
 }
