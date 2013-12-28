@@ -7,7 +7,7 @@
       <xs:element name="gameDuration" type="xs:int"/>
       <xs:element name="planetsDensity" type="xs:int"/>
       <xs:element name="bombsFrequency" type="xs:int"/>
-      <xs:element name="megaBombsPerCent" type="xs:int"/>
+      <xs:element name="megaBombsRatio" type="xs:int"/>
       <xs:element name="enemyWaves" minOccurs="0">
         <xs:complexType>
           <xs:sequence>

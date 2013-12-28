@@ -1,13 +1,16 @@
 <configuration>
   <gameDuration>120</gameDuration>
-  <planetsDensity>2</planetsDensity> <!--How many planets per screen?-->
-  <bombsFrequency>30</bombsFrequency> <!--// How many bombs per minute?-->
-  <megaBombsPerCent>40</megaBombsPerCent> <!--// Percentage of mega bombs-->
+  <planetsDensity>2</planetsDensity> <!-- How many planets per screen?-->
+  <bombsFrequency>30</bombsFrequency> <!-- How many bombs per minute?-->
+  <megaBombsRate>40</megaBombsRate> <!-- On 100 bombs, how many are mega? -->
 
   <enemyWaves>
     <enemyWave>
+      <enemy>SQUADRON</enemy>
       <enemy>TIE</enemy>
+      <enemy>ROTATINGTRIANGLE</enemy>
       <enemy>BRUTE</enemy>
+      <enemy>CRUISER</enemy>
     </enemyWave>
     <enemyWave>
       <enemy>BRUTE</enemy>

@@ -37,7 +37,7 @@ public class Map {
 
     private List<AbstractBomb> bombs = new ArrayList<>();
     private int bombsFrequency;
-    private final int megaBombsPerCent;
+    private final int megaBombsRatio;
 
     private int hudXPosition;
     private int hudYPosition;
@@ -58,7 +58,7 @@ public class Map {
         this.world = world;
         this.planetsDensity = config.getPlanetsDensity();
         this.bombsFrequency = config.getBombsFrequency();
-        this.megaBombsPerCent = config.getMegaBombsPerCent();
+        this.megaBombsRatio = config.getMegaBombsRatio();
         this.height = height;
         this.width = width;
         this.viewport = viewport;
@@ -111,7 +111,7 @@ public class Map {
 
         lastTimeWasABombSpawned = currentTime;
         Vec2 position = viewport.getRandomPosition(ship);
-        if (random.nextInt(100) >= megaBombsPerCent) {
+        if (random.nextInt(100) >= megaBombsRatio) {
             bombs.add(NormalBombFactory.create(world, position));
         } else {
             bombs.add(MegaBombFactory.create(world, position));
