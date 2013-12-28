@@ -168,7 +168,7 @@ public class Map {
             wavesGenerator.getEnemies().forEach(e -> e.draw(graphics, viewport));
             toggleShieldIfNearAPlanet(planets);
             if (ship.hasBomb()) updateBombInfo(graphics);
-
+            drawEnemiesInfo(graphics);
             drawTimeCounter(graphics, startTime, gameDuration);
         });
     }
@@ -214,5 +214,22 @@ public class Map {
         graphics.setFont(font);
         String leftTime = Util.getTimeLeftAsString(startTime, gameDuration);
         graphics.drawString(leftTime, hudXPosition, hudYPosition);
+    }
+
+    private void drawEnemiesInfo(Graphics2D graphics) {
+        Font font = new Font("arial", Font.BOLD, 18);
+        graphics.setPaint(Color.WHITE);
+        graphics.setFont(font);
+
+        int wavesLeft = wavesGenerator.wavesLeft();
+        int enemiesLeft = wavesGenerator.enemiesLeftInCurrentWave();
+
+        String wavesLeftText = String.format("%d wave%c left", wavesLeft,
+                (wavesLeft > 1) ? 's' : ' ');
+        String enemiesLeftText = String.format("%d enem%s left", enemiesLeft,
+                (enemiesLeft > 1) ? "ies" : "y");
+
+        graphics.drawString(wavesLeftText, 50, hudYPosition);
+        graphics.drawString(enemiesLeftText, 50, hudYPosition + 47);
     }
 }

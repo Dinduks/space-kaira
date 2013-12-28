@@ -9,7 +9,7 @@ import org.jbox2d.common.Vec2;
 import java.util.*;
 
 /**
- * This class create all enemy during the game, generating enemy wave
+ * This class creates all the enemies during the game, generating enemy waves
  */
 public class EnemyWavesGenerator {
     /**
@@ -18,11 +18,11 @@ public class EnemyWavesGenerator {
     public static class EnemyWave {
         private int numberOfEnemy;
 
-        public EnemyWave(int numberOfEnemy) {
-            this.numberOfEnemy = numberOfEnemy;
+        public EnemyWave(int numberOfEnemies) {
+            this.numberOfEnemy = numberOfEnemies;
         }
 
-        public int getNumberOfEnemy() {
+        public int getNumberOfEnemies() {
             return numberOfEnemy;
         }
     }
@@ -79,9 +79,9 @@ public class EnemyWavesGenerator {
         float height = maxLength/viewport.getCameraScale();
         Vec2 start = new Vec2(0,height).add(ship.getPosition());
         Vec2 rotate = new Vec2();
-        Rot rot = new Rot(6.28f/enemyWave.getNumberOfEnemy()); /* 2.PI / number */
+        Rot rot = new Rot(6.28f/enemyWave.getNumberOfEnemies()); /* 2.PI / number */
 
-        for(int i=0,n=enemyWave.getNumberOfEnemy(); i<n; i++) {
+        for(int i=0,n=enemyWave.getNumberOfEnemies(); i<n; i++) {
             Rot.mulTrans(rot, start, rotate);
             currentWave.add(enemyFactory.createEnemy(rotate.x, rotate.y));
             start = new Vec2(rotate);
@@ -94,5 +94,13 @@ public class EnemyWavesGenerator {
      */
     public boolean noMoreEnemies() {
         return wavesQueue.size() == 0 && currentWave.size() == 0;
+    }
+
+    public int wavesLeft() {
+        return wavesQueue.size();
+    }
+
+    public int enemiesLeftInCurrentWave() {
+        return currentWave.size();
     }
 }
