@@ -22,8 +22,8 @@ public class IntergalacticCruiser extends Enemy {
         bodyDef.linearDamping = 1.0f;
         bodyDef.position.set(x,y);
 
-        body = world.createBody(bodyDef);
-        body.setUserData(this);
+        setBody(world.createBody(bodyDef));
+        getBody().setUserData(this);
 
         FixtureDef cruiserFix = new FixtureDef();
         cruiserFix.density = 1.0f;
@@ -41,28 +41,30 @@ public class IntergalacticCruiser extends Enemy {
                 new Vec2(7, 2), new Vec2(7, 0) }, 4);
 
         cruiserFix.shape = polygonShape;
-        body.createFixture(cruiserFix);
+        getBody().createFixture(cruiserFix);
     }
 
     private void shootUp() {
-        addBulletToShootLocal(new Vec2(3.5f, 4), new Vec2(0, 1), body.getAngle());
+        addBulletToShootLocal(new Vec2(3.5f, 4), new Vec2(0, 1),
+                getBody().getAngle());
     }
 
     private void shootDown() {
-        addBulletToShootLocal(new Vec2(3.5f, -2),new Vec2(0, -1),body.getAngle());
+        addBulletToShootLocal(new Vec2(3.5f, -2), new Vec2(0, -1),
+                getBody().getAngle());
     }
 
     @Override
     public boolean isDead() {
-        return body.getUserData() == Brush.DESTROY_BRUSH;
+        return getBody().getUserData() == Brush.DESTROY_BRUSH;
     }
 
     @Override
     public void shoot(Ship ship) {
-        Vec2 upCanon = body.getWorldVector(new Vec2(0, 1));
-        Vec2 downCanon = body.getWorldVector(new Vec2(0, -1));
+        Vec2 upCanon = getBody().getWorldVector(new Vec2(0, 1));
+        Vec2 downCanon = getBody().getWorldVector(new Vec2(0, -1));
 
-        Vec2 shipIc = ship.getPosition().sub(body.getPosition());
+        Vec2 shipIc = ship.getPosition().sub(getBody().getPosition());
         shipIc.normalize();
 
         if (upCanon.sub(shipIc).length() <= 0.05f) shootUp();
@@ -72,11 +74,11 @@ public class IntergalacticCruiser extends Enemy {
     @Override
     public void move(Ship ship) {
         Vec2 speed = computeFollowingSpeed(ship.getPosition(),
-                body.getPosition(),
+                getBody().getPosition(),
                 ship.getLinearVelocity(),
-                body.getLinearVelocity(),
+                getBody().getLinearVelocity(),
                 0.5f);
-        body.setLinearVelocity(speed.mul(0.99f));
-        body.setAngularVelocity(2);
+        getBody().setLinearVelocity(speed.mul(0.99f));
+        getBody().setAngularVelocity(2);
     }
 }

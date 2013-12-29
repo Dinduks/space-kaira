@@ -23,8 +23,8 @@ public class TIE extends Enemy {
         bodyDef.linearDamping = 1.0f;
         bodyDef.position.set(x,y);
 
-        body = world.createBody(bodyDef);
-        body.setUserData(this);
+        setBody(world.createBody(bodyDef));
+        getBody().setUserData(this);
 
         FixtureDef edgeFix = new FixtureDef();
         edgeFix.density = 1.0f;
@@ -44,7 +44,7 @@ public class TIE extends Enemy {
                    new Vec2(-1.5f, 4.1f), new Vec2(-1.5f, 4) };
            polygonShape.set(vertices, 4);
             edgeFix.shape = polygonShape;
-            body.createFixture(edgeFix);
+           getBody().createFixture(edgeFix);
         }
 
         //left-side-up
@@ -54,7 +54,7 @@ public class TIE extends Enemy {
                    new Vec2(-1.5f, 0.1f), new Vec2(-1.5f, 0) };
            polygonShape.set(vertices, 4);
             edgeFix.shape = polygonShape;
-            body.createFixture(edgeFix);
+           getBody().createFixture(edgeFix);
         }
 
         //right-side-down
@@ -64,7 +64,7 @@ public class TIE extends Enemy {
                    new Vec2(1.5f, 4.1f), new Vec2(1.5f, 4) };
            polygonShape.set(vertices, 4);
            edgeFix.shape = polygonShape;
-           body.createFixture(edgeFix);
+           getBody().createFixture(edgeFix);
         }
 
         //right-side-up
@@ -74,7 +74,7 @@ public class TIE extends Enemy {
                     new Vec2(1.5f, 0.1f), new Vec2(1.5f, 0) };
             polygonShape.set(vertices, 4);
             edgeFix.shape = polygonShape;
-            body.createFixture(edgeFix);
+            getBody().createFixture(edgeFix);
         }
 
 
@@ -85,7 +85,7 @@ public class TIE extends Enemy {
                     new Vec2(1.5f, 2.1f), new Vec2(1.5f, 2) };
             polygonShape.set(vertices, 4);
             edgeFix.shape = polygonShape;
-            body.createFixture(edgeFix);
+            getBody().createFixture(edgeFix);
         }
 
 
@@ -97,33 +97,36 @@ public class TIE extends Enemy {
                     new Vec2(2, 1.25f), new Vec2(-2, 1.25f) };
             polygonShape.set(vertices, 6);
             edgeFix.shape = polygonShape;
-            body.createFixture(edgeFix);
+            getBody().createFixture(edgeFix);
         }
     }
 
     @Override
     public void move(Ship ship) {
         Vec2 speed = computeRotationSpeed(ship.getPosition(),
-                body.getPosition(), 10, 0.017f);
+                getBody().getPosition(), 10, 0.017f);
         speed.normalize();
-        body.setLinearVelocity(speed.mul(ship.getLinearVelocity().length()*0.9f));
-        body.setAngularVelocity(2);
+        Vec2 linearVeloc = speed.mul(ship.getLinearVelocity().length() * 0.9f);
+        getBody().setLinearVelocity(linearVeloc);
+        getBody().setAngularVelocity(2);
     }
 
     private void shootLeft() {
-        addBulletToShootLocal(new Vec2(-4.5f, 2), new Vec2(-1, 0), body.getAngle() + 1.57f);
+        addBulletToShootLocal(new Vec2(-4.5f, 2), new Vec2(-1, 0),
+                getBody().getAngle() + 1.57f);
     }
 
     private void shootRight() {
-        addBulletToShootLocal(new Vec2(4.5f, 2), new Vec2(1, 0), body.getAngle() - 1.57f);
+        addBulletToShootLocal(new Vec2(4.5f, 2), new Vec2(1, 0),
+                getBody().getAngle() - 1.57f);
     }
 
     /* This function shoot if the ship is more or less in the shoot-windows */
     @Override
     public void shoot(Ship ship) {
-        Vec2 rightCanon = body.getWorldVector(new Vec2(1, 0));
-        Vec2 leftCanon = body.getWorldVector(new Vec2(-1, 0));
-        Vec2 shipTie = ship.getPosition().sub(body.getPosition());
+        Vec2 rightCanon = getBody().getWorldVector(new Vec2(1, 0));
+        Vec2 leftCanon = getBody().getWorldVector(new Vec2(-1, 0));
+        Vec2 shipTie = ship.getPosition().sub(getBody().getPosition());
         shipTie.normalize();
 
         if( leftCanon.sub(shipTie).length() <= 0.05f ) shootLeft();
@@ -132,6 +135,6 @@ public class TIE extends Enemy {
 
     @Override
     public boolean isDead() {
-        return body.getUserData() == Brush.DESTROY_BRUSH;
+        return getBody().getUserData() == Brush.DESTROY_BRUSH;
     }
 }

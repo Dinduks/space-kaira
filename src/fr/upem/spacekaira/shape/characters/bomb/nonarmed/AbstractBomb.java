@@ -30,7 +30,7 @@ public abstract class AbstractBomb extends AbstractShape implements DynamicConta
         bodyDef.type = BodyType.DYNAMIC;
         bodyDef.position.set(position);
 
-        body = world.createBody(bodyDef);
+        setBody(world.createBody(bodyDef));
 
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(0.5f);
@@ -43,8 +43,8 @@ public abstract class AbstractBomb extends AbstractShape implements DynamicConta
 
         bombFixtureDef.filter.maskBits = FixtureType.SHIP;
 
-        body.createFixture(bombFixtureDef);
-        body.setUserData(this);
+        getBody().createFixture(bombFixtureDef);
+        getBody().setUserData(this);
     }
 
     @Override
@@ -53,6 +53,6 @@ public abstract class AbstractBomb extends AbstractShape implements DynamicConta
 
     @Override
     public boolean isDead() {
-        return body.getFixtureList().getUserData() == Brush.DESTROY_BRUSH;
+        return getBody().getFixtureList().getUserData() == Brush.DESTROY_BRUSH;
     }
 }

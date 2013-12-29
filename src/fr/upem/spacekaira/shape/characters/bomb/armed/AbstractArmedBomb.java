@@ -36,7 +36,7 @@ public abstract class AbstractArmedBomb
         bodyDef.type = BodyType.DYNAMIC;
         bodyDef.position.set(position);
 
-        body = world.createBody(bodyDef);
+        setBody(world.createBody(bodyDef));
 
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(radius);
@@ -48,8 +48,8 @@ public abstract class AbstractArmedBomb
         armedBombFixtureDef.filter.categoryBits = FixtureType.ARMED_BOMB;
         armedBombFixtureDef.filter.maskBits = 0;
 
-        fixture = body.createFixture(armedBombFixtureDef);
-        body.setUserData(this);
+        fixture = getBody().createFixture(armedBombFixtureDef);
+        getBody().setUserData(this);
     }
 
     /**
@@ -64,7 +64,7 @@ public abstract class AbstractArmedBomb
 
     @Override
     public boolean isDead() {
-        return body.getFixtureList().getUserData() == Brush.DESTROY_BRUSH;
+        return getBody().getFixtureList().getUserData() == Brush.DESTROY_BRUSH;
     }
 
     public long getDropTime() {

@@ -19,8 +19,8 @@ public class RotatingTriangle extends Enemy {
         bodyDef.linearDamping = 1.0f;
         bodyDef.position.set(x,y);
 
-        body = world.createBody(bodyDef);
-        body.setUserData(this);
+        setBody(world.createBody(bodyDef));
+        getBody().setUserData(this);
 
         FixtureDef triangleFix = new FixtureDef();
         triangleFix.density = 1.0f;
@@ -38,45 +38,51 @@ public class RotatingTriangle extends Enemy {
                 new Vec2(0, 0.86f)},3);
 
         triangleFix.shape = polygonShape;
-        body.createFixture(triangleFix);
+        getBody().createFixture(triangleFix);
     }
 
     @Override
     public void move(Ship ship) {
         Vec2 speed = computeFollowingSpeed(ship.getPosition(),
-                body.getPosition(),
+                getBody().getPosition(),
                 ship.getLinearVelocity(),
-                body.getLinearVelocity(),
+                getBody().getLinearVelocity(),
                 0.3f);
-        body.setLinearVelocity(speed.mul(0.97f));
-        body.setAngularVelocity(2);
+        getBody().setLinearVelocity(speed.mul(0.97f));
+        getBody().setAngularVelocity(2);
     }
 
     @Override
     public boolean isDead() {
-        return body.getUserData() == Brush.DESTROY_BRUSH;
+        return getBody().getUserData() == Brush.DESTROY_BRUSH;
     }
 
     private void shoot1() {
-        addBulletToShootLocal(new Vec2(-1.2f, -1.03f),new Vec2(-1, -0.86f), body.getAngle() + 2.1f);
+        addBulletToShootLocal(new Vec2(-1.2f, -1.03f),new Vec2(-1, -0.86f),
+                getBody().getAngle() + 2.1f);
     }
 
     private void shoot2() {
-        addBulletToShootLocal(new Vec2(1.2f, -1.03f), new Vec2(1, -0.86f), body.getAngle() - 2.1f);
+        addBulletToShootLocal(new Vec2(1.2f, -1.03f), new Vec2(1, -0.86f),
+                getBody().getAngle() - 2.1f);
     }
 
     private void shoot3() {
-        addBulletToShootLocal(new Vec2(0.0f, 1.03f), new Vec2(0, 0.86f), body.getAngle());
+        addBulletToShootLocal(new Vec2(0.0f, 1.03f), new Vec2(0, 0.86f),
+                getBody().getAngle());
     }
 
     private long lastShootTime = 0;
     @Override
     public void shoot(Ship ship) {
-        Vec2 canon1 = body.getWorldVector(new Vec2(-1, -0.86f){{normalize();}});
-        Vec2 canon2 = body.getWorldVector(new Vec2(1, -0.86f){{normalize();}});
-        Vec2 canon3 = body.getWorldVector(new Vec2(0, 0.86f){{normalize();}});
+        Vec2 canon1 =
+                getBody().getWorldVector(new Vec2(-1, -0.86f){{normalize();}});
+        Vec2 canon2 =
+                getBody().getWorldVector(new Vec2(1, -0.86f){{normalize();}});
+        Vec2 canon3 =
+                getBody().getWorldVector(new Vec2(0, 0.86f){{normalize();}});
 
-        Vec2 shipRT = ship.getPosition().sub(body.getPosition());
+        Vec2 shipRT = ship.getPosition().sub(getBody().getPosition());
         shipRT.normalize();
         if (System.currentTimeMillis() - lastShootTime < 1000) return;
         if (canon1.sub(shipRT).length() <= 1f || canon2.sub(shipRT).length() <= 1f ||

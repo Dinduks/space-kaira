@@ -66,7 +66,7 @@ public class ArmedMegaBomb extends AbstractArmedBomb {
                     continue;
                 }
 
-                Vec2 dir = body.getWorldCenter().sub(enemy.getPosition());
+                Vec2 dir = getBody().getWorldCenter().sub(enemy.getPosition());
                 dir.normalize();
                 dir.mulLocal(10000);
                 enemy.moveToward(dir);

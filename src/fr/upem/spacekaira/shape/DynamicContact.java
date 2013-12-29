@@ -4,6 +4,7 @@ package fr.upem.spacekaira.shape;
     This interface should be implemented by all figure who should contact with other
  */
 public interface DynamicContact {
+
     /**
      * Computes pre-solve collisions
      */

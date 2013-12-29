@@ -10,7 +10,7 @@ import java.awt.*;
  * Represent a base to construct a figure an contains drawing method
  */
 public abstract class AbstractShape implements Drawable {
-    protected Body body;
+    private Body body;
 
     @Override
     public void draw(Graphics2D graphics, Viewport viewport) {
@@ -50,6 +50,10 @@ public abstract class AbstractShape implements Drawable {
 
     public Body getBody() {
         return body;
+    }
+
+    public void setBody(Body body) {
+        this.body = body;
     }
 }
 

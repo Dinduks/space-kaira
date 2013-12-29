@@ -47,7 +47,7 @@ public class Ship extends AbstractShape implements DynamicContact {
         bodyDef.angularDamping = 1.0f;
         bodyDef.linearDamping = 0.8f;
 
-        body = world.createBody(bodyDef);
+        setBody(world.createBody(bodyDef));
 
         //Ship
         FixtureDef ship = null;
@@ -86,24 +86,24 @@ public class Ship extends AbstractShape implements DynamicContact {
             shield.filter.categoryBits = shieldFilter.categoryBits;
             shield.filter.maskBits = shieldFilter.maskBits;
         }
-        shipFix = body.createFixture(ship);
-        shieldFix = body.createFixture(shield);
+        shipFix = getBody().createFixture(ship);
+        shieldFix = getBody().createFixture(shield);
 
-        body.setUserData(this);
+        getBody().setUserData(this);
     }
 
     public void up() {
-        Vec2 f = body.getWorldVector(new Vec2(0.0f, 500.0f));
-        Vec2 p = body.getPosition();
-        body.applyForce(f, p);
+        Vec2 f = getBody().getWorldVector(new Vec2(0.0f, 500.0f));
+        Vec2 p = getBody().getPosition();
+        getBody().applyForce(f, p);
     }
 
     public void left() {
-        body.applyTorque(-30.0f);
+        getBody().applyTorque(-30.0f);
     }
 
     public void right() {
-        body.applyTorque(30.0f);
+        getBody().applyTorque(30.0f);
     }
 
     private Filter shieldFilterOff = new Filter() {{
@@ -131,14 +131,16 @@ public class Ship extends AbstractShape implements DynamicContact {
 
         hasBomb = false;
         if (!megaBomb) {
-            armedBomb = ArmedNormalBomb.create(body.getWorld(), getPosition());
+            armedBomb = ArmedNormalBomb.create(getBody().getWorld(),
+                    getPosition());
         } else {
-            armedBomb = ArmedMegaBomb.create(body.getWorld(), getPosition());
+            armedBomb = ArmedMegaBomb.create(getBody().getWorld(),
+                    getPosition());
         }
     }
 
     public Vec2 getLinearVelocity() {
-        return body.getLinearVelocity();
+        return getBody().getLinearVelocity();
     }
 
     private static long lastShootTime = 0;
@@ -149,10 +151,10 @@ public class Ship extends AbstractShape implements DynamicContact {
 
         lastShootTime = System.currentTimeMillis();
         bullets.add(Bullet.createShipBullet(
-                body.getWorld(),
-                body.getPosition(),
-                body.getWorldVector(new Vec2(0, 3)),
-                body.getAngle(),
+                getBody().getWorld(),
+                getBody().getPosition(),
+                getBody().getWorldVector(new Vec2(0, 3)),
+                getBody().getAngle(),
                 bulletColor));
     }
 
@@ -167,9 +169,9 @@ public class Ship extends AbstractShape implements DynamicContact {
         shieldFix.setUserData((shield) ? BrushFactory.get(Color.BLUE, false) : null);
         super.draw(graphics, viewport);
         bullets.forEach(b -> b.draw(graphics, viewport));
-        if (Viewport.isZero(body.getLinearVelocity().x) ||
-                Viewport.isZero(body.getLinearVelocity().y) ||
-                Viewport.isZero(body.getAngularVelocity())) {
+        if (Viewport.isZero(getBody().getLinearVelocity().x) ||
+                Viewport.isZero(getBody().getLinearVelocity().y) ||
+                Viewport.isZero(getBody().getAngularVelocity())) {
             drawMotors(graphics, viewport);
         }
     }
@@ -227,8 +229,10 @@ public class Ship extends AbstractShape implements DynamicContact {
         Vec2 leftMotor = new Vec2(-0.5f, -3.3f);
         Vec2 rightMotor = new Vec2(0.5f, -3.3f);
 
-        leftMotor = viewport.getWorldVectorToScreen(body.getWorldPoint(leftMotor));
-        rightMotor = viewport.getWorldVectorToScreen(body.getWorldPoint(rightMotor));
+        leftMotor = viewport.getWorldVectorToScreen(
+                getBody().getWorldPoint(leftMotor));
+        rightMotor = viewport.getWorldVectorToScreen(
+                getBody().getWorldPoint(rightMotor));
 
         graphics.setPaint(Color.YELLOW);
         graphics.fillOval(Math.round(leftMotor.x - (int) viewport.getCameraScale()/2),

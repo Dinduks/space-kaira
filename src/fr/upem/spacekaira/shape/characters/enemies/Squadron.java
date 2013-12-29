@@ -32,8 +32,8 @@ public class Squadron extends Enemy {
             bd.type = BodyType.DYNAMIC;
             bd.position.set(x, y);
             bd.angularDamping = 25;
-            body = world.createBody(bd);
-            body.setUserData(this);
+            setBody(world.createBody(bd));
+            getBody().setUserData(this);
 
             PolygonShape ps = new PolygonShape();
             ps.setAsBox(2,2);
@@ -49,7 +49,7 @@ public class Squadron extends Enemy {
                     | FixtureType.SHIP
                     | FixtureType.PLANET
                     | FixtureType.ENEMY;
-            body.createFixture(fixtureDef);
+            getBody().createFixture(fixtureDef);
         }
         {
           /*Triangles*/
@@ -94,7 +94,7 @@ public class Squadron extends Enemy {
 
             /*joint core-triangle*/
                 jd.bodyA = b;
-                jd.bodyB = body;
+                jd.bodyB = getBody();
                 p1 = jd.bodyA.getWorldPoint(jd.localAnchorA);
                 p2 = jd.bodyB.getWorldPoint(jd.localAnchorB);
                 d = p2.sub(p1);
@@ -137,16 +137,16 @@ public class Squadron extends Enemy {
     @Override
     public void move(Ship ship) {
         Vec2 speed = computeFollowingSpeed(ship.getPosition(),
-                body.getPosition(),
+                getBody().getPosition(),
                 ship.getLinearVelocity(),
-                body.getLinearVelocity(),
+                getBody().getLinearVelocity(),
                 0.3f);
-        body.setLinearVelocity(speed.mul(0.95f));
+        getBody().setLinearVelocity(speed.mul(0.95f));
     }
 
     @Override
     public boolean isDead() {
-        return body.getUserData() == Brush.DESTROY_BRUSH;
+        return getBody().getUserData() == Brush.DESTROY_BRUSH;
     }
 
     @Override
@@ -196,9 +196,9 @@ public class Squadron extends Enemy {
             jd.bodyA = m_bodies.get(indexA);
             jd.bodyB = m_bodies.get(indexB);
             jd.length = length;
-            body.getWorld().createJoint(jd);
+            getBody().getWorld().createJoint(jd);
         }
-        body.getWorld().destroyBody(b);
+        getBody().getWorld().destroyBody(b);
 
         m_joints.forEach(j -> ((DistanceJoint) j).setLength(length));
     }
@@ -210,7 +210,7 @@ public class Squadron extends Enemy {
         if(m_bodies.size() >= 3) {
             Map<Body,Float> lengthMap = new HashMap<>(nBodies);
 
-            Vec2 shipSquad = ship.getPosition().sub(body.getPosition());
+            Vec2 shipSquad = ship.getPosition().sub(getBody().getPosition());
             shipSquad.normalize();
 
             for (Body b : m_bodies) {

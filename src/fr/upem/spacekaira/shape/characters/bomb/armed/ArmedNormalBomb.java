@@ -51,8 +51,8 @@ public class ArmedNormalBomb extends AbstractArmedBomb {
         getArmedBombFixtureDef().shape = getCircleShape();
         getArmedBombFixtureDef().userData = getBrushAfterExploding();
         getArmedBombFixtureDef().filter.maskBits = FixtureType.ENEMY;
-        body.destroyFixture(getFixture());
-        body.createFixture(getArmedBombFixtureDef());
+        getBody().destroyFixture(getFixture());
+        getBody().createFixture(getArmedBombFixtureDef());
 
         return true;
     }

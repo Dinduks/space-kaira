@@ -36,11 +36,11 @@ public class Bullet extends AbstractShape implements DynamicContact {
         bodyDef.position.set(position);
         bodyDef.bullet = true;
 
-        body = world.createBody(bodyDef);
+        setBody(world.createBody(bodyDef));
         Vec2 newVelocity = velocity.clone();
         newVelocity.normalize();
-        body.setLinearVelocity(velocity.mul(1000));
-        body.setTransform(position, angle);
+        getBody().setLinearVelocity(velocity.mul(1000));
+        getBody().setTransform(position, angle);
 
         PolygonShape polygonShape = new PolygonShape();
         Vec2[] tab = {new Vec2(0,-0.5f),new Vec2(0.1f,-0.5f),new Vec2(0.1f,0.5f),new Vec2(0,0.5f)};
@@ -56,8 +56,8 @@ public class Bullet extends AbstractShape implements DynamicContact {
                 FixtureType.SHIP |
                 FixtureType.SHIELD;
 
-        body.createFixture(bullet);
-        body.setUserData(this);
+        getBody().createFixture(bullet);
+        getBody().setUserData(this);
     }
 
     public static Bullet createShipBullet(World world, Vec2 position,
@@ -75,7 +75,7 @@ public class Bullet extends AbstractShape implements DynamicContact {
     }
 
     boolean isInScreen(Viewport viewport) {
-        return  viewport.isInScreen(body.getPosition());
+        return  viewport.isInScreen(getBody().getPosition());
     }
 
     public static void checkForBulletsOutScreen(Viewport viewport,
@@ -109,6 +109,6 @@ public class Bullet extends AbstractShape implements DynamicContact {
 
     @Override
     public boolean isDead() {
-        return body.getFixtureList().getUserData() == Brush.DESTROY_BRUSH;
+        return getBody().getFixtureList().getUserData() == Brush.DESTROY_BRUSH;
     }
 }

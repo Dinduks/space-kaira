@@ -42,9 +42,9 @@ public abstract class Enemy extends AbstractShape implements ShooterEnemy, Dynam
 
     @Override
     public void computeTimeStepData() {
-        for (Fixture fix = body.getFixtureList(); fix != null; fix = fix.getNext()) {
+        for (Fixture fix = getBody().getFixtureList(); fix != null; fix = fix.getNext()) {
             if (fix.getUserData() == Brush.DESTROY_BRUSH) {
-                body.setUserData(Brush.DESTROY_BRUSH);
+                getBody().setUserData(Brush.DESTROY_BRUSH);
             }
         }
 
@@ -59,13 +59,13 @@ public abstract class Enemy extends AbstractShape implements ShooterEnemy, Dynam
     }
 
     protected void addBulletToShootLocal(Vec2 position, Vec2 velocity, float angle) {
-        addBulletToShootWorld(body.getWorldPoint(position),
-                body.getWorldVector(velocity),
+        addBulletToShootWorld(getBody().getWorldPoint(position),
+                getBody().getWorldVector(velocity),
                 angle);
     }
 
     protected void addBulletToShootWorld(Vec2 position, Vec2 velocity, float angle) {
-        bullets.add(Bullet.createEnemyBullet(body.getWorld(),
+        bullets.add(Bullet.createEnemyBullet(getBody().getWorld(),
             position,
             velocity,
             angle,
@@ -137,7 +137,7 @@ public abstract class Enemy extends AbstractShape implements ShooterEnemy, Dynam
 
     public void moveToward(Vec2 position) {
         Vec2 f = position;
-        Vec2 p = body.getWorldCenter();
-        body.applyForce(f, p);
+        Vec2 p = getBody().getWorldCenter();
+        getBody().applyForce(f, p);
     }
 }

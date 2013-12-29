@@ -15,7 +15,7 @@ public class Planet extends AbstractShape {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(x,y);
 
-        body = world.createBody(bodyDef);
+        setBody(world.createBody(bodyDef));
 
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(radius);
@@ -30,8 +30,7 @@ public class Planet extends AbstractShape {
                                 | FixtureType.SHIELD
                                 | FixtureType.BULLET_ENEMY;
 
-        body.createFixture(planet);
-
-        body.setUserData(this);
+        getBody().createFixture(planet);
+        getBody().setUserData(this);
     }
 }
