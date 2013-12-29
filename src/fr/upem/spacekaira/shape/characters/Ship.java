@@ -147,7 +147,7 @@ public class Ship extends ShapeWithDynamicContact {
 
     public void shoot() {
         if (shield) return;
-        if (System.currentTimeMillis() - lastShootTime < 100) return;
+        if (System.currentTimeMillis() - lastShootTime < 20) return;
 
         lastShootTime = System.currentTimeMillis();
         bullets.add(Bullet.createShipBullet(

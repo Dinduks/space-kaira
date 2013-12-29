@@ -20,11 +20,9 @@ public class ArmedNormalBomb extends AbstractArmedBomb {
      * @param world               The current world
      * @param position            The position of the armed bomb
      * @param initialBrush        Its brush when its dropped
-     * @param brushAfterExploding Its brush when it starts exploding
      */
-    public ArmedNormalBomb(World world, Vec2 position, Brush initialBrush,
-                           Brush brushAfterExploding) {
-        super(world, position, initialBrush, brushAfterExploding);
+    public ArmedNormalBomb(World world, Vec2 position, Brush initialBrush) {
+        super(world, position, initialBrush);
     }
 
     /**
@@ -35,11 +33,9 @@ public class ArmedNormalBomb extends AbstractArmedBomb {
      * @return         The created bomb
      */
     public static ArmedNormalBomb create(World world, Vec2 position) {
-        Brush initialBrush = BrushFactory.get(Color.RED);
-        Brush brushAfterExploding = BrushFactory.get(Color.RED, false);
+        Brush initialBrush = BrushFactory.get(Color.DARK_GRAY);
 
-        return new ArmedNormalBomb(world, position, initialBrush,
-                brushAfterExploding);
+        return new ArmedNormalBomb(world, position, initialBrush);
     }
 
     @Override
@@ -49,7 +45,7 @@ public class ArmedNormalBomb extends AbstractArmedBomb {
         setRadius(getRadius() + 0.5f);
         getCircleShape().setRadius(getRadius());
         getArmedBombFixtureDef().shape = getCircleShape();
-        getArmedBombFixtureDef().userData = getBrushAfterExploding();
+        getArmedBombFixtureDef().userData = BrushFactory.get(Color.RED, false);
         getArmedBombFixtureDef().filter.maskBits = FixtureType.ENEMY;
         getBody().destroyFixture(getFixture());
         getBody().createFixture(getArmedBombFixtureDef());
