@@ -1,6 +1,8 @@
 package fr.upem.spacekaira.shape.characters;
 
 
+import fr.upem.spacekaira.brush.Brush;
+import fr.upem.spacekaira.game.Viewport;
 import fr.upem.spacekaira.shape.*;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;

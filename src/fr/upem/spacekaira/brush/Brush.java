@@ -1,4 +1,4 @@
-package fr.upem.spacekaira.shape;
+package fr.upem.spacekaira.brush;
 
 import java.awt.*;
 

@@ -1,6 +1,6 @@
 package fr.upem.spacekaira.shape.characters.bomb.nonarmed;
 
-import fr.upem.spacekaira.shape.Brush;
+import fr.upem.spacekaira.brush.Brush;
 import fr.upem.spacekaira.shape.ShapeWithDynamicContact;
 import fr.upem.spacekaira.shape.characters.FixtureType;
 import fr.upem.spacekaira.shape.characters.bomb.BombType;

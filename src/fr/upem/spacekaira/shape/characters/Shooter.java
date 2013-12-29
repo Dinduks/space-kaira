@@ -1,6 +1,6 @@
 package fr.upem.spacekaira.shape.characters;
 
-import fr.upem.spacekaira.shape.Viewport;
+import fr.upem.spacekaira.game.Viewport;
 
 /**
  * This interface represents the ability of an enemy character to shoot

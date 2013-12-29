@@ -1,9 +1,9 @@
 package fr.upem.spacekaira.shape.characters;
 
-import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.BrushFactory;
+import fr.upem.spacekaira.brush.Brush;
+import fr.upem.spacekaira.brush.BrushFactory;
 import fr.upem.spacekaira.shape.ShapeWithDynamicContact;
-import fr.upem.spacekaira.shape.Viewport;
+import fr.upem.spacekaira.game.Viewport;
 import fr.upem.spacekaira.shape.characters.bomb.armed.AbstractArmedBomb;
 import fr.upem.spacekaira.shape.characters.bomb.armed.ArmedMegaBomb;
 import fr.upem.spacekaira.shape.characters.bomb.armed.ArmedNormalBomb;
@@ -239,8 +239,8 @@ public class Ship extends ShapeWithDynamicContact {
                 Math.round(leftMotor.y - (int) viewport.getCameraScale()/2),
                 (int) viewport.getCameraScale(),
                 (int) viewport.getCameraScale());
-        graphics.fillOval(Math.round(rightMotor.x - (int) viewport.getCameraScale()/2),
-                Math.round(rightMotor.y - (int) viewport.getCameraScale()/2),
+        graphics.fillOval(Math.round(rightMotor.x - (int) viewport.getCameraScale() / 2),
+                Math.round(rightMotor.y - (int) viewport.getCameraScale() / 2),
                 (int) viewport.getCameraScale(),
                 (int) viewport.getCameraScale());
     }

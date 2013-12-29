@@ -1,7 +1,7 @@
 package fr.upem.spacekaira.shape.characters.enemies;
 
-import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.Viewport;
+import fr.upem.spacekaira.brush.Brush;
+import fr.upem.spacekaira.game.Viewport;
 import fr.upem.spacekaira.shape.characters.FixtureType;
 import fr.upem.spacekaira.shape.characters.Ship;
 import org.jbox2d.collision.shapes.PolygonShape;

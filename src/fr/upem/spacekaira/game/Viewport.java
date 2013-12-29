@@ -1,5 +1,6 @@
-package fr.upem.spacekaira.shape;
+package fr.upem.spacekaira.game;
 
+import fr.upem.spacekaira.brush.Brush;
 import fr.upem.spacekaira.shape.characters.Ship;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.EdgeShape;

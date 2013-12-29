@@ -1,8 +1,8 @@
 package fr.upem.spacekaira.shape.characters.enemies;
 
-import fr.upem.spacekaira.shape.Brush;
+import fr.upem.spacekaira.brush.Brush;
 import fr.upem.spacekaira.shape.ShapeWithDynamicContact;
-import fr.upem.spacekaira.shape.Viewport;
+import fr.upem.spacekaira.game.Viewport;
 import fr.upem.spacekaira.shape.characters.Bullet;
 import fr.upem.spacekaira.shape.characters.Ship;
 import fr.upem.spacekaira.shape.characters.Shooter;

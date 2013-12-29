@@ -5,7 +5,6 @@ import fr.umlv.zen3.KeyboardEvent;
 import fr.umlv.zen3.KeyboardKey;
 import fr.upem.spacekaira.Main;
 import fr.upem.spacekaira.config.Configuration;
-import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.characters.Ship;
 import fr.upem.spacekaira.time.Synchronizer;
 import fr.upem.spacekaira.util.Util;

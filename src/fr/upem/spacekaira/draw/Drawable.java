@@ -1,4 +1,6 @@
-package fr.upem.spacekaira.shape;
+package fr.upem.spacekaira.draw;
+
+import fr.upem.spacekaira.game.Viewport;
 
 import java.awt.*;
 

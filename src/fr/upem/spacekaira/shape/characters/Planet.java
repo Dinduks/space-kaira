@@ -1,7 +1,7 @@
 package fr.upem.spacekaira.shape.characters;
 
 import fr.upem.spacekaira.shape.AbstractShape;
-import fr.upem.spacekaira.shape.Brush;
+import fr.upem.spacekaira.brush.Brush;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.FixtureDef;

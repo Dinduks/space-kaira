@@ -1,7 +1,7 @@
 package fr.upem.spacekaira.shape.characters.bomb.armed;
 
-import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.BrushFactory;
+import fr.upem.spacekaira.brush.Brush;
+import fr.upem.spacekaira.brush.BrushFactory;
 import fr.upem.spacekaira.shape.characters.enemies.Enemy;
 import fr.upem.spacekaira.util.Util;
 import org.jbox2d.common.Vec2;

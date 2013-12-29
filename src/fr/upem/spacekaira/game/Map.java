@@ -2,8 +2,7 @@ package fr.upem.spacekaira.game;
 
 import fr.umlv.zen3.ApplicationContext;
 import fr.upem.spacekaira.config.Configuration;
-import fr.upem.spacekaira.shape.BrushFactory;
-import fr.upem.spacekaira.shape.Viewport;
+import fr.upem.spacekaira.brush.BrushFactory;
 import fr.upem.spacekaira.shape.characters.*;
 import fr.upem.spacekaira.shape.characters.bomb.nonarmed.AbstractBomb;
 import fr.upem.spacekaira.shape.characters.bomb.nonarmed.MegaBomb;

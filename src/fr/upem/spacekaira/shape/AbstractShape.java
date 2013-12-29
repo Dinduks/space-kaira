@@ -1,5 +1,7 @@
 package fr.upem.spacekaira.shape;
 
+import fr.upem.spacekaira.draw.Drawable;
+import fr.upem.spacekaira.game.Viewport;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.Fixture;
