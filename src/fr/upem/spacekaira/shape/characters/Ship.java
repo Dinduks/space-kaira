@@ -249,4 +249,9 @@ public class Ship extends ShapeWithDynamicContact {
     public void computeTimeStepData() {
         Bullet.checkForDeadBullet(bullets);
     }
+
+    @Override
+    public boolean isDead() {
+        return shipFix.getUserData() == Brush.DESTROY_BRUSH;
+    }
 }
