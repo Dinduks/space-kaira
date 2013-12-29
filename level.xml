@@ -4,6 +4,7 @@
   <bombsFrequency>30</bombsFrequency> <!-- How many bombs per minute?-->
   <megaBombsRate>40</megaBombsRate> <!-- On 100 bombs, how many are mega? -->
   <bulletsFrequency>20</bulletsFrequency> <!-- Shoot 1 bullet each N ms -->
+  <shipSpeed>500</shipSpeed> <!-- Required force to move the ship, default: 500 -->
 
   <enemyWaves>
     <enemyWave>

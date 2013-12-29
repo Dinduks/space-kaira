@@ -39,7 +39,7 @@ public class ArmedNormalBomb extends AbstractArmedBomb {
     }
 
     @Override
-    public boolean explode(List<Enemy> enemies) {
+    public boolean detonate(List<Enemy> enemies) {
         if (getRadius() >= 10.0f) return false;
 
         setRadius(getRadius() + 0.5f);

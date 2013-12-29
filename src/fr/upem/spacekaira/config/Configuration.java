@@ -18,6 +18,7 @@ public final class Configuration {
     @XmlElement private int bombsFrequency;
     @XmlElement private int megaBombsRate;
     @XmlElement private int bulletsFrequency;
+    @XmlElement private float shipSpeed;
     @XmlElementWrapper(name = "enemyWaves")
     @XmlElement(name = "enemyWave")
     private List<EnemyWave> enemyWaves;
@@ -57,5 +58,9 @@ public final class Configuration {
 
     public int getBulletsFrequency() {
         return bulletsFrequency;
+    }
+
+    public float getShipSpeed() {
+        return shipSpeed;
     }
 }
