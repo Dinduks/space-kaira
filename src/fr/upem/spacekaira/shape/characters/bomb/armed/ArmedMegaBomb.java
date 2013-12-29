@@ -81,7 +81,7 @@ public class ArmedMegaBomb extends AbstractArmedBomb {
      * @return a list of close {@link Enemy}
      */
     public List<Enemy> getCloseEnemies(List<Enemy> enemies) {
-        return new LinkedList<>((Collection<? extends Enemy>) enemies.stream()
+        return new LinkedList<>(enemies.stream()
                 .filter(e -> {
                     float d = Util.distanceBetweenVectors(e.getPosition(),
                             getPosition());
