@@ -58,8 +58,7 @@ public final class Util {
      public static <E> Iterator<E> asIterator(List<List<E>> lists) {
          List<Iterator<E>> iterators = new ArrayList<>(lists.size());
          for(List<E> list : lists) {
-             if(list != null)
-                iterators.add(list.iterator());
+             if(list != null) iterators.add(list.iterator());
          }
 
          return new Iterator<E> () {

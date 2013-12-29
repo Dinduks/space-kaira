@@ -49,8 +49,9 @@ public class EnemyWavesGenerator {
      * @return a list who contains the current enemy
      */
     public List<Enemy> getEnemies() {
-        if (wavesQueue.size() != 0 && currentWave.size() == 0)
+        if (wavesQueue.size() != 0 && currentWave.size() == 0) {
             generateNextWave();
+        }
         return currentWave;
     }
 

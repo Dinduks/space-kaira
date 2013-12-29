@@ -24,7 +24,8 @@ public final class BrushFactory {
     public static Brush get(Color color, boolean isOpaque) {
         Brush res;
         int hashCode = Brush.hashCode(color, isOpaque);
-        if((res = brushMap.get(hashCode)) == null) {
+        res = brushMap.get(hashCode);
+        if(res == null) {
             res = new Brush(color, isOpaque);
             brushMap.put(hashCode, res);
         }

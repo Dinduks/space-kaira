@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Represent a bullet who are a little segment
+ * Represent a bullet which is a little segment
  */
 public class Bullet extends AbstractShape implements DynamicContact {
     /**
