@@ -4,10 +4,35 @@
 
   <xs:complexType name="configuration">
     <xs:sequence>
-      <xs:element name="gameDuration" type="xs:int"/>
-      <xs:element name="planetsDensity" type="xs:int"/>
-      <xs:element name="bombsFrequency" type="xs:int"/>
-      <xs:element name="megaBombsRatio" type="xs:int"/>
+      <xs:element name="gameDuration">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="planetsDensity">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="bombsFrequency">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="megaBombsRate">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="100"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
       <xs:element name="enemyWaves" minOccurs="0">
         <xs:complexType>
           <xs:sequence>

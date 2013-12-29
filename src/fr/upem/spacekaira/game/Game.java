@@ -44,8 +44,9 @@ public class Game {
         Viewport viewport = new Viewport(width, height);
         viewport.setCamera(0, 0, CAMERA_SCALE);
 
-        //Map
-        Map map = Map.createMap(world, viewport, height, width, config);
+        //Environment
+        Environment env =
+                Environment.createMap(world, viewport, height, width, config);
 
         Synchronizer syn = new Synchronizer((long)(REFRESH_TIME * 1000));
 
@@ -54,17 +55,17 @@ public class Game {
         String gameOverMessage = "THE TIME'S OVER! :(";
         while (Util.anyTimeLeft(startTime, config.getGameDuration())) {
             syn.start();
-            handleKeyboardEvents(context, map.getShip());
+            handleKeyboardEvents(context, env.getShip());
             world.step(REFRESH_TIME, 6, 8);
-            map.computeDataGame();
-            map.draw(context, viewport, startTime, config.getGameDuration());
-            viewport.setCenter(map.getShip().getPosition());
+            env.computeDataGame();
+            env.draw(context, viewport, startTime, config.getGameDuration());
+            viewport.setCenter(env.getShip().getPosition());
             syn.waitToSynchronize();
-            if (map.getShip().isDead()) {
+            if (env.getShip().isDead()) {
                 gameOverMessage = "YOU DIED! :(";
                 break;
             }
-            if (map.noMoreEnemies()) {
+            if (env.noMoreEnemies()) {
                 gameOverMessage = "YOU WON! :D";
                 break;
             }
