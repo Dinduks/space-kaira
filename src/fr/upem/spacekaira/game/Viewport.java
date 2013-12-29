@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
- * Performs vector transformation (local -> world -> screen) and shape drawing
+ * Performs vector transformation (local - world - screen) and shape drawing
  */
 public class Viewport {
     private OBBViewportTransform obb;
@@ -138,7 +138,7 @@ public class Viewport {
     /**
      * Returns a random position in the current view port. The position will be
      * at least 10f away from the ship.
-     * @param ship
+     * @param ship the player ship
      * @return A position on the current view port
      */
     public Vec2 getRandomPositionForBomb(Ship ship) {

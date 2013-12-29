@@ -53,6 +53,7 @@ public final class Util {
     /**
      * Builds a single iterator from the iterators of all passed lists
      * @param lists A list of lists whose iterators will be "merged"
+     * @param <E> class of element in the list
      * @return An iterator that allows to iterator over all the lists
      */
      public static <E> Iterator<E> asIterator(List<List<E>> lists) {

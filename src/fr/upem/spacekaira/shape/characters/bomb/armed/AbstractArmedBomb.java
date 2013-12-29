@@ -23,8 +23,8 @@ public abstract class AbstractArmedBomb extends ShapeWithDynamicContact {
      *
      * @param world The current world
      * @param position The position of the armed bomb
-     * @param initialBrush
-     * @param brushAfterExploding
+     * @param initialBrush InitialBrush
+     * @param brushAfterExploding BrushAfterExploding
      */
     public AbstractArmedBomb(World world, Vec2 position, Brush initialBrush,
                              Brush brushAfterExploding) {
@@ -52,7 +52,7 @@ public abstract class AbstractArmedBomb extends ShapeWithDynamicContact {
 
     /**
      * @return true if done exploding, false otherwise
-     * @param enemies
+     * @param enemies a list of {@link Enemy}
      */
     public abstract boolean explode(List<Enemy> enemies);
 

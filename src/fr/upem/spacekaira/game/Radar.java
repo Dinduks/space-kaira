@@ -17,8 +17,9 @@ public class Radar {
     private List<Enemy> enemies;
     private OBBViewportTransform viewportTransform;
     private Viewport viewport;
+    private int length;
 
-    private int x,y,width, height;
+    private int x, y, width, height;
 
     public Radar(Viewport viewport, Ship ship, List<Enemy> enemies) {
         this.ship = ship;
@@ -38,25 +39,29 @@ public class Radar {
 
     /**
      * Draw the radar at the bottom of the screen
+     * @param  graphics a instance of the class {@link java.awt.Graphics2D}
      */
     public void drawRadar(Graphics2D graphics) {
         viewportTransform.setCenter(ship.getPosition());
         graphics.setPaint(Color.DARK_GRAY);
         graphics.fillOval(x, y, width, height);
 
+        graphics.setPaint(Color.GRAY);
+        graphics.drawOval(x,y,width,height);
+        graphics.drawOval(x+7,y+7,width-14,height-14);
+        graphics.drawOval(x+15,y+15,width-30,height-30);
+        graphics.drawOval(x+25,y+25,width-50,height-50);
+        graphics.drawLine(x+width/2,y,x+width/2,y+height);
+        graphics.drawLine(x,y+height/2,x+width,y+height/2);
+
         Vec2 out = new Vec2();
-        viewportTransform.getWorldToScreen(ship.getPosition(), out);
-
-        graphics.setPaint(Color.BLUE);
-        graphics.fillOval((int) out.x, (int) out.y, 4, 4);
-
         graphics.setPaint(Color.blue);
         for(Enemy e : enemies) {
             Vec2 pos = e.getPosition();
             viewportTransform.getWorldToScreen(pos,out);
             if(isInRadarScreen(out)) {
                 graphics.setPaint(((Brush)(e.getBody().getFixtureList().getUserData())).getColor());
-                graphics.fillOval((int)out.x,(int)out.y,3,3);
+                graphics.fillOval((int)out.x,(int)out.y,4,4);
             }
         }
     }

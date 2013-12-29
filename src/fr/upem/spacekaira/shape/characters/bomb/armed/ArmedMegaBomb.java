@@ -80,11 +80,11 @@ public class ArmedMegaBomb extends AbstractArmedBomb {
      * Takes a collection of {@code Enemy} and returns a view containing the
      * enemies 15f away of the bomb
      *
-     * @param enemies
-     * @return
+     * @param enemies a list of {@link Enemy}
+     * @return a list of close {@link Enemy}
      */
     public List<Enemy> getCloseEnemies(List<Enemy> enemies) {
-        return new LinkedList<>(enemies.stream()
+        return new LinkedList<>((Collection<? extends Enemy>) enemies.stream()
                 .filter(e -> {
                     float d = Util.distanceBetweenVectors(e.getPosition(),
                             getPosition());

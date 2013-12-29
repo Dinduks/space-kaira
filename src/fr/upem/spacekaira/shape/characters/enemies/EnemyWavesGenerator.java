@@ -28,7 +28,7 @@ public class EnemyWavesGenerator {
      * @param viewport an instance of the ViewPort class
      * @param ship the player ship
      * @param enemyWaveList A list who represent all wave of enemy during the game
-     * @param enemies
+     * @param enemies a list of {@link Enemy}
      */
     public EnemyWavesGenerator(EnemyFactory enemyFactory, Viewport viewport,
                                Ship ship, List<EnemyWave> enemyWaveList,

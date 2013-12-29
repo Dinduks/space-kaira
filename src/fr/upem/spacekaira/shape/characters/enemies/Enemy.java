@@ -76,6 +76,7 @@ public abstract class Enemy extends ShapeWithDynamicContact
 
     /**
      * Compute enemy movement
+     * @param ship the player ship
      */
     abstract public void move(Ship ship);
 
@@ -140,5 +141,10 @@ public abstract class Enemy extends ShapeWithDynamicContact
         Vec2 f = position;
         Vec2 p = getBody().getWorldCenter();
         getBody().applyForce(f, p);
+    }
+
+    @Override
+    public boolean isDead() {
+        return getBody().getUserData() == Brush.DESTROY_BRUSH;
     }
 }

@@ -21,6 +21,9 @@ public final class BrushFactory {
 
     /**
      * Returns a brush of the specified color
+     * @param color color of the brush
+     * @param isOpaque true to make opaque your draw
+     * @return a instance of {@link Brush}
      */
     public static Brush get(Color color, boolean isOpaque) {
         Brush res;

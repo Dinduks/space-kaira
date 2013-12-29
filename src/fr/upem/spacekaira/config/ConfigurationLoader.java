@@ -16,7 +16,7 @@ public final class ConfigurationLoader {
      *
      * @param file The level description file
      * @return     The build Configuration
-     * @throws     ConfigurationParsingException
+     * @throws     ConfigurationParsingException configurationParsingException
      */
     public static Configuration loadFrom(File file)
             throws ConfigurationParsingException {
