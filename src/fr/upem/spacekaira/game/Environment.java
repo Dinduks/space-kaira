@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * This class contains all figure present on the screen
  */
-public class Map {
+public class Environment {
     private final int height;
     private final int width;
 
@@ -44,16 +44,17 @@ public class Map {
 
     private List<AbstractBomb> bombs = new ArrayList<>();
 
-    public static Map createMap(World world, Viewport viewport,
+    public static Environment createMap(World world, Viewport viewport,
                                 final int height, final int width,
                                 Configuration config) {
-        Map map = new Map(world, viewport, height, width, config);
-        map.initMap(config);
-        return map;
+        Environment environment =
+                new Environment(world, viewport, height, width, config);
+        environment.initMap(config);
+        return environment;
     }
 
-    private Map(World world, Viewport viewport, final int height,
-               final int width, Configuration config) {
+    private Environment(World world, Viewport viewport, final int height,
+                        final int width, Configuration config) {
         this.world = world;
         this.bombsFrequency = config.getBombsFrequency();
         this.megaBombsRate = config.getMegaBombsRate();
@@ -141,7 +142,8 @@ public class Map {
 
     private void checkBulletOutScreen() {
         ship.checkForBulletOutScreen(viewport);
-        wavesGenerator.getEnemies().forEach(e -> e.checkForBulletOutScreen(viewport));
+        wavesGenerator.getEnemies()
+                .forEach(e -> e.checkForBulletOutScreen(viewport));
     }
 
     private void moveEnemies() {
@@ -156,13 +158,13 @@ public class Map {
             //clear screen
             graphics.clearRect(0, 0, width, height);
 
-            //draw Map
             Set<Planet> planets = planetGenerator.getPlanetSet();
 
             bombs.forEach(b -> b.draw(graphics, viewport));
             ship.draw(graphics, viewport);
             planets.forEach(p -> p.draw(graphics, viewport));
-            wavesGenerator.getEnemies().forEach(e -> e.draw(graphics, viewport));
+            wavesGenerator.getEnemies()
+                    .forEach(e -> e.draw(graphics, viewport));
             toggleShieldIfNearAPlanet(planets);
             if (ship.hasBomb()) updateBombInfo(graphics);
             drawEnemiesInfo(graphics);
