@@ -45,7 +45,7 @@ public class ArmedMegaBomb extends AbstractArmedBomb {
     }
 
     @Override
-    public boolean explode(List<Enemy> enemies) {
+    public boolean detonate(List<Enemy> enemies) {
         if (enemiesToDestroy.isEmpty()) {
             enemiesToDestroy = getCloseEnemies(enemies);
             return true;

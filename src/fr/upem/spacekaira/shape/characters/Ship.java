@@ -185,7 +185,7 @@ public class Ship extends ShapeWithDynamicContact {
 
     private void handleTheArmedBomb(Graphics2D graphics, Viewport viewport) {
         if (System.currentTimeMillis() - armedBomb.getDropTime() >= 1000) {
-            if (armedBomb.explode(enemies)) {
+            if (armedBomb.detonate(enemies)) {
                 armedBomb.draw(graphics, viewport);
             } else {
                 armedBomb = null;

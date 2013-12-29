@@ -50,7 +50,7 @@ public abstract class AbstractArmedBomb extends ShapeWithDynamicContact {
      * @return true if done exploding, false otherwise
      * @param enemies a list of {@link Enemy}
      */
-    public abstract boolean explode(List<Enemy> enemies);
+    public abstract boolean detonate(List<Enemy> enemies);
 
     @Override
     public void computeTimeStepData() {
