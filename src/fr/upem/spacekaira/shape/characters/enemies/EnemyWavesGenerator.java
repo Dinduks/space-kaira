@@ -63,15 +63,16 @@ public class EnemyWavesGenerator {
         EnemyWave enemyWave = wavesQueue.poll();
         if (enemyWave == null || currentWave.size() != 0) return;
         float height = maxLength/viewport.getCameraScale();
-        Vec2 start = new Vec2(0,height).add(ship.getPosition());
+        Vec2 start = new Vec2(0,height);
         Vec2 rotate = new Vec2();
         Rot rot = new Rot(6.28f/enemyWave.getNumberOfEnemies()); /* 2.PI / number */
 
         for (EnemyType enemyType : enemyWave) {
             Rot.mulTrans(rot, start, rotate);
-            Enemy enemy = enemyFactory.create(rotate.x, rotate.y, enemyType);
+            Vec2 out = rotate.add(ship.getPosition());
+            Enemy enemy = enemyFactory.create(out.x, out.y, enemyType);
             currentWave.add(enemy);
-            start = new Vec2(rotate);
+            start.set(rotate);
         }
     }
 
