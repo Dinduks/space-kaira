@@ -106,7 +106,7 @@ public class TIE extends Enemy {
         Vec2 speed = computeRotationSpeed(ship.getPosition(),
                 getBody().getPosition(), 10, 0.017f);
         speed.normalize();
-        Vec2 linearVeloc = speed.mul(ship.getLinearVelocity().length() * 0.9f);
+        Vec2 linearVeloc = speed.mul(ship.getLinearVelocity().length() * 0.9f + 6);
         getBody().setLinearVelocity(linearVeloc);
         getBody().setAngularVelocity(2);
     }
