@@ -1,8 +1,7 @@
 package fr.upem.spacekaira.shape.characters.bomb.nonarmed;
 
-import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.DynamicContact;
+import fr.upem.spacekaira.shape.ShapeWithDynamicContact;
 import fr.upem.spacekaira.shape.characters.FixtureType;
 import fr.upem.spacekaira.shape.characters.bomb.BombType;
 import org.jbox2d.collision.shapes.CircleShape;
@@ -15,7 +14,7 @@ import org.jbox2d.dynamics.World;
 /**
  * Represents a bomb
  */
-public abstract class AbstractBomb extends AbstractShape implements DynamicContact {
+public abstract class AbstractBomb extends ShapeWithDynamicContact {
     /**
      * Builds a new non-armed bomb
      *
@@ -49,10 +48,5 @@ public abstract class AbstractBomb extends AbstractShape implements DynamicConta
 
     @Override
     public void computeTimeStepData() {
-    }
-
-    @Override
-    public boolean isDead() {
-        return getBody().getFixtureList().getUserData() == Brush.DESTROY_BRUSH;
     }
 }

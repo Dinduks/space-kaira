@@ -1,8 +1,7 @@
 package fr.upem.spacekaira.shape.characters.bomb.armed;
 
-import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.DynamicContact;
+import fr.upem.spacekaira.shape.ShapeWithDynamicContact;
 import fr.upem.spacekaira.shape.characters.FixtureType;
 import fr.upem.spacekaira.shape.characters.enemies.Enemy;
 import org.jbox2d.collision.shapes.CircleShape;
@@ -11,8 +10,7 @@ import org.jbox2d.dynamics.*;
 
 import java.util.List;
 
-public abstract class AbstractArmedBomb
-        extends AbstractShape implements DynamicContact {
+public abstract class AbstractArmedBomb extends ShapeWithDynamicContact {
     private FixtureDef armedBombFixtureDef;
     private Brush brushAfterExploding;
     private CircleShape circleShape = new CircleShape();
@@ -60,11 +58,6 @@ public abstract class AbstractArmedBomb
 
     @Override
     public void computeTimeStepData() {
-    }
-
-    @Override
-    public boolean isDead() {
-        return getBody().getFixtureList().getUserData() == Brush.DESTROY_BRUSH;
     }
 
     public long getDropTime() {

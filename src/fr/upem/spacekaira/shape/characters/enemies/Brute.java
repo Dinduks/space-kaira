@@ -50,12 +50,7 @@ public class Brute extends Enemy {
     }
 
     @Override
-    public boolean isDead() {
-        return getBody().getUserData() == Brush.DESTROY_BRUSH;
-    }
-
-    @Override
     public void shoot(Ship ship) {
-        //No shoot function for this enemy
+        // This enemy doesn't shoot
     }
 }

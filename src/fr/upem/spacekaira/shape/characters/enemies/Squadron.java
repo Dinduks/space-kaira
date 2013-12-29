@@ -145,11 +145,6 @@ public class Squadron extends Enemy {
     }
 
     @Override
-    public boolean isDead() {
-        return getBody().getUserData() == Brush.DESTROY_BRUSH;
-    }
-
-    @Override
     public void computeTimeStepData() {
         super.computeTimeStepData();
         /* check for all triangles */

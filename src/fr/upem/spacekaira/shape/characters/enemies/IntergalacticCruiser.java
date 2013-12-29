@@ -55,11 +55,6 @@ public class IntergalacticCruiser extends Enemy {
     }
 
     @Override
-    public boolean isDead() {
-        return getBody().getUserData() == Brush.DESTROY_BRUSH;
-    }
-
-    @Override
     public void shoot(Ship ship) {
         Vec2 upCanon = getBody().getWorldVector(new Vec2(0, 1));
         Vec2 downCanon = getBody().getWorldVector(new Vec2(0, -1));

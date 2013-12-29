@@ -52,11 +52,6 @@ public class RotatingTriangle extends Enemy {
         getBody().setAngularVelocity(2);
     }
 
-    @Override
-    public boolean isDead() {
-        return getBody().getUserData() == Brush.DESTROY_BRUSH;
-    }
-
     private void shoot1() {
         addBulletToShootLocal(new Vec2(-1.2f, -1.03f),new Vec2(-1, -0.86f),
                 getBody().getAngle() + 2.1f);

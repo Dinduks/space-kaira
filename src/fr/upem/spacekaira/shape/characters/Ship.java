@@ -1,8 +1,8 @@
 package fr.upem.spacekaira.shape.characters;
 
-import fr.upem.spacekaira.shape.*;
-import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
+import fr.upem.spacekaira.shape.BrushFactory;
+import fr.upem.spacekaira.shape.ShapeWithDynamicContact;
 import fr.upem.spacekaira.shape.Viewport;
 import fr.upem.spacekaira.shape.characters.bomb.armed.AbstractArmedBomb;
 import fr.upem.spacekaira.shape.characters.bomb.armed.ArmedMegaBomb;
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * The player ship
  */
-public class Ship extends AbstractShape implements DynamicContact {
+public class Ship extends ShapeWithDynamicContact {
     private boolean shield;
     private final Fixture shieldFix;
     private final Fixture shipFix;
@@ -248,10 +248,5 @@ public class Ship extends AbstractShape implements DynamicContact {
     @Override
     public void computeTimeStepData() {
         Bullet.checkForDeadBullet(bullets);
-    }
-
-    @Override
-    public boolean isDead() {
-        return shipFix.getUserData() == Brush.DESTROY_BRUSH;
     }
 }

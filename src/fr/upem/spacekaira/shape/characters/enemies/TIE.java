@@ -132,9 +132,4 @@ public class TIE extends Enemy {
         if( leftCanon.sub(shipTie).length() <= 0.05f ) shootLeft();
         else if( rightCanon.sub(shipTie).length() <= 0.05f ) shootRight();
     }
-
-    @Override
-    public boolean isDead() {
-        return getBody().getUserData() == Brush.DESTROY_BRUSH;
-    }
 }

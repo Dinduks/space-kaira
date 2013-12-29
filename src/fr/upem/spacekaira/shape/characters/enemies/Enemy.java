@@ -1,9 +1,8 @@
 package fr.upem.spacekaira.shape.characters.enemies;
 
-import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
+import fr.upem.spacekaira.shape.ShapeWithDynamicContact;
 import fr.upem.spacekaira.shape.Viewport;
-import fr.upem.spacekaira.shape.DynamicContact;
 import fr.upem.spacekaira.shape.characters.Bullet;
 import fr.upem.spacekaira.shape.characters.Ship;
 import fr.upem.spacekaira.shape.characters.ShooterEnemy;
@@ -12,13 +11,15 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Fixture;
 
 import java.awt.*;
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * This abstract class represent a base to construct a Enemy
  */
-public abstract class Enemy extends AbstractShape implements ShooterEnemy, DynamicContact {
+public abstract class Enemy extends ShapeWithDynamicContact
+        implements ShooterEnemy {
     protected final Brush enemyColor;
     protected final Brush bulletColor;
     protected List<Bullet> bullets;
