@@ -3,9 +3,9 @@ package fr.upem.spacekaira.shape.characters;
 import fr.upem.spacekaira.shape.Viewport;
 
 /**
- * This interface represent the ability to a character to shoot, and make some stuff with his bullet
+ * This interface represents the ability of an enemy character to shoot
  */
-public interface ShooterEnemy {
+public interface Shooter {
     /**
      * Orders a shooter to shoot
      *
