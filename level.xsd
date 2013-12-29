@@ -40,6 +40,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="shipSpeed">
+        <xs:simpleType>
+          <xs:restriction base="xs:float">
+            <xs:minInclusive value="0"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
       <xs:element name="enemyWaves" minOccurs="0">
         <xs:complexType>
           <xs:sequence>

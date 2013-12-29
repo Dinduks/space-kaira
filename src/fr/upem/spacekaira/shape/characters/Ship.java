@@ -32,13 +32,16 @@ public class Ship extends ShapeWithDynamicContact {
     private List<Enemy> enemies;
     private boolean autoShield;
     private int bulletsFrequency;
+    private float shipSpeed;
 
     public Ship(World world, List<Enemy> enemies, Brush shipColor,
-                Brush bulletColor, boolean autoShield, int bulletsFrequency) {
+                Brush bulletColor, boolean autoShield, int bulletsFrequency,
+                float shipSpeed) {
         this.enemies = enemies;
         this.bulletColor = bulletColor;
         this.autoShield = autoShield;
         this.bulletsFrequency = bulletsFrequency;
+        this.shipSpeed = shipSpeed;
         this.shield = true;
 
         //Bullet list
@@ -95,7 +98,7 @@ public class Ship extends ShapeWithDynamicContact {
     }
 
     public void up() {
-        Vec2 f = getBody().getWorldVector(new Vec2(0.0f, 500.0f));
+        Vec2 f = getBody().getWorldVector(new Vec2(0.0f, shipSpeed));
         Vec2 p = getBody().getPosition();
         getBody().applyForce(f, p);
     }

@@ -79,7 +79,7 @@ public class Environment {
 
         ship = new Ship(world, enemies, BrushFactory.get(Color.BLUE),
                 BrushFactory.get(Color.GREEN), !config.isHardcore(),
-                config.getBulletsFrequency());
+                config.getBulletsFrequency(), config.getShipSpeed());
         planetGenerator = PlanetGenerator.create(config.getPlanetsDensity(),
                 viewport, width, height, ship, planetFactory);
 
