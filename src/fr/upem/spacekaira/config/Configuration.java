@@ -17,6 +17,7 @@ public final class Configuration {
     @XmlElement private int planetsDensity;
     @XmlElement private int bombsFrequency;
     @XmlElement private int megaBombsRate;
+    @XmlElement private int bulletsFrequency;
     @XmlElementWrapper(name = "enemyWaves")
     @XmlElement(name = "enemyWave")
     private List<EnemyWave> enemyWaves;
@@ -52,5 +53,9 @@ public final class Configuration {
 
     public boolean isHardcore() {
         return hardcore;
+    }
+
+    public int getBulletsFrequency() {
+        return bulletsFrequency;
     }
 }

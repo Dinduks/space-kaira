@@ -78,7 +78,8 @@ public class Environment {
         List<Enemy> enemies = new LinkedList<>();
 
         ship = new Ship(world, enemies, BrushFactory.get(Color.BLUE),
-                BrushFactory.get(Color.GREEN), !config.isHardcore());
+                BrushFactory.get(Color.GREEN), !config.isHardcore(),
+                config.getBulletsFrequency());
         planetGenerator = PlanetGenerator.create(config.getPlanetsDensity(),
                 viewport, width, height, ship, planetFactory);
 

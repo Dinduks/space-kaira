@@ -31,12 +31,14 @@ public class Ship extends ShapeWithDynamicContact {
     private AbstractArmedBomb armedBomb;
     private List<Enemy> enemies;
     private boolean autoShield;
+    private int bulletsFrequency;
 
     public Ship(World world, List<Enemy> enemies, Brush shipColor,
-                Brush bulletColor, boolean autoShield) {
+                Brush bulletColor, boolean autoShield, int bulletsFrequency) {
         this.enemies = enemies;
         this.bulletColor = bulletColor;
         this.autoShield = autoShield;
+        this.bulletsFrequency = bulletsFrequency;
         this.shield = true;
 
         //Bullet list
@@ -147,7 +149,9 @@ public class Ship extends ShapeWithDynamicContact {
 
     public void shoot() {
         if (shield) return;
-        if (System.currentTimeMillis() - lastShootTime < 20) return;
+        if (System.currentTimeMillis() - lastShootTime < bulletsFrequency) {
+            return;
+        }
 
         lastShootTime = System.currentTimeMillis();
         bullets.add(Bullet.createShipBullet(

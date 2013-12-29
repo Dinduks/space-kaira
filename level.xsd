@@ -33,6 +33,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="bulletsFrequency">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
       <xs:element name="enemyWaves" minOccurs="0">
         <xs:complexType>
           <xs:sequence>
