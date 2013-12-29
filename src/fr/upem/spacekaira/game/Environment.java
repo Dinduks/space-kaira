@@ -29,6 +29,7 @@ public class Environment {
     private Ship ship;
     private EnemyWavesGenerator wavesGenerator;
     private PlanetGenerator planetGenerator;
+    private Radar radar;
 
     private World world;
     private Viewport viewport;
@@ -83,6 +84,8 @@ public class Environment {
 
         wavesGenerator = new EnemyWavesGenerator(enemyFactory, viewport,
                 ship, config.getEnemyWaves(), enemies);
+
+        radar = new Radar(viewport,ship,enemies);
     }
 
     public Ship getShip() {
@@ -169,6 +172,7 @@ public class Environment {
             if (ship.hasBomb()) updateBombInfo(graphics);
             drawEnemiesInfo(graphics);
             drawTimeCounter(graphics, startTime, gameDuration);
+            radar.drawRadar(graphics);
         });
     }
 
