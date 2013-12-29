@@ -38,7 +38,7 @@ public class Bullet extends AbstractShape implements DynamicContact{
 
         body = world.createBody(bodyDef);
         velocity.normalize();
-        velocity = velocity.mul(60);
+        velocity = velocity.mul(1000);
         body.setLinearVelocity(velocity);
         body.setTransform(position,angle);
 
