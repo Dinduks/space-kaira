@@ -32,8 +32,8 @@ public class MegaBomb extends AbstractBomb {
      * @return         The created non-armed mega bomb
      */
     public static MegaBomb create(World world, Vec2 position) {
-        Color color = Color.YELLOW;
-        Brush brush = BrushFactory.get(color);
+        Color goldColor = new Color(255, 215, 0);
+        Brush brush = BrushFactory.get(goldColor);
         return new MegaBomb(world, position, brush);
     }
 }
