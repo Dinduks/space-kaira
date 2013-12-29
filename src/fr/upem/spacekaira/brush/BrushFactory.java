@@ -14,7 +14,8 @@ public final class BrushFactory {
     private static Map<Integer, Brush> brushMap = new HashMap<>();
     private static Random random = new Random();
     private static Color[] colors = new Color[] {
-            Color.BLUE, Color.CYAN, Color.YELLOW, Color.RED, Color.WHITE };
+            Color.BLUE, Color.CYAN, Color.YELLOW, Color.RED, Color.WHITE,
+            Color.ORANGE, Color.MAGENTA, Color.GREEN, Color.PINK, Color.RED };
 
     private BrushFactory() {};
 
