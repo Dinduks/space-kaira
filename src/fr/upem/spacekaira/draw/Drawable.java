@@ -1,4 +1,6 @@
-package fr.upem.spacekaira.shape;
+package fr.upem.spacekaira.draw;
+
+import fr.upem.spacekaira.game.Viewport;
 
 import java.awt.*;
 
@@ -7,5 +9,5 @@ import java.awt.*;
  */
 @FunctionalInterface
 public interface Drawable {
-    public void draw(Graphics2D graphics, Viewport viewport);
+    void draw(Graphics2D graphics, Viewport viewport);
 }

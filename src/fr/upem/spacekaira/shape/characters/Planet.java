@@ -1,7 +1,7 @@
 package fr.upem.spacekaira.shape.characters;
 
 import fr.upem.spacekaira.shape.AbstractShape;
-import fr.upem.spacekaira.shape.Brush;
+import fr.upem.spacekaira.brush.Brush;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.FixtureDef;
@@ -15,7 +15,7 @@ public class Planet extends AbstractShape {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(x,y);
 
-        body = world.createBody(bodyDef);
+        setBody(world.createBody(bodyDef));
 
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(radius);
@@ -30,8 +30,7 @@ public class Planet extends AbstractShape {
                                 | FixtureType.SHIELD
                                 | FixtureType.BULLET_ENEMY;
 
-        body.createFixture(planet);
-
-        body.setUserData(this);
+        getBody().createFixture(planet);
+        getBody().setUserData(this);
     }
 }

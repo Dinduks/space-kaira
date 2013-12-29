@@ -1,6 +1,6 @@
 package fr.upem.spacekaira.shape.characters.enemies;
 
-import fr.upem.spacekaira.shape.Viewport;
+import fr.upem.spacekaira.game.Viewport;
 import fr.upem.spacekaira.shape.characters.Ship;
 import org.jbox2d.common.Rot;
 import org.jbox2d.common.Vec2;
@@ -49,8 +49,9 @@ public class EnemyWavesGenerator {
      * @return a list who contains the current enemy
      */
     public List<Enemy> getEnemies() {
-        if (wavesQueue.size() != 0 && currentWave.size() == 0)
+        if (wavesQueue.size() != 0 && currentWave.size() == 0) {
             generateNextWave();
+        }
         return currentWave;
     }
 

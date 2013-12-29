@@ -1,5 +1,7 @@
 package fr.upem.spacekaira.shape;
 
+import fr.upem.spacekaira.draw.Drawable;
+import fr.upem.spacekaira.game.Viewport;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.Fixture;
@@ -10,7 +12,7 @@ import java.awt.*;
  * Represent a base to construct a figure an contains drawing method
  */
 public abstract class AbstractShape implements Drawable {
-    protected Body body;
+    private Body body;
 
     @Override
     public void draw(Graphics2D graphics, Viewport viewport) {
@@ -46,6 +48,14 @@ public abstract class AbstractShape implements Drawable {
      */
     public Vec2 getPosition() {
         return body.getWorldCenter();
+    }
+
+    public Body getBody() {
+        return body;
+    }
+
+    public void setBody(Body body) {
+        this.body = body;
     }
 }
 

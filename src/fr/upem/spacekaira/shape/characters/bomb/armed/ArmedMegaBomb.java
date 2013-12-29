@@ -1,7 +1,7 @@
 package fr.upem.spacekaira.shape.characters.bomb.armed;
 
-import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.BrushFactory;
+import fr.upem.spacekaira.brush.Brush;
+import fr.upem.spacekaira.brush.BrushFactory;
 import fr.upem.spacekaira.shape.characters.enemies.Enemy;
 import fr.upem.spacekaira.util.Util;
 import org.jbox2d.common.Vec2;
@@ -11,8 +11,6 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static fr.upem.spacekaira.shape.characters.bomb.BombType.MEGA_BOMB;
 
 /**
  * Represents a mega bomb that has been dropped
@@ -31,7 +29,7 @@ public class ArmedMegaBomb extends AbstractArmedBomb {
      */
     public ArmedMegaBomb(World world, Vec2 position, Brush initialBrush,
                          Brush brushAfterExploding) {
-        super(world, position, initialBrush, brushAfterExploding, MEGA_BOMB);
+        super(world, position, initialBrush, brushAfterExploding);
     }
 
     /**
@@ -68,7 +66,7 @@ public class ArmedMegaBomb extends AbstractArmedBomb {
                     continue;
                 }
 
-                Vec2 dir = body.getWorldCenter().sub(enemy.getPosition());
+                Vec2 dir = getBody().getWorldCenter().sub(enemy.getPosition());
                 dir.normalize();
                 dir.mulLocal(10000);
                 enemy.moveToward(dir);

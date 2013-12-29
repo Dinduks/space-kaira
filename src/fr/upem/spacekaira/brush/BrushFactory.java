@@ -1,4 +1,4 @@
-package fr.upem.spacekaira.shape;
+package fr.upem.spacekaira.brush;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -10,7 +10,7 @@ import java.util.Random;
  *
  * It caches the brushes in order to create them only once
  */
-public class BrushFactory {
+public final class BrushFactory {
     private static Map<Integer, Brush> brushMap = new HashMap<>();
     private static Random random = new Random();
     private static Color[] colors = new Color[] {
@@ -24,8 +24,10 @@ public class BrushFactory {
     public static Brush get(Color color, boolean isOpaque) {
         Brush res;
         int hashCode = Brush.hashCode(color, isOpaque);
-        if((res = brushMap.get(hashCode)) == null) {
-            brushMap.put(hashCode, res = new Brush(color, isOpaque));
+        res = brushMap.get(hashCode);
+        if(res == null) {
+            res = new Brush(color, isOpaque);
+            brushMap.put(hashCode, res);
         }
 
         return res;

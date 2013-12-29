@@ -1,10 +1,9 @@
 package fr.upem.spacekaira.shape.characters;
 
 
-import fr.upem.spacekaira.shape.AbstractShape;
-import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.Viewport;
-import fr.upem.spacekaira.shape.DynamicContact;
+import fr.upem.spacekaira.brush.Brush;
+import fr.upem.spacekaira.game.Viewport;
+import fr.upem.spacekaira.shape.*;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
@@ -16,9 +15,9 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Represent a bullet who are a little segment
+ * Represent a bullet which is a little segment
  */
-public class Bullet extends AbstractShape implements DynamicContact{
+public class Bullet extends ShapeWithDynamicContact {
     /**
      * Builds a new bullet with a fixed velocity
      *
@@ -36,11 +35,11 @@ public class Bullet extends AbstractShape implements DynamicContact{
         bodyDef.position.set(position);
         bodyDef.bullet = true;
 
-        body = world.createBody(bodyDef);
-        velocity.normalize();
-        velocity = velocity.mul(1000);
-        body.setLinearVelocity(velocity);
-        body.setTransform(position,angle);
+        setBody(world.createBody(bodyDef));
+        Vec2 newVelocity = velocity.clone();
+        newVelocity.normalize();
+        getBody().setLinearVelocity(velocity.mul(1000));
+        getBody().setTransform(position, angle);
 
         PolygonShape polygonShape = new PolygonShape();
         Vec2[] tab = {new Vec2(0,-0.5f),new Vec2(0.1f,-0.5f),new Vec2(0.1f,0.5f),new Vec2(0,0.5f)};
@@ -56,8 +55,8 @@ public class Bullet extends AbstractShape implements DynamicContact{
                 FixtureType.SHIP |
                 FixtureType.SHIELD;
 
-        body.createFixture(bullet);
-        body.setUserData(this);
+        getBody().createFixture(bullet);
+        getBody().setUserData(this);
     }
 
     public static Bullet createShipBullet(World world, Vec2 position,
@@ -75,7 +74,7 @@ public class Bullet extends AbstractShape implements DynamicContact{
     }
 
     boolean isInScreen(Viewport viewport) {
-        return  viewport.isInScreen(body.getPosition());
+        return  viewport.isInScreen(getBody().getPosition());
     }
 
     public static void checkForBulletsOutScreen(Viewport viewport,
@@ -105,10 +104,5 @@ public class Bullet extends AbstractShape implements DynamicContact{
 
     @Override
     public void computeTimeStepData() {
-    }
-
-    @Override
-    public boolean isDead() {
-        return body.getFixtureList().getUserData() == Brush.DESTROY_BRUSH;
     }
 }

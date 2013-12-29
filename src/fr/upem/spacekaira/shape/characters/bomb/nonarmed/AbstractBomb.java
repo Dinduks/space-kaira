@@ -1,8 +1,7 @@
 package fr.upem.spacekaira.shape.characters.bomb.nonarmed;
 
-import fr.upem.spacekaira.shape.AbstractShape;
-import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.DynamicContact;
+import fr.upem.spacekaira.brush.Brush;
+import fr.upem.spacekaira.shape.ShapeWithDynamicContact;
 import fr.upem.spacekaira.shape.characters.FixtureType;
 import fr.upem.spacekaira.shape.characters.bomb.BombType;
 import org.jbox2d.collision.shapes.CircleShape;
@@ -15,7 +14,7 @@ import org.jbox2d.dynamics.World;
 /**
  * Represents a bomb
  */
-public abstract class AbstractBomb extends AbstractShape implements DynamicContact {
+public abstract class AbstractBomb extends ShapeWithDynamicContact {
     /**
      * Builds a new non-armed bomb
      *
@@ -30,7 +29,7 @@ public abstract class AbstractBomb extends AbstractShape implements DynamicConta
         bodyDef.type = BodyType.DYNAMIC;
         bodyDef.position.set(position);
 
-        body = world.createBody(bodyDef);
+        setBody(world.createBody(bodyDef));
 
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(0.5f);
@@ -43,16 +42,11 @@ public abstract class AbstractBomb extends AbstractShape implements DynamicConta
 
         bombFixtureDef.filter.maskBits = FixtureType.SHIP;
 
-        body.createFixture(bombFixtureDef);
-        body.setUserData(this);
+        getBody().createFixture(bombFixtureDef);
+        getBody().setUserData(this);
     }
 
     @Override
     public void computeTimeStepData() {
-    }
-
-    @Override
-    public boolean isDead() {
-        return body.getFixtureList().getUserData() == Brush.DESTROY_BRUSH;
     }
 }

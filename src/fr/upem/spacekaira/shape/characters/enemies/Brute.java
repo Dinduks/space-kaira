@@ -1,7 +1,7 @@
 package fr.upem.spacekaira.shape.characters.enemies;
 
 
-import fr.upem.spacekaira.shape.Brush;
+import fr.upem.spacekaira.brush.Brush;
 import fr.upem.spacekaira.shape.characters.FixtureType;
 import fr.upem.spacekaira.shape.characters.Ship;
 import org.jbox2d.collision.shapes.CircleShape;
@@ -22,8 +22,8 @@ public class Brute extends Enemy {
         bodyDef.linearDamping = 1.0f;
         bodyDef.position.set(x,y);
 
-        body = world.createBody(bodyDef);
-        body.setUserData(this);
+        setBody(world.createBody(bodyDef));
+        getBody().setUserData(this);
 
         FixtureDef fd = new FixtureDef();
         fd.density = 1.0f;
@@ -40,22 +40,17 @@ public class Brute extends Enemy {
 
         fd.shape = circleShape;
 
-        body.createFixture(fd);
+        getBody().createFixture(fd);
     }
 
     @Override
     public void move(Ship ship) {
-        Vec2 f = ship.getPosition().sub(body.getPosition()).mul(100);
-        body.setLinearVelocity(f);
-    }
-
-    @Override
-    public boolean isDead() {
-        return body.getUserData() == Brush.DESTROY_BRUSH;
+        Vec2 f = ship.getPosition().sub(getBody().getPosition()).mul(100);
+        getBody().setLinearVelocity(f);
     }
 
     @Override
     public void shoot(Ship ship) {
-        //No shoot function for this enemy
+        // This enemy doesn't shoot
     }
 }

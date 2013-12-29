@@ -1,24 +1,25 @@
 package fr.upem.spacekaira.shape.characters.enemies;
 
-import fr.upem.spacekaira.shape.AbstractShape;
-import fr.upem.spacekaira.shape.Brush;
-import fr.upem.spacekaira.shape.Viewport;
-import fr.upem.spacekaira.shape.DynamicContact;
+import fr.upem.spacekaira.brush.Brush;
+import fr.upem.spacekaira.shape.ShapeWithDynamicContact;
+import fr.upem.spacekaira.game.Viewport;
 import fr.upem.spacekaira.shape.characters.Bullet;
 import fr.upem.spacekaira.shape.characters.Ship;
-import fr.upem.spacekaira.shape.characters.ShooterEnemy;
+import fr.upem.spacekaira.shape.characters.Shooter;
 import org.jbox2d.common.Rot;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Fixture;
 
 import java.awt.*;
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * This abstract class represent a base to construct a Enemy
  */
-public abstract class Enemy extends AbstractShape implements ShooterEnemy, DynamicContact {
+public abstract class Enemy extends ShapeWithDynamicContact
+        implements Shooter {
     protected final Brush enemyColor;
     protected final Brush bulletColor;
     protected List<Bullet> bullets;
@@ -42,9 +43,9 @@ public abstract class Enemy extends AbstractShape implements ShooterEnemy, Dynam
 
     @Override
     public void computeTimeStepData() {
-        for (Fixture fix = body.getFixtureList(); fix != null; fix = fix.getNext()) {
+        for (Fixture fix = getBody().getFixtureList(); fix != null; fix = fix.getNext()) {
             if (fix.getUserData() == Brush.DESTROY_BRUSH) {
-                body.setUserData(Brush.DESTROY_BRUSH);
+                getBody().setUserData(Brush.DESTROY_BRUSH);
             }
         }
 
@@ -59,13 +60,13 @@ public abstract class Enemy extends AbstractShape implements ShooterEnemy, Dynam
     }
 
     protected void addBulletToShootLocal(Vec2 position, Vec2 velocity, float angle) {
-        addBulletToShootWorld(body.getWorldPoint(position),
-                body.getWorldVector(velocity),
+        addBulletToShootWorld(getBody().getWorldPoint(position),
+                getBody().getWorldVector(velocity),
                 angle);
     }
 
     protected void addBulletToShootWorld(Vec2 position, Vec2 velocity, float angle) {
-        bullets.add(Bullet.createEnemyBullet(body.getWorld(),
+        bullets.add(Bullet.createEnemyBullet(getBody().getWorld(),
             position,
             velocity,
             angle,
@@ -137,7 +138,7 @@ public abstract class Enemy extends AbstractShape implements ShooterEnemy, Dynam
 
     public void moveToward(Vec2 position) {
         Vec2 f = position;
-        Vec2 p = body.getWorldCenter();
-        body.applyForce(f, p);
+        Vec2 p = getBody().getWorldCenter();
+        getBody().applyForce(f, p);
     }
 }

@@ -4,13 +4,15 @@ package fr.upem.spacekaira.shape;
     This interface should be implemented by all figure who should contact with other
  */
 public interface DynamicContact {
-    /*
-        Compute pre-solve collisions
+    /**
+     * Computes pre-solve collisions
      */
-    public void computeTimeStepData();
+    void computeTimeStepData();
 
-    /*
-        return true if the character should be destroy
+    /**
+     * Returns true if the character should be destroyed
+     *
+     * @return true if the character should be destroyed, false otherwise
      */
-    public boolean isDead();
+    boolean isDead();
 }
