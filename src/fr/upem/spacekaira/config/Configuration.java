@@ -16,7 +16,7 @@ public final class Configuration {
     @XmlElement private int gameDuration;
     @XmlElement private int planetsDensity;
     @XmlElement private int bombsFrequency;
-    @XmlElement private int megaBombsRatio;
+    @XmlElement private int megaBombsRate;
     @XmlElementWrapper(name = "enemyWaves")
     @XmlElement(name = "enemyWave")
     private List<EnemyWave> enemyWaves;
@@ -38,8 +38,8 @@ public final class Configuration {
         return bombsFrequency;
     }
 
-    public int getMegaBombsRatio() {
-        return megaBombsRatio;
+    public int getMegaBombsRate() {
+        return megaBombsRate;
     }
 
     public List<EnemyWave> getEnemyWaves() {

@@ -34,7 +34,7 @@ public class Map {
     private Viewport viewport;
 
     private final int bombsFrequency;
-    private final int megaBombsRatio;
+    private final int megaBombsRate;
 
     private int hudXPosition;
     private int hudYPosition;
@@ -56,7 +56,7 @@ public class Map {
                final int width, Configuration config) {
         this.world = world;
         this.bombsFrequency = config.getBombsFrequency();
-        this.megaBombsRatio = config.getMegaBombsRatio();
+        this.megaBombsRate = config.getMegaBombsRate();
         this.height = height;
         this.width = width;
         this.viewport = viewport;
@@ -111,7 +111,7 @@ public class Map {
         lastTimeWasABombSpawned = currentTime;
         Vec2 position = viewport.getRandomPositionForBomb(ship);
         Random random = new Random();
-        if (random.nextInt(100) >= megaBombsRatio) {
+        if (random.nextInt(100) >= megaBombsRate) {
             bombs.add(NormalBomb.create(world, position));
         } else {
             bombs.add(MegaBomb.create(world, position));
