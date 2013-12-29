@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Represent a bullet who are a little segment
  */
-public class Bullet extends AbstractShape implements DynamicContact{
+public class Bullet extends AbstractShape implements DynamicContact {
     /**
      * Builds a new bullet with a fixed velocity
      *
@@ -37,10 +37,10 @@ public class Bullet extends AbstractShape implements DynamicContact{
         bodyDef.bullet = true;
 
         body = world.createBody(bodyDef);
-        velocity.normalize();
-        velocity = velocity.mul(1000);
-        body.setLinearVelocity(velocity);
-        body.setTransform(position,angle);
+        Vec2 newVelocity = velocity.clone();
+        newVelocity.normalize();
+        body.setLinearVelocity(velocity.mul(1000));
+        body.setTransform(position, angle);
 
         PolygonShape polygonShape = new PolygonShape();
         Vec2[] tab = {new Vec2(0,-0.5f),new Vec2(0.1f,-0.5f),new Vec2(0.1f,0.5f),new Vec2(0,0.5f)};

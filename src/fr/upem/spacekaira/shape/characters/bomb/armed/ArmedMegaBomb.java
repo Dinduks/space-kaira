@@ -12,8 +12,6 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static fr.upem.spacekaira.shape.characters.bomb.BombType.MEGA_BOMB;
-
 /**
  * Represents a mega bomb that has been dropped
  * The bomb disappears 10 seconds after it has been thrown
@@ -31,7 +29,7 @@ public class ArmedMegaBomb extends AbstractArmedBomb {
      */
     public ArmedMegaBomb(World world, Vec2 position, Brush initialBrush,
                          Brush brushAfterExploding) {
-        super(world, position, initialBrush, brushAfterExploding, MEGA_BOMB);
+        super(world, position, initialBrush, brushAfterExploding);
     }
 
     /**

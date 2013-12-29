@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * The player ship
  */
-public class Ship extends AbstractShape implements DynamicContact{
+public class Ship extends AbstractShape implements DynamicContact {
     private boolean shield;
     private final Fixture shieldFix;
     private final Fixture shipFix;

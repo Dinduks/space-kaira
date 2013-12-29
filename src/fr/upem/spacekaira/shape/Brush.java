@@ -1,12 +1,9 @@
 package fr.upem.spacekaira.shape;
 
-import org.jbox2d.common.Vec2;
-
 import java.awt.*;
-import java.util.Random;
 
 /**
- * Contains data to draw a shape
+ * Holds information about a color and its opacity
  */
 public class Brush {
     private final Color color;

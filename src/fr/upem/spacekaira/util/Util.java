@@ -6,17 +6,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Util {
+public final class Util {
+    private Util() {}
+
     /**
-     * @param startTime Start time in milliseconds
+     * @param startTime    Start time in milliseconds
      * @param gameDuration Game duration in seconds
-     * @return Example: for 1m5s, return 1:05
+     * @return             Time left — Example: for 1m5s, return 1:05
      */
     public static String getTimeLeftAsString(long startTime, int gameDuration) {
         long currentTime = (long) Math.floor(System.currentTimeMillis() / 1000);
-        startTime = (long) Math.floor(startTime / 1000);
+        Long startTimeInSecs = (long) Math.floor(startTime / 1000);
 
-        int timeLeft = (int) (gameDuration - (currentTime - startTime));
+        int timeLeft = (int) (gameDuration - (currentTime - startTimeInSecs));
         int minutes = (timeLeft / 60);
         int seconds = timeLeft % 60;
 
@@ -61,17 +63,21 @@ public class Util {
          }
 
          return new Iterator<E> () {
-            int current=0;
+             private int current=0;
              public boolean hasNext() {
-                 while ( current < iterators.size() && !iterators.get(current).hasNext() )
+                 while (current < iterators.size() &&
+                         !iterators.get(current).hasNext()) {
                      current++;
+                 }
 
                  return current < iterators.size();
              }
 
              public E next() {
-                 while ( current < iterators.size() && !iterators.get(current).hasNext() )
+                 while (current < iterators.size() &&
+                         !iterators.get(current).hasNext()) {
                      current++;
+                 }
 
                  return iterators.get(current).next();
              }

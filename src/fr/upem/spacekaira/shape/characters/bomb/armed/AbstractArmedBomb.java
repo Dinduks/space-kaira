@@ -3,25 +3,22 @@ package fr.upem.spacekaira.shape.characters.bomb.armed;
 import fr.upem.spacekaira.shape.AbstractShape;
 import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.DynamicContact;
-import fr.upem.spacekaira.shape.characters.enemies.Enemy;
 import fr.upem.spacekaira.shape.characters.FixtureType;
-import fr.upem.spacekaira.shape.characters.bomb.BombType;
+import fr.upem.spacekaira.shape.characters.enemies.Enemy;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
 
 import java.util.List;
 
-abstract public class AbstractArmedBomb
+public abstract class AbstractArmedBomb
         extends AbstractShape implements DynamicContact {
-    protected FixtureDef armedBombFixtureDef = new FixtureDef();
-    protected Brush brushAfterExploding;
-    final private Vec2 position;
-    private BombType bombType;
-    protected CircleShape circleShape = new CircleShape();
+    private FixtureDef armedBombFixtureDef;
+    private Brush brushAfterExploding;
+    private CircleShape circleShape = new CircleShape();
     private final long dropTime = System.currentTimeMillis();
-    protected Fixture fixture;
-    protected float radius = 0.5f;
+    private Fixture fixture;
+    private float radius = 0.5f;
 
     /**
      * Build A new armed bomb
@@ -32,9 +29,7 @@ abstract public class AbstractArmedBomb
      * @param brushAfterExploding
      */
     public AbstractArmedBomb(World world, Vec2 position, Brush initialBrush,
-                     Brush brushAfterExploding, BombType bombType) {
-        this.position = position;
-        this.bombType = bombType;
+                             Brush brushAfterExploding) {
         this.brushAfterExploding = brushAfterExploding;
 
         BodyDef bodyDef = new BodyDef();
@@ -46,6 +41,7 @@ abstract public class AbstractArmedBomb
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(radius);
 
+        armedBombFixtureDef = new FixtureDef();
         armedBombFixtureDef.shape = circleShape;
         armedBombFixtureDef.density = 1.0f;
         armedBombFixtureDef.userData = initialBrush;
@@ -60,7 +56,7 @@ abstract public class AbstractArmedBomb
      * @return true if done exploding, false otherwise
      * @param enemies
      */
-    abstract public boolean explode(List<Enemy> enemies);
+    public abstract boolean explode(List<Enemy> enemies);
 
     @Override
     public void computeTimeStepData() {
@@ -81,5 +77,21 @@ abstract public class AbstractArmedBomb
 
     public void setRadius(float radius) {
         this.radius = radius;
+    }
+
+    public FixtureDef getArmedBombFixtureDef() {
+        return armedBombFixtureDef;
+    }
+
+    public Brush getBrushAfterExploding() {
+        return brushAfterExploding;
+    }
+
+    public CircleShape getCircleShape() {
+        return circleShape;
+    }
+
+    public Fixture getFixture() {
+        return fixture;
     }
 }

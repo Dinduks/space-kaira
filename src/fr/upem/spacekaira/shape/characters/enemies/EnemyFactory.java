@@ -2,20 +2,16 @@ package fr.upem.spacekaira.shape.characters.enemies;
 
 import fr.upem.spacekaira.shape.Brush;
 import fr.upem.spacekaira.shape.BrushFactory;
-import fr.upem.spacekaira.shape.characters.enemies.*;
 import org.jbox2d.dynamics.World;
 
 import java.awt.*;
 import java.util.Objects;
-import java.util.Random;
 
 public class EnemyFactory {
     private World world;
-    private Random rand;
 
     public EnemyFactory(World world) {
         this.world = world;
-        this.rand = new Random();
     }
 
     public Enemy create(float x, float y, EnemyType type) {

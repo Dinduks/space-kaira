@@ -12,7 +12,7 @@ import java.util.List;
  * Represents the configuration of the game
  */
 @XmlRootElement
-public class Configuration {
+public final class Configuration {
     @XmlElement private int gameDuration;
     @XmlElement private int planetsDensity;
     @XmlElement private int bombsFrequency;

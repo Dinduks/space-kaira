@@ -10,8 +10,6 @@ import org.jbox2d.dynamics.World;
 import java.awt.*;
 import java.util.List;
 
-import static fr.upem.spacekaira.shape.characters.bomb.BombType.NORMAL_BOMB;
-
 /**
  * Represents a bomb that has been dropped
  */
@@ -26,7 +24,7 @@ public class ArmedNormalBomb extends AbstractArmedBomb {
      */
     public ArmedNormalBomb(World world, Vec2 position, Brush initialBrush,
                            Brush brushAfterExploding) {
-        super(world, position, initialBrush, brushAfterExploding, NORMAL_BOMB);
+        super(world, position, initialBrush, brushAfterExploding);
     }
 
     /**
@@ -46,13 +44,15 @@ public class ArmedNormalBomb extends AbstractArmedBomb {
 
     @Override
     public boolean explode(List<Enemy> enemies) {
-        if (radius >= 10.0f) return false;
-        circleShape.setRadius((radius = radius + 0.5f));
-        armedBombFixtureDef.shape = circleShape;
-        armedBombFixtureDef.userData = brushAfterExploding;
-        armedBombFixtureDef.filter.maskBits = FixtureType.ENEMY;
-        body.destroyFixture(fixture);
-        body.createFixture(armedBombFixtureDef);
+        if (getRadius() >= 10.0f) return false;
+
+        setRadius(getRadius() + 0.5f);
+        getCircleShape().setRadius(getRadius());
+        getArmedBombFixtureDef().shape = getCircleShape();
+        getArmedBombFixtureDef().userData = getBrushAfterExploding();
+        getArmedBombFixtureDef().filter.maskBits = FixtureType.ENEMY;
+        body.destroyFixture(getFixture());
+        body.createFixture(getArmedBombFixtureDef());
 
         return true;
     }

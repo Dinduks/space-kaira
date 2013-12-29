@@ -47,5 +47,9 @@ public abstract class AbstractShape implements Drawable {
     public Vec2 getPosition() {
         return body.getWorldCenter();
     }
+
+    public Body getBody() {
+        return body;
+    }
 }
 
