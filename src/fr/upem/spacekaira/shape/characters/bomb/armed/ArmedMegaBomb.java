@@ -25,11 +25,9 @@ public class ArmedMegaBomb extends AbstractArmedBomb {
      * @param world               The current world
      * @param position            The position of the armed bomb
      * @param initialBrush        Its brush when its dropped
-     * @param brushAfterExploding Its brush when it starts exploding
      */
-    public ArmedMegaBomb(World world, Vec2 position, Brush initialBrush,
-                         Brush brushAfterExploding) {
-        super(world, position, initialBrush, brushAfterExploding);
+    public ArmedMegaBomb(World world, Vec2 position, Brush initialBrush) {
+        super(world, position, initialBrush);
     }
 
     /**
@@ -40,11 +38,10 @@ public class ArmedMegaBomb extends AbstractArmedBomb {
      * @return         The created mega bomb
      */
     public static ArmedMegaBomb create(World world, Vec2 position) {
-        Brush initialBrush = BrushFactory.get(Color.RED);
-        Brush brushAfterExploding = BrushFactory.get(Color.RED);
+        Color darkGoldColor = new Color(210, 105, 30);
+        Brush initialBrush = BrushFactory.get(darkGoldColor);
 
-        return new ArmedMegaBomb(world, position, initialBrush,
-                brushAfterExploding);
+        return new ArmedMegaBomb(world, position, initialBrush);
     }
 
     @Override

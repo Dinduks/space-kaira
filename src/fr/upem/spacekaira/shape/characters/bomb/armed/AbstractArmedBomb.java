@@ -24,12 +24,8 @@ public abstract class AbstractArmedBomb extends ShapeWithDynamicContact {
      * @param world The current world
      * @param position The position of the armed bomb
      * @param initialBrush
-     * @param brushAfterExploding
      */
-    public AbstractArmedBomb(World world, Vec2 position, Brush initialBrush,
-                             Brush brushAfterExploding) {
-        this.brushAfterExploding = brushAfterExploding;
-
+    public AbstractArmedBomb(World world, Vec2 position, Brush initialBrush) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;
         bodyDef.position.set(position);
