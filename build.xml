@@ -51,7 +51,7 @@
     <javadoc destdir="${docDir}" nodeprecatedlist="yes">
       <classpath refid="master-classpath"/>
       <fileset dir="${srcDir}" defaultexcludes="yes">
-        <include name="**"/>
+        <include name="**/*.java"/>
         <exclude name="**/Main.java"/>
       </fileset>
     </javadoc>
