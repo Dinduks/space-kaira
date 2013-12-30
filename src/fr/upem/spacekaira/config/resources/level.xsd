@@ -4,6 +4,20 @@
 
   <xs:complexType name="configuration">
     <xs:sequence>
+      <xs:element name="screenWidth">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="screenHeight">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
       <xs:element name="gameDuration">
         <xs:simpleType>
           <xs:restriction base="xs:int">

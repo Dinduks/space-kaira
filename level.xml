@@ -1,4 +1,6 @@
 <configuration>
+  <screenWidth>1024</screenWidth>
+  <screenHeight>768</screenHeight>
   <gameDuration>120</gameDuration>
   <planetsDensity>1</planetsDensity> <!-- How many planets per screen?-->
   <bombsFrequency>30</bombsFrequency> <!-- How many bombs per minute?-->

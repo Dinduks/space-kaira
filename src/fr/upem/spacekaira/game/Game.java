@@ -26,9 +26,9 @@ public class Game {
     private HashSet<KeyboardKey> keys = new HashSet<>();
     private long lastTimeWasShieldToggled = 0;
 
-    public Game(int width, int height, Configuration config) {
-        this.width = width;
-        this.height = height;
+    public Game(Configuration config) {
+        this.width = config.getScreenWidth();
+        this.height = config.getScreenHeight();
         this.config = config;
     }
 
@@ -95,7 +95,7 @@ public class Game {
             if (event.getKey() == KeyboardKey.Q) {
                 System.exit(0);
             } else if (event.getKey() == KeyboardKey.R) {
-                Game game = new Game(width, height, config);
+                Game game = new Game(config);
                 Main.startTheGame(game);
             }
         }

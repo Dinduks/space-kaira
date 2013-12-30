@@ -13,6 +13,8 @@ import java.util.List;
  */
 @XmlRootElement
 public final class Configuration {
+    @XmlElement private int screenWidth;
+    @XmlElement private int screenHeight;
     @XmlElement private int gameDuration;
     @XmlElement private int planetsDensity;
     @XmlElement private int bombsFrequency;
@@ -62,5 +64,13 @@ public final class Configuration {
 
     public float getShipSpeed() {
         return shipSpeed;
+    }
+
+    public int getScreenWidth() {
+        return screenWidth;
+    }
+
+    public int getScreenHeight() {
+        return screenHeight;
     }
 }

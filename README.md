@@ -60,6 +60,8 @@ Example of a level description file:
 
 ```xml
 <configuration>
+  <screenWidth>1024</screenWidth>
+  <screenHeight>768</screenHeight>
   <gameDuration>120</gameDuration>
   <planetsDensity>1</planetsDensity>
   <bombsFrequency>30</bombsFrequency>
@@ -79,6 +81,7 @@ Example of a level description file:
       <enemy>BRUTE</enemy>
       <enemy>SQUADRON</enemy>
       <enemy>ROTATINGTRIANGLE</enemy>
+      <enemy>BRUTE</enemy>
     </enemyWave>
   </enemyWaves>
 </configuration>
