@@ -134,7 +134,8 @@ public class PlanetGenerator {
 
     /**
      * Returns a set of planet who should be in the viewport
-     * @warning should be called at each time step
+     * Warning: should be called at each time step
+     *
      * @return A set of planets
      */
     public Set<Planet> getPlanetSet() {
