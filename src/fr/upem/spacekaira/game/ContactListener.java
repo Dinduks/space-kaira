@@ -17,16 +17,18 @@ public class ContactListener implements org.jbox2d.callbacks.ContactListener {
     @FunctionalInterface
     interface ContactAction extends BiConsumer<Fixture, Fixture> {}
 
-    // TODO: Rename this
+    // Double sides destroy
     private static ContactAction dSD =  (f1,f2) -> {
         f1.setUserData(Brush.DESTROY_BRUSH);
         f2.setUserData(Brush.DESTROY_BRUSH);
     };
 
+    // Left side destroy
     private static ContactAction lSD = (f1,f2) -> {
         f1.setUserData(Brush.DESTROY_BRUSH);
     };
 
+    // Right side destroy
     private static ContactAction rSD = (f1,f2) -> {
         f1.setUserData(Brush.DESTROY_BRUSH);
     };
