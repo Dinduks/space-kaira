@@ -26,7 +26,8 @@ public final class ConfigurationLoader {
 
             SchemaFactory sf = SchemaFactory.newInstance(
                     XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = sf.newSchema(new File("level.xsd"));
+            Schema schema = sf.newSchema(ConfigurationLoader.class.getResource(
+                    "resources/level.xsd"));
 
             Unmarshaller unmarshaller = context.createUnmarshaller();
             unmarshaller.setSchema(schema);

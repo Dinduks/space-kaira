@@ -34,6 +34,7 @@
         <attribute name="Main-Class" value="fr.upem.spacekaira.Main"/>
         <attribute name="Class-Path" value="${manifest-classpath}"/>
       </manifest>
+      <fileset dir="src" includes="fr/upem/spacekaira/config/resources/level.xsd" />
     </jar>
   </target>
 
