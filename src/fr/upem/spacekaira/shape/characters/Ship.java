@@ -26,8 +26,8 @@ public class Ship extends ShapeWithDynamicContact {
     private final Fixture shipFix;
     private List<Bullet> bullets;
     private final Brush bulletColor;
-    private boolean hasBomb;
-    private boolean megaBomb;
+    private boolean hasNormalBomb;
+    private boolean hasMegaBomb;
     private AbstractArmedBomb armedBomb;
     private List<Enemy> enemies;
     private boolean autoShield;
@@ -55,7 +55,7 @@ public class Ship extends ShapeWithDynamicContact {
         setBody(world.createBody(bodyDef));
 
         //Ship
-        FixtureDef ship = null;
+        FixtureDef ship;
         {
             PolygonShape polygonShape = new PolygonShape();
             Vec2[] tab = {new Vec2(0, 0),
@@ -77,7 +77,7 @@ public class Ship extends ShapeWithDynamicContact {
         }
 
         //Shield
-        FixtureDef shield = null;
+        FixtureDef shield;
         {
             CircleShape circleShape = new CircleShape();
             circleShape.setRadius(2);
@@ -132,13 +132,14 @@ public class Ship extends ShapeWithDynamicContact {
     }
 
     public void dropBomb() {
-        if (!hasBomb) return;
+        if (!hasBomb()) return;
 
-        hasBomb = false;
-        if (!megaBomb) {
+        if (hasNormalBomb) {
+            hasNormalBomb = false;
             armedBomb = ArmedNormalBomb.create(getBody().getWorld(),
                     getPosition());
         } else {
+            hasMegaBomb = false;
             armedBomb = ArmedMegaBomb.create(getBody().getWorld(),
                     getPosition());
         }
@@ -201,35 +202,26 @@ public class Ship extends ShapeWithDynamicContact {
 
     private void setShield(boolean shield) {
         if (!autoShield) {
-            if (shield)
-                shieldFix.setFilterData(shieldFilterOn);
-            else
-                shieldFix.setFilterData(shieldFilterOff);
+            if (shield) shieldFix.setFilterData(shieldFilterOn);
+            else shieldFix.setFilterData(shieldFilterOff);
         }
         this.shield = shield;
     }
 
-    // TODO: Refactor this shit
-    public void addMegaBomb() {
-        hasBomb = true;
-        megaBomb = true;
+    public void addNormalBomb() {
+        hasNormalBomb = true;
     }
 
-    public void addBomb() {
-        hasBomb = true;
-        megaBomb = false;
+    public void addMegaBomb() {
+        hasMegaBomb = true;
     }
 
     public boolean hasBomb() {
-        return hasBomb;
-    }
-
-    public boolean hasNormalBomb() {
-        return hasBomb && !megaBomb;
+        return hasNormalBomb || hasMegaBomb;
     }
 
     public boolean hasMegaBomb() {
-        return hasBomb && megaBomb;
+        return hasMegaBomb;
     }
 
     private void drawMotors(Graphics2D graphics, Viewport viewport) {

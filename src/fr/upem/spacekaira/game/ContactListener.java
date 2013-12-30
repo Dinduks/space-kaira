@@ -46,7 +46,7 @@ public class ContactListener implements org.jbox2d.callbacks.ContactListener {
     };
 
     private static ContactAction shipBomb = (f1,f2) -> {
-        ((Ship) f1.getBody().getUserData()).addBomb();
+        ((Ship) f1.getBody().getUserData()).addNormalBomb();
         f2.setUserData(Brush.DESTROY_BRUSH);
     };
 
