@@ -1,9 +1,9 @@
 package fr.upem.spacekaira.game;
 
+import fr.umlv.zen3.Application;
 import fr.umlv.zen3.ApplicationContext;
 import fr.umlv.zen3.KeyboardEvent;
 import fr.umlv.zen3.KeyboardKey;
-import fr.upem.spacekaira.Main;
 import fr.upem.spacekaira.config.Configuration;
 import fr.upem.spacekaira.shape.characters.Ship;
 import fr.upem.spacekaira.time.Synchronizer;
@@ -96,7 +96,8 @@ public class Game {
                 System.exit(0);
             } else if (event.getKey() == KeyboardKey.R) {
                 Game game = new Game(config);
-                Main.startTheGame(game);
+                Application.run("Space Kaïra", game.getWidth(),
+                        game.getHeight(), game::run);
             }
         }
     }

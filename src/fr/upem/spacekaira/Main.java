@@ -24,11 +24,7 @@ public class Main {
         }
 
         Game game = new Game(config);
-        startTheGame(game);
-    }
-
-    public static void startTheGame(Game game) {
         Application.run("Space Kaïra", game.getWidth(), game.getHeight(),
-        game::run);
+                game::run);
     }
 }
