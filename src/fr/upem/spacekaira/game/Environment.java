@@ -209,14 +209,14 @@ public class Environment {
     private void drawTimeCounter(Graphics2D graphics,
                                  long startTime,
                                  int gameDuration) {
-        if (Util.getTimeLeftAsLong(startTime, gameDuration) >= 10) {
+        if (getTimeLeftAsLong(startTime, gameDuration) >= 10) {
             graphics.setPaint(new Color(255, 255, 255));
         } else {
             graphics.setPaint(new Color(255, 0, 0));
         }
         Font font = new Font("arial", Font.BOLD, 30);
         graphics.setFont(font);
-        String leftTime = Util.getTimeLeftAsString(startTime, gameDuration);
+        String leftTime = getTimeLeftAsString(startTime, gameDuration);
         graphics.drawString(leftTime, hudXPosition, hudYPosition);
     }
 
@@ -235,5 +235,30 @@ public class Environment {
 
         graphics.drawString(wavesLeftText, 50, hudYPosition);
         graphics.drawString(enemiesLeftText, 50, hudYPosition + 47);
+    }
+
+    /**
+     * @param startTime    Start time in milliseconds
+     * @param gameDuration Game duration in seconds
+     * @return             Time left — Example: for 1m5s, return 1:05
+     */
+    public static String getTimeLeftAsString(long startTime, int gameDuration) {
+        long currentTime = (long) Math.floor(System.currentTimeMillis() / 1000);
+        Long startTimeInSecs = (long) Math.floor(startTime / 1000);
+
+        int timeLeft = (int) (gameDuration - (currentTime - startTimeInSecs));
+        int minutes = (timeLeft / 60);
+        int seconds = timeLeft % 60;
+
+        return String.format("%d:%02d", minutes, seconds);
+    }
+
+    /**
+     * @param startTime Start time in milliseconds
+     * @param gameDuration Game duration in seconds
+     * @return Example: for 1m10s, returns 70
+     */
+    public static long getTimeLeftAsLong(long startTime, int gameDuration) {
+        return (gameDuration * 1000 - System.currentTimeMillis() + startTime) / 1000;
     }
 }

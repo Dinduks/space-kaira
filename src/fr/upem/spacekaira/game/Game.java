@@ -53,7 +53,7 @@ public class Game {
         long startTime = System.currentTimeMillis();
 
         String gameOverMessage = "THE TIME'S OVER! :(";
-        while (Util.anyTimeLeft(startTime, config.getGameDuration())) {
+        while (anyTimeLeft(startTime, config.getGameDuration())) {
             syn.start();
             handleKeyboardEvents(context, env.getShip());
             world.step(REFRESH_TIME, 6, 8);
@@ -166,5 +166,9 @@ public class Game {
             graphics.setFont(font);
             graphics.drawString("Press Q to quit or R to restart.", 100, 250);
         });
+    }
+
+    private static boolean anyTimeLeft(long startTime, int gameDuration) {
+        return System.currentTimeMillis() <= startTime + gameDuration * 1000;
     }
 }

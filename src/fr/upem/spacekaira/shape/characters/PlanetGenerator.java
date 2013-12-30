@@ -143,7 +143,7 @@ public class PlanetGenerator {
         return new AbstractSet<Planet>() {
             @Override
             public Iterator<Planet> iterator() {
-                return Util.asIterator(lists);
+                return asIterator(lists);
             }
 
             @Override
@@ -200,5 +200,39 @@ public class PlanetGenerator {
                 vec2s.add(v);
         }
         return vec2s;
+    }
+
+    /**
+     * Builds a single iterator from the iterators of all passed lists
+     * @param lists A list of lists whose iterators will be "merged"
+     * @param <E> class of element in the list
+     * @return An iterator that allows to iterator over all the lists
+     */
+    private static <E> Iterator<E> asIterator(List<List<E>> lists) {
+        List<Iterator<E>> iterators = new ArrayList<>(lists.size());
+        for(List<E> list : lists) {
+            if(list != null) iterators.add(list.iterator());
+        }
+
+        return new Iterator<E> () {
+            private int current=0;
+            public boolean hasNext() {
+                while (current < iterators.size() &&
+                        !iterators.get(current).hasNext()) {
+                    current++;
+                }
+
+                return current < iterators.size();
+            }
+
+            public E next() {
+                while (current < iterators.size() &&
+                        !iterators.get(current).hasNext()) {
+                    current++;
+                }
+
+                return iterators.get(current).next();
+            }
+        };
     }
 }

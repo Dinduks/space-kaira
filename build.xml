@@ -64,7 +64,7 @@
     </javac>
 
     <junit printsummary="yes" showoutput="yes">
-      <test name="fr.upem.spacekaira.util.UtilTest"/>
+      <test name="fr.upem.spacekaira.util.EnvironmentTest"/>
       <formatter type="plain" usefile="false"/>
       <classpath refid="master-classpath"/>
       <classpath>
