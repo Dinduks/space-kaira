@@ -30,6 +30,7 @@
     </pathconvert>
 
     <jar destfile="${jar}" basedir="${buildDir}">
+      <zipgroupfileset dir="${libDir}" includes="*.jar" excludes=""/>
       <manifest>
         <attribute name="Main-Class" value="fr.upem.spacekaira.Main"/>
         <attribute name="Class-Path" value="${manifest-classpath}"/>
