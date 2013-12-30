@@ -104,5 +104,6 @@ public class Bullet extends ShapeWithDynamicContact {
 
     @Override
     public void computeTimeStepData() {
+        // Not used
     }
 }

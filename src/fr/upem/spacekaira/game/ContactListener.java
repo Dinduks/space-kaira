@@ -121,16 +121,16 @@ public class ContactListener implements org.jbox2d.callbacks.ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-        //Not use
+        //Not used
     }
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
-        //Not use
+        //Not used
     }
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
-        //Not use
+        //Not used
     }
 }

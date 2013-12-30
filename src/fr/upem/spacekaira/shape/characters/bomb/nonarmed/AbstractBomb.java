@@ -48,5 +48,6 @@ public abstract class AbstractBomb extends ShapeWithDynamicContact {
 
     @Override
     public void computeTimeStepData() {
+        // Not used
     }
 }
