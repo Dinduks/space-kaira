@@ -50,12 +50,12 @@ public final class Configuration {
         return enemyWaves;
     }
 
-    public void setHardcore(boolean hardcore) {
-        this.hardcore = hardcore;
-    }
-
     public boolean isHardcore() {
         return hardcore;
+    }
+
+    public void setHardcore(boolean hardcore) {
+        this.hardcore = hardcore;
     }
 
     public int getBulletsFrequency() {

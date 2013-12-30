@@ -30,28 +30,31 @@ int [OXxxxxyyyy]
 
  */
 public class PlanetGenerator {
-    private Ship ship;
+    /* represent all zones around the ship */
+    private static final List<Vec2> zone;
+    static {
+        zone = new ArrayList<>(8);
+        zone.addAll(Arrays.asList(new Vec2(-1,+1),new Vec2(-1,0),new Vec2(-1,-1),
+                new Vec2(0,+1),new Vec2(0,-1),
+                new Vec2(+1,+1),new Vec2(+1,0),new Vec2(+1,-1)));
+    }
+    /* represent all zone around the ship and the ship zone */
+    private static final List<Vec2> zones;
+    static {
+        zones = new ArrayList<>(9);
+        zones.addAll(Arrays.asList(
+                new Vec2(-1,1),new Vec2(-1,0),new Vec2(-1,-1),
+                new Vec2(0,1),new Vec2(0,0),new Vec2(0,-1),
+                new Vec2(1,1),new Vec2(1,0),new Vec2(1,-1)));
+    }
     private final int HEIGHT;
     private final int WIDTH;
     private final Viewport viewport;
     private final int density;
     private final Random rand;
     private final PlanetFactory planetFactory;
-
+    private Ship ship;
     private Map<Integer,List<Planet>> visitedZone;
-
-    /* a factory method to create a planet generator */
-    public static PlanetGenerator create(int density,
-                                         Viewport viewport,
-                                         int WIDTH,
-                                         int HEIGHT,
-                                         Ship ship,
-                                         PlanetFactory planetFactory) {
-        PlanetGenerator pg = new PlanetGenerator(density, viewport, WIDTH,
-                HEIGHT, ship, planetFactory);
-        pg.execute();
-        return pg;
-    }
 
     private PlanetGenerator(int density,
                             Viewport viewport,
@@ -67,6 +70,53 @@ public class PlanetGenerator {
         this.visitedZone = new HashMap<>();
         this.rand = new Random();
         this.planetFactory = planetFactory;
+    }
+
+    /* a factory method to create a planet generator */
+    public static PlanetGenerator create(int density,
+                                         Viewport viewport,
+                                         int WIDTH,
+                                         int HEIGHT,
+                                         Ship ship,
+                                         PlanetFactory planetFactory) {
+        PlanetGenerator pg = new PlanetGenerator(density, viewport, WIDTH,
+                HEIGHT, ship, planetFactory);
+        pg.execute();
+        return pg;
+    }
+
+    /**
+     * Builds a single iterator from the iterators of all passed lists
+     * @param lists A list of lists whose iterators will be "merged"
+     * @param <E> class of element in the list
+     * @return An iterator that allows to iterator over all the lists
+     */
+    private static <E> Iterator<E> asIterator(List<List<E>> lists) {
+        List<Iterator<E>> iterators = new ArrayList<>(lists.size());
+        for(List<E> list : lists) {
+            if(list != null) iterators.add(list.iterator());
+        }
+
+        return new Iterator<E> () {
+            private int current=0;
+            public boolean hasNext() {
+                while (current < iterators.size() &&
+                        !iterators.get(current).hasNext()) {
+                    current++;
+                }
+
+                return current < iterators.size();
+            }
+
+            public E next() {
+                while (current < iterators.size() &&
+                        !iterators.get(current).hasNext()) {
+                    current++;
+                }
+
+                return iterators.get(current).next();
+            }
+        };
     }
 
     /* generate an hash code with the ship position */
@@ -89,15 +139,6 @@ public class PlanetGenerator {
         return x<<16|y&0xFFFF;
     }
 
-    /* represent all zones around the ship */
-    private static final List<Vec2> zone;
-    static {
-        zone = new ArrayList<>(8);
-        zone.addAll(Arrays.asList(new Vec2(-1,+1),new Vec2(-1,0),new Vec2(-1,-1),
-                new Vec2(0,+1),new Vec2(0,-1),
-                new Vec2(+1,+1),new Vec2(+1,0),new Vec2(+1,-1)));
-    }
-
     /* create new planets if is necessary */
     private void execute() {
         Vec2 shipPos = zoneCodeToIndex(genShipZoneCode());
@@ -108,16 +149,6 @@ public class PlanetGenerator {
                 visitedZone.put(zoneCode,generateZone(zoneCode));
             }
         }
-    }
-
-    /* represent all zone around the ship and the ship zone */
-    private static final List<Vec2> zones;
-    static {
-        zones = new ArrayList<>(9);
-        zones.addAll(Arrays.asList(
-                new Vec2(-1,1),new Vec2(-1,0),new Vec2(-1,-1),
-                new Vec2(0,1),new Vec2(0,0),new Vec2(0,-1),
-                new Vec2(1,1),new Vec2(1,0),new Vec2(1,-1)));
     }
 
     /* return a list of list of planet who should be viewport */
@@ -200,39 +231,5 @@ public class PlanetGenerator {
                 vec2s.add(v);
         }
         return vec2s;
-    }
-
-    /**
-     * Builds a single iterator from the iterators of all passed lists
-     * @param lists A list of lists whose iterators will be "merged"
-     * @param <E> class of element in the list
-     * @return An iterator that allows to iterator over all the lists
-     */
-    private static <E> Iterator<E> asIterator(List<List<E>> lists) {
-        List<Iterator<E>> iterators = new ArrayList<>(lists.size());
-        for(List<E> list : lists) {
-            if(list != null) iterators.add(list.iterator());
-        }
-
-        return new Iterator<E> () {
-            private int current=0;
-            public boolean hasNext() {
-                while (current < iterators.size() &&
-                        !iterators.get(current).hasNext()) {
-                    current++;
-                }
-
-                return current < iterators.size();
-            }
-
-            public E next() {
-                while (current < iterators.size() &&
-                        !iterators.get(current).hasNext()) {
-                    current++;
-                }
-
-                return iterators.get(current).next();
-            }
-        };
     }
 }

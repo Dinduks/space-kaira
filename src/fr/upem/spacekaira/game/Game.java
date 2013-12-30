@@ -19,10 +19,8 @@ import java.util.HashSet;
  */
 public class Game {
     private final int width;
-
     private final int height;
     private final Configuration config;
-
     private HashSet<KeyboardKey> keys = new HashSet<>();
     private long lastTimeWasShieldToggled = 0;
 
@@ -30,6 +28,25 @@ public class Game {
         this.width = config.getScreenWidth();
         this.height = config.getScreenHeight();
         this.config = config;
+    }
+
+    public static void drawGameOver(ApplicationContext context, String text) {
+        context.render((graphics) -> {
+            Font font;
+            graphics.setPaint(new Color(255, 0, 0));
+
+            font = new Font("arial", Font.BOLD, 60);
+            graphics.setFont(font);
+            graphics.drawString(text, 100, 200);
+
+            font = new Font("arial", Font.BOLD, 20);
+            graphics.setFont(font);
+            graphics.drawString("Press Q to quit or R to restart.", 100, 250);
+        });
+    }
+
+    private static boolean anyTimeLeft(long startTime, int gameDuration) {
+        return System.currentTimeMillis() <= startTime + gameDuration * 1000;
     }
 
     public void run(ApplicationContext context) {
@@ -151,24 +168,5 @@ public class Game {
             default:
                 break;
         }
-    }
-
-    public static void drawGameOver(ApplicationContext context, String text) {
-        context.render((graphics) -> {
-            Font font;
-            graphics.setPaint(new Color(255, 0, 0));
-
-            font = new Font("arial", Font.BOLD, 60);
-            graphics.setFont(font);
-            graphics.drawString(text, 100, 200);
-
-            font = new Font("arial", Font.BOLD, 20);
-            graphics.setFont(font);
-            graphics.drawString("Press Q to quit or R to restart.", 100, 250);
-        });
-    }
-
-    private static boolean anyTimeLeft(long startTime, int gameDuration) {
-        return System.currentTimeMillis() <= startTime + gameDuration * 1000;
     }
 }

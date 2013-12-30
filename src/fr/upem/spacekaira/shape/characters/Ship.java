@@ -21,11 +21,12 @@ import java.util.List;
  * The player ship
  */
 public class Ship extends ShapeWithDynamicContact {
-    private boolean shield;
+    private static long lastShootTime = 0;
     private final Fixture shieldFix;
     private final Fixture shipFix;
-    private List<Bullet> bullets;
     private final Brush bulletColor;
+    private boolean shield;
+    private List<Bullet> bullets;
     private boolean hasNormalBomb;
     private boolean hasMegaBomb;
     private AbstractArmedBomb armedBomb;
@@ -33,6 +34,16 @@ public class Ship extends ShapeWithDynamicContact {
     private boolean autoShield;
     private int bulletsFrequency;
     private float shipSpeed;
+    private Filter shieldFilterOff = new Filter() {{
+        categoryBits = 0;
+        maskBits = 0;
+    }};
+    private Filter shieldFilterOn = new Filter() {{
+        categoryBits = FixtureType.SHIELD;
+        maskBits = FixtureType.PLANET |
+                FixtureType.ENEMY |
+                FixtureType.BULLET_ENEMY | FixtureType.PLANET;
+    }};
 
     public Ship(World world, List<Enemy> enemies, Brush shipColor,
                 Brush bulletColor, boolean autoShield, int bulletsFrequency,
@@ -111,18 +122,6 @@ public class Ship extends ShapeWithDynamicContact {
         getBody().applyTorque(30.0f);
     }
 
-    private Filter shieldFilterOff = new Filter() {{
-        categoryBits = 0;
-        maskBits = 0;
-    }};
-
-    private Filter shieldFilterOn = new Filter() {{
-        categoryBits = FixtureType.SHIELD;
-        maskBits = FixtureType.PLANET |
-                FixtureType.ENEMY |
-                FixtureType.BULLET_ENEMY | FixtureType.PLANET;
-    }};
-
     public void toggleShield() {
         setShield(!shield);
     }
@@ -149,8 +148,6 @@ public class Ship extends ShapeWithDynamicContact {
         return getBody().getLinearVelocity();
     }
 
-    private static long lastShootTime = 0;
-
     public void shoot() {
         if (shield) return;
         if (System.currentTimeMillis() - lastShootTime < bulletsFrequency) {
@@ -165,7 +162,6 @@ public class Ship extends ShapeWithDynamicContact {
                 getBody().getAngle(),
                 bulletColor));
     }
-
 
     public void checkForBulletOutScreen(Viewport viewport) {
         Bullet.checkForBulletsOutScreen(viewport, bullets);

@@ -11,10 +11,10 @@ import org.jbox2d.dynamics.*;
 import java.util.List;
 
 public abstract class AbstractArmedBomb extends ShapeWithDynamicContact {
+    private final long dropTime = System.currentTimeMillis();
     private FixtureDef armedBombFixtureDef;
     private Brush brushAfterExploding;
     private CircleShape circleShape = new CircleShape();
-    private final long dropTime = System.currentTimeMillis();
     private Fixture fixture;
     private float radius = 0.5f;
 

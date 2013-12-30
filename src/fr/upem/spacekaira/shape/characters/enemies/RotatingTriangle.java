@@ -9,6 +9,8 @@ import org.jbox2d.dynamics.*;
 
 public class RotatingTriangle extends Enemy {
 
+    private long lastShootTime = 0;
+
     public RotatingTriangle(World world, float x, float y, Brush brush,
                             Brush bulletColor) {
         super(brush, bulletColor);
@@ -67,7 +69,6 @@ public class RotatingTriangle extends Enemy {
                 getBody().getAngle());
     }
 
-    private long lastShootTime = 0;
     @Override
     public void shoot(Ship ship) {
         Vec2 canon1 =

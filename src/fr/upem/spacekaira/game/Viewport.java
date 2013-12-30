@@ -19,13 +19,12 @@ import java.util.Random;
  * Performs vector transformation (local - world - screen) and shape drawing
  */
 public class Viewport {
-    private OBBViewportTransform obb;
     private final int screenHeight;
     private final int screenWidth;
-    private float scale = 1;
-
     private final Vec2Array vec2Array = new Vec2Array();
     private final int circlePoints = 13;
+    private OBBViewportTransform obb;
+    private float scale = 1;
 
     public Viewport(int screenWidth, int screenHeight) {
         this.screenHeight = screenHeight;
@@ -33,6 +32,10 @@ public class Viewport {
         obb = new OBBViewportTransform();
         obb.setCamera(0, 0, 1);
         obb.setExtents(screenWidth / 2, screenHeight / 2);
+    }
+
+    public static boolean isZero(float f) {
+        return Math.abs(f) > 0.5;
     }
 
     public boolean isInScreen(Vec2 worldVector) {
@@ -129,10 +132,6 @@ public class Viewport {
         } else {
             graphics.drawPolygon(xPoints, yPoints,vertexCount);
         }
-    }
-
-    public static boolean isZero(float f) {
-        return Math.abs(f) > 0.5;
     }
 
     /**

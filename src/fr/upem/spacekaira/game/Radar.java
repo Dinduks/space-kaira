@@ -17,8 +17,6 @@ public class Radar {
     private List<Enemy> enemies;
     private OBBViewportTransform viewportTransform;
     private Viewport viewport;
-    private int length;
-
     private int x, y, width, height;
 
     public Radar(Viewport viewport, Ship ship, List<Enemy> enemies) {

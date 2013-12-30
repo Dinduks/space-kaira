@@ -21,6 +21,7 @@ public class Squadron extends Enemy {
     private int nBodies = 14;
     private List<Body> m_bodies = new ArrayList<>(nBodies);
     private List<Joint> m_joints = new ArrayList<>(nBodies*2);
+    private long lastShootTime = 0;
 
     public Squadron(World world, float x, float y, Brush brush,
                     Brush bulletColor) {
@@ -198,7 +199,6 @@ public class Squadron extends Enemy {
         m_joints.forEach(j -> ((DistanceJoint) j).setLength(length));
     }
 
-    private long lastShootTime = 0;
     @Override
     public void shoot(Ship ship) {
 

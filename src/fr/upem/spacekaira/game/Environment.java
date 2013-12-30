@@ -25,34 +25,20 @@ import java.util.List;
 public class Environment {
     private final int height;
     private final int width;
-
+    private final int bombsFrequency;
+    private final int megaBombsRate;
+    private final PlanetFactory planetFactory;
+    private final EnemyFactory enemyFactory;
     private Ship ship;
     private EnemyWavesGenerator wavesGenerator;
     private PlanetGenerator planetGenerator;
     private Radar radar;
-
     private World world;
     private Viewport viewport;
-
-    private final int bombsFrequency;
-    private final int megaBombsRate;
-
     private int hudXPosition;
     private int hudYPosition;
-
-    private final PlanetFactory planetFactory;
-    private final EnemyFactory enemyFactory;
-
     private List<AbstractBomb> bombs = new ArrayList<>();
-
-    public static Environment createMap(World world, Viewport viewport,
-                                final int height, final int width,
-                                Configuration config) {
-        Environment environment =
-                new Environment(world, viewport, height, width, config);
-        environment.initMap(config);
-        return environment;
-    }
+    private long lastTimeWasABombSpawned = 0;
 
     private Environment(World world, Viewport viewport, final int height,
                         final int width, Configuration config) {
@@ -68,6 +54,40 @@ public class Environment {
         hudXPosition = width - 80;
         hudYPosition = 50;
 
+    }
+
+    public static Environment createMap(World world, Viewport viewport,
+                                final int height, final int width,
+                                Configuration config) {
+        Environment environment =
+                new Environment(world, viewport, height, width, config);
+        environment.initMap(config);
+        return environment;
+    }
+
+    /**
+     * @param startTime    Start time in milliseconds
+     * @param gameDuration Game duration in seconds
+     * @return             Time left — Example: for 1m5s, return 1:05
+     */
+    public static String getTimeLeftAsString(long startTime, int gameDuration) {
+        long currentTime = (long) Math.floor(System.currentTimeMillis() / 1000);
+        Long startTimeInSecs = (long) Math.floor(startTime / 1000);
+
+        int timeLeft = (int) (gameDuration - (currentTime - startTimeInSecs));
+        int minutes = (timeLeft / 60);
+        int seconds = timeLeft % 60;
+
+        return String.format("%d:%02d", minutes, seconds);
+    }
+
+    /**
+     * @param startTime Start time in milliseconds
+     * @param gameDuration Game duration in seconds
+     * @return Example: for 1m10s, returns 70
+     */
+    public static long getTimeLeftAsLong(long startTime, int gameDuration) {
+        return (gameDuration * 1000 - System.currentTimeMillis() + startTime) / 1000;
     }
 
     private void initMap(Configuration config) {
@@ -106,7 +126,6 @@ public class Environment {
         return wavesGenerator.noMoreEnemies();
     }
 
-    private long lastTimeWasABombSpawned = 0;
     private void spawnABombIfNecessary() {
         long currentTime = System.currentTimeMillis();
         int durationBetweenEachSpawn = (60 / bombsFrequency) * 1000;
@@ -235,30 +254,5 @@ public class Environment {
 
         graphics.drawString(wavesLeftText, 50, hudYPosition);
         graphics.drawString(enemiesLeftText, 50, hudYPosition + 47);
-    }
-
-    /**
-     * @param startTime    Start time in milliseconds
-     * @param gameDuration Game duration in seconds
-     * @return             Time left — Example: for 1m5s, return 1:05
-     */
-    public static String getTimeLeftAsString(long startTime, int gameDuration) {
-        long currentTime = (long) Math.floor(System.currentTimeMillis() / 1000);
-        Long startTimeInSecs = (long) Math.floor(startTime / 1000);
-
-        int timeLeft = (int) (gameDuration - (currentTime - startTimeInSecs));
-        int minutes = (timeLeft / 60);
-        int seconds = timeLeft % 60;
-
-        return String.format("%d:%02d", minutes, seconds);
-    }
-
-    /**
-     * @param startTime Start time in milliseconds
-     * @param gameDuration Game duration in seconds
-     * @return Example: for 1m10s, returns 70
-     */
-    public static long getTimeLeftAsLong(long startTime, int gameDuration) {
-        return (gameDuration * 1000 - System.currentTimeMillis() + startTime) / 1000;
     }
 }

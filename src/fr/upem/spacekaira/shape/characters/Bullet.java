@@ -73,10 +73,6 @@ public class Bullet extends ShapeWithDynamicContact {
                 FixtureType.BULLET_ENEMY);
     }
 
-    boolean isInScreen(Viewport viewport) {
-        return  viewport.isInScreen(getBody().getPosition());
-    }
-
     public static void checkForBulletsOutScreen(Viewport viewport,
                                                 List<Bullet> bullets) {
         Iterator<Bullet> it = bullets.iterator();
@@ -100,6 +96,10 @@ public class Bullet extends ShapeWithDynamicContact {
                 it.remove();
             }
         }
+    }
+
+    boolean isInScreen(Viewport viewport) {
+        return  viewport.isInScreen(getBody().getPosition());
     }
 
     @Override

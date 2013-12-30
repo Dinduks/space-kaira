@@ -95,8 +95,9 @@ public class ContactListener implements org.jbox2d.callbacks.ContactListener {
         f2.getBody().setLinearVelocity(shieldSpeed.mul(40));
     };
 
-    private static ContactAction shieldPlanet = (f1, f2) ->
-            planetShield.accept(f2, f1);
+    private static ContactAction shieldPlanet = (f1, f2) -> {
+        planetShield.accept(f2, f1);
+    };
 
     private static ContactAction[][] action = {
                           /* BULLET PLANET        ENEMY        SHIP         BOMB,     ARMED_BOMB, MBOMB,     ARMED_MBOMB BULLET_ENEMY       SHIELD*/
