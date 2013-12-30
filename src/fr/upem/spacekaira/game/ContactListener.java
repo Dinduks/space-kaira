@@ -133,11 +133,4 @@ public class ContactListener implements org.jbox2d.callbacks.ContactListener {
     public void postSolve(Contact contact, ContactImpulse impulse) {
         //Not use
     }
-
-    private void debug(Contact contact) {
-        try {
-            System.out.println(contact.getFixtureA().getBody().getUserData().getClass().getName() + " & " +
-                    contact.getFixtureB().getBody().getUserData().getClass().getName() + "\n");
-        } catch (Exception e) {}
-    }
 }
