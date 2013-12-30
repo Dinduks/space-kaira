@@ -31,23 +31,12 @@ public final class ConfigurationLoader {
 
             Unmarshaller unmarshaller = context.createUnmarshaller();
             unmarshaller.setSchema(schema);
-            unmarshaller.setEventHandler(new ConfigurationEventHandler());
+            unmarshaller.setEventHandler((e) -> false); // crash on error
             Configuration config = (Configuration) unmarshaller.unmarshal(file);
 
             return config;
         } catch (Exception e) {
             throw new ConfigurationParsingException(e.toString());
-        }
-    }
-
-    /**
-     * This event handler makes the marshalling crash if there's any error or
-     * warning
-     */
-    public static class ConfigurationEventHandler implements ValidationEventHandler {
-        @Override
-        public boolean handleEvent(ValidationEvent event) {
-            return false;
         }
     }
 }
