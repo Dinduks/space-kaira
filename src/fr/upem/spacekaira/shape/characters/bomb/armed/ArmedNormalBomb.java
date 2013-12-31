@@ -40,7 +40,10 @@ public class ArmedNormalBomb extends AbstractArmedBomb {
 
     @Override
     public boolean detonate(List<Enemy> enemies) {
-        if (getRadius() >= 10.0f) return false;
+        if (getRadius() >= 10.0f) {
+            this.destroy();
+            return false;
+        }
 
         setRadius(getRadius() + 0.5f);
         getCircleShape().setRadius(getRadius());
