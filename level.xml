@@ -18,87 +18,36 @@
             <enemy>SQUADRON</enemy>
             <enemy>CRUISER</enemy>
             <enemy>SQUADRON</enemy>
-            <enemy>TIE</enemy>
-            <enemy>ROTATINGTRIANGLE</enemy>
-            <enemy>TIE</enemy>
-            <enemy>BRUTE</enemy>
-            <enemy>TIE</enemy>
-            <enemy>BRUTE</enemy>
-            <enemy>ROTATINGTRIANGLE</enemy>
-            <enemy>TIE</enemy>
-            <enemy>CRUISER</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>TIE</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>TIE</enemy>
-            <enemy>TIE</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>BRUTE</enemy>
-            <enemy>CRUISER</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>ROTATINGTRIANGLE</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>ROTATINGTRIANGLE</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>BRUTE</enemy>
-            <enemy>ROTATINGTRIANGLE</enemy>
         </enemyWave>
         <enemyWave>
-            <enemy>ROTATINGTRIANGLE</enemy>
+            <enemy>SQUADRON</enemy>
             <enemy>TIE</enemy>
             <enemy>CRUISER</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>TIE</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>SQUADRON</enemy>
             <enemy>TIE</enemy>
             <enemy>TIE</enemy>
             <enemy>SQUADRON</enemy>
-            <enemy>BRUTE</enemy>
             <enemy>CRUISER</enemy>
             <enemy>SQUADRON</enemy>
-            <enemy>ROTATINGTRIANGLE</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>ROTATINGTRIANGLE</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>BRUTE</enemy>
-            <enemy>ROTATINGTRIANGLE</enemy>
             <enemy>TIE</enemy>
-            <enemy>TIE</enemy>
-            <enemy>ROTATINGTRIANGLE</enemy>
-            <enemy>TIE</enemy>
-            <enemy>TIE</enemy>
-            <enemy>TIE</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>TIE</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>ROTATINGTRIANGLE</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>TIE</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>BRUTE</enemy>
-            <enemy>ROTATINGTRIANGLE</enemy>
             <enemy>ROTATINGTRIANGLE</enemy>
             <enemy>TIE</enemy>
             <enemy>BRUTE</enemy>
+            <enemy>TIE</enemy>
+            <enemy>BRUTE</enemy>
+            <enemy>ROTATINGTRIANGLE</enemy>
+            <enemy>TIE</enemy>
+        </enemyWave>
+        <enemyWave>
+            <enemy>SQUADRON</enemy>
             <enemy>TIE</enemy>
             <enemy>CRUISER</enemy>
-            <enemy>ROTATINGTRIANGLE</enemy>
-            <enemy>CRUISER</enemy>
-            <enemy>BRUTE</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>SQUADRON</enemy>
-            <enemy>CRUISER</enemy>
             <enemy>TIE</enemy>
-            <enemy>BRUTE</enemy>
+            <enemy>TIE</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>CRUISER</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>TIE</enemy>
+            <enemy>ROTATINGTRIANGLE</enemy>
         </enemyWave>
     </enemyWaves>
 </configuration>
