@@ -1,25 +1,104 @@
 <configuration>
-  <screenWidth>1024</screenWidth>
-  <screenHeight>768</screenHeight>
-  <gameDuration>120</gameDuration>
-  <planetsDensity>1</planetsDensity> <!-- How many planets per screen?-->
-  <bombsFrequency>30</bombsFrequency> <!-- How many bombs per minute?-->
-  <megaBombsRate>40</megaBombsRate> <!-- On 100 bombs, how many are mega? -->
-  <bulletsFrequency>20</bulletsFrequency> <!-- Shoot 1 bullet each N ms -->
-  <shipSpeed>500</shipSpeed> <!-- Required force to move the ship, default: 500 -->
+    <screenWidth>1024</screenWidth>
+    <screenHeight>768</screenHeight>
+    <gameDuration>120</gameDuration>
+    <planetsDensity>1</planetsDensity> <!-- How many planets per screen?-->
+    <bombsFrequency>30</bombsFrequency> <!-- How many bombs per minute?-->
+    <megaBombsRate>40</megaBombsRate> <!-- On 100 bombs, how many are mega? -->
+    <bulletsFrequency>20</bulletsFrequency> <!-- Shoot 1 bullet each N ms -->
+    <shipSpeed>500</shipSpeed> <!-- Required force to move the ship, default: 500 -->
 
-  <enemyWaves>
-    <enemyWave>
-      <enemy>SQUADRON</enemy>
-      <enemy>TIE</enemy>
-      <enemy>ROTATINGTRIANGLE</enemy>
-      <enemy>BRUTE</enemy>
-      <enemy>CRUISER</enemy>
-    </enemyWave>
-    <enemyWave>
-      <enemy>BRUTE</enemy>
-      <enemy>SQUADRON</enemy>
-      <enemy>ROTATINGTRIANGLE</enemy>
-    </enemyWave>
-  </enemyWaves>
+    <enemyWaves>
+        <enemyWave>
+            <enemy>SQUADRON</enemy>
+            <enemy>TIE</enemy>
+            <enemy>CRUISER</enemy>
+            <enemy>TIE</enemy>
+            <enemy>TIE</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>CRUISER</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>TIE</enemy>
+            <enemy>ROTATINGTRIANGLE</enemy>
+            <enemy>TIE</enemy>
+            <enemy>BRUTE</enemy>
+            <enemy>TIE</enemy>
+            <enemy>BRUTE</enemy>
+            <enemy>ROTATINGTRIANGLE</enemy>
+            <enemy>TIE</enemy>
+            <enemy>CRUISER</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>TIE</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>TIE</enemy>
+            <enemy>TIE</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>BRUTE</enemy>
+            <enemy>CRUISER</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>ROTATINGTRIANGLE</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>ROTATINGTRIANGLE</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>BRUTE</enemy>
+            <enemy>ROTATINGTRIANGLE</enemy>
+        </enemyWave>
+        <enemyWave>
+            <enemy>ROTATINGTRIANGLE</enemy>
+            <enemy>TIE</enemy>
+            <enemy>CRUISER</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>TIE</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>TIE</enemy>
+            <enemy>TIE</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>BRUTE</enemy>
+            <enemy>CRUISER</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>ROTATINGTRIANGLE</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>ROTATINGTRIANGLE</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>BRUTE</enemy>
+            <enemy>ROTATINGTRIANGLE</enemy>
+            <enemy>TIE</enemy>
+            <enemy>TIE</enemy>
+            <enemy>ROTATINGTRIANGLE</enemy>
+            <enemy>TIE</enemy>
+            <enemy>TIE</enemy>
+            <enemy>TIE</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>TIE</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>ROTATINGTRIANGLE</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>TIE</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>BRUTE</enemy>
+            <enemy>ROTATINGTRIANGLE</enemy>
+            <enemy>ROTATINGTRIANGLE</enemy>
+            <enemy>TIE</enemy>
+            <enemy>BRUTE</enemy>
+            <enemy>TIE</enemy>
+            <enemy>CRUISER</enemy>
+            <enemy>ROTATINGTRIANGLE</enemy>
+            <enemy>CRUISER</enemy>
+            <enemy>BRUTE</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>SQUADRON</enemy>
+            <enemy>CRUISER</enemy>
+            <enemy>TIE</enemy>
+            <enemy>BRUTE</enemy>
+        </enemyWave>
+    </enemyWaves>
 </configuration>
