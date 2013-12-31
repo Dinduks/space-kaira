@@ -34,10 +34,6 @@ public class Viewport {
         obb.setExtents(screenWidth / 2, screenHeight / 2);
     }
 
-    public static boolean isZero(float f) {
-        return Math.abs(f) > 0.5;
-    }
-
     public boolean isInScreen(Vec2 worldVector) {
         Vec2 v = getWorldVectorToScreen(worldVector);
         return v.x >= 0 && v.x <= screenWidth &&

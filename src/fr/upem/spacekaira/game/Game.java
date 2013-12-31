@@ -7,7 +7,6 @@ import fr.umlv.zen3.KeyboardKey;
 import fr.upem.spacekaira.config.Configuration;
 import fr.upem.spacekaira.shape.characters.Ship;
 import fr.upem.spacekaira.time.Synchronizer;
-import fr.upem.spacekaira.util.Util;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
@@ -62,8 +61,8 @@ public class Game {
         viewport.setCamera(0, 0, CAMERA_SCALE);
 
         //Environment
-        Environment env =
-                Environment.createMap(world, viewport, height, width, config);
+        Environment env = Environment.createEnvironment(world, viewport, height,
+                width, config);
 
         Synchronizer syn = new Synchronizer((long)(REFRESH_TIME * 1000));
 

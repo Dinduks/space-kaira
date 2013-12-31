@@ -9,7 +9,7 @@ import org.jbox2d.dynamics.Fixture;
 import java.awt.*;
 
 /**
- * Represent a base to construct a figure an contains drawing method
+ * Represents a base to construct shapes and contains drawing methods
  */
 public abstract class AbstractShape implements Drawable {
     private Body body;
@@ -26,8 +26,7 @@ public abstract class AbstractShape implements Drawable {
                     break;
                 case POLYGON: viewport.drawPolygon(list, graphics);
                     break;
-                case CHAIN: assert false; //no chain in this project
-                    break;
+                case CHAIN: throw new UnsupportedOperationException();
             }
             list = list.getNext();
         }

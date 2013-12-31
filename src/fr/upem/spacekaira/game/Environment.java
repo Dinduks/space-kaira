@@ -56,14 +56,35 @@ public class Environment {
 
     }
 
-    public static Environment createMap(World world, Viewport viewport,
-                                final int height, final int width,
-                                Configuration config) {
+    public static Environment createEnvironment(World world, Viewport viewport,
+                                                final int height,
+                                                final int width,
+                                                Configuration config) {
         Environment environment =
                 new Environment(world, viewport, height, width, config);
-        environment.initMap(config);
+        environment.initEnvironment(config);
         return environment;
     }
+
+    private void initEnvironment(Configuration config) {
+        /**
+         * This collection is shared between the enemy waves generators and the
+         * ship that passes it to exploding bombs.
+         */
+        List<Enemy> enemies = new LinkedList<>();
+
+        ship = new Ship(world, enemies, BrushFactory.get(Color.BLUE),
+                BrushFactory.get(Color.GREEN), !config.isHardcore(),
+                config.getBulletsFrequency(), config.getShipSpeed());
+        planetGenerator = PlanetGenerator.create(config.getPlanetsDensity(),
+                viewport, width, height, ship, planetFactory);
+
+        wavesGenerator = new EnemyWavesGenerator(enemyFactory, viewport,
+                ship, config.getEnemyWaves(), enemies);
+
+        radar = new Radar(viewport, ship, enemies);
+    }
+
 
     /**
      * @param startTime    Start time in milliseconds
@@ -88,25 +109,6 @@ public class Environment {
      */
     public static long getTimeLeftAsLong(long startTime, int gameDuration) {
         return (gameDuration * 1000 - System.currentTimeMillis() + startTime) / 1000;
-    }
-
-    private void initMap(Configuration config) {
-        /**
-         * This collection is shared between the enemy waves generators and the
-         * ship that passes it to exploding bombs.
-         */
-        List<Enemy> enemies = new LinkedList<>();
-
-        ship = new Ship(world, enemies, BrushFactory.get(Color.BLUE),
-                BrushFactory.get(Color.GREEN), !config.isHardcore(),
-                config.getBulletsFrequency(), config.getShipSpeed());
-        planetGenerator = PlanetGenerator.create(config.getPlanetsDensity(),
-                viewport, width, height, ship, planetFactory);
-
-        wavesGenerator = new EnemyWavesGenerator(enemyFactory, viewport,
-                ship, config.getEnemyWaves(), enemies);
-
-        radar = new Radar(viewport,ship,enemies);
     }
 
     public Ship getShip() {

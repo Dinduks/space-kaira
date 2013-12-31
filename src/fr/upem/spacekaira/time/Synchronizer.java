@@ -2,8 +2,8 @@ package fr.upem.spacekaira.time;
 
 import org.jbox2d.common.Timer;
 
-/*
-    This provide methods to execute a loop with a fixed frequency
+/**
+ * This classe provides methods to execute a loop with a fixed frequency
  */
 public class Synchronizer {
     private Timer timer;
@@ -14,16 +14,12 @@ public class Synchronizer {
         this.millsTimeToWait = timeToWait;
     }
 
-    /*
-        Should call at the start of the loop
-     */
+    // Should be called at the start of the loop
     public void start() {
         timer.reset();
     }
 
-    /*
-        Call at the end to wait the delta time
-     */
+    // Should e called at the end to wait the delta time
     public void waitToSynchronize() {
         long millis = (long)timer.getMilliseconds();
 

@@ -64,9 +64,10 @@ public class Radar {
         }
     }
 
-    /*
-        Check if the dot pos is in the radar or not
-        @return true is pos is in the radar false otherwise
+    /**
+     * Checks if the specified position is in the radar or not
+     * @param pos
+     * @return tue if the specified position is in the radar, false otherwise
      */
     private boolean isInRadarScreen(Vec2 pos) {
         if( pos.x <= viewport.getScreenWidth()  &&

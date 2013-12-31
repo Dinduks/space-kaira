@@ -173,9 +173,9 @@ public class Ship extends ShapeWithDynamicContact {
         shieldFix.setUserData((shield) ? BrushFactory.get(Color.BLUE, false) : null);
         super.draw(graphics, viewport);
         bullets.forEach(b -> b.draw(graphics, viewport));
-        if (Viewport.isZero(getBody().getLinearVelocity().x) ||
-                Viewport.isZero(getBody().getLinearVelocity().y) ||
-                Viewport.isZero(getBody().getAngularVelocity())) {
+        if (isZero(getBody().getLinearVelocity().x) ||
+                isZero(getBody().getLinearVelocity().y) ||
+                isZero(getBody().getAngularVelocity())) {
             drawMotors(graphics, viewport);
         }
     }
@@ -248,5 +248,9 @@ public class Ship extends ShapeWithDynamicContact {
     @Override
     public boolean isDead() {
         return shipFix.getUserData() == Brush.DESTROY_BRUSH;
+    }
+
+    public static boolean isZero(float f) {
+        return Math.abs(f) > 0.5;
     }
 }
