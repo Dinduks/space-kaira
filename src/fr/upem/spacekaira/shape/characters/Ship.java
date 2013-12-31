@@ -250,6 +250,12 @@ public class Ship extends ShapeWithDynamicContact {
         return shipFix.getUserData() == Brush.DESTROY_BRUSH;
     }
 
+    /**
+     * Return true is the absolute value is around 0.0f because is really hard to obtain exactly
+     * 0.0f with float value
+     * @param f a float value to check
+     * @return  true is the value is around Zero, false otherwise
+     */
     public static boolean isZero(float f) {
         return Math.abs(f) > 0.5;
     }
