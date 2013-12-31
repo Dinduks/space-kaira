@@ -206,10 +206,12 @@ public class Ship extends ShapeWithDynamicContact {
 
     public void addNormalBomb() {
         hasNormalBomb = true;
+        hasMegaBomb = false;
     }
 
     public void addMegaBomb() {
         hasMegaBomb = true;
+        hasNormalBomb = false;
     }
 
     public boolean hasBomb() {

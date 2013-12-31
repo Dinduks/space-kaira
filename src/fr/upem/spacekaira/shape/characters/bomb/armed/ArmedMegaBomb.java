@@ -59,6 +59,7 @@ public class ArmedMegaBomb extends AbstractArmedBomb {
                 Enemy enemy = iterator.next();
                 if (roundedPosEqual(getPosition(), enemy.getPosition())) {
                     iterator.remove();
+                    enemy.destroy();
                     enemies.remove(enemy);
                     continue;
                 }
