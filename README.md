@@ -18,6 +18,7 @@ java -jar master-pilot.jar level.xml [hardcore]
 ```
 
 Where *level.xml* is a level description file.  
+There's an example one available at the project's root.
 
 ### What is it about
 The goal of the game is to kill all the ennemies, that come in waves, within
